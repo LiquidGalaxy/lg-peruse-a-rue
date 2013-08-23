@@ -25,6 +25,7 @@ module.exports.main = function() {
   var BigL = require('./lib/bigl');
   var ViewSync = require('./lib/viewsync');
   var MultiAxis = require('./lib/multiaxis');
+  var geRecv = require('./lib/ge_nl_rec').handler;
 
   //
   // sort out configuration/settings
@@ -66,6 +67,7 @@ module.exports.main = function() {
       .use( connect.static( docRoot ) )
       // serve the global configuration script
       .use( config.middleware )
+      .use( geRecv )
       // no url match? send a 404
       .use( function( req, res ) {
         res.statusCode = 404;
