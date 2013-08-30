@@ -4,7 +4,7 @@ A Street View implementation for Liquid Galaxy.
 
 ### Installing Peruse-a-Rue
 
-    $ git clone <path-to-peruse-a-rue.git>
+    $ git clone https://code.google.com/p/liquid-galaxy.lg-peruse-a-rue/
     $ cd peruse-a-rue
 
 ### Installing Node deps
