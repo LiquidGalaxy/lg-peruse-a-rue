@@ -42,6 +42,10 @@
   },
   "analyze": false,
   "license": "Apache 2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://code.google.com/p/liquid-galaxy.lg-peruse-a-rue/"
+  },
   "engines": {
     "node": ">=0.10.0"
   }
