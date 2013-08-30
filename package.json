@@ -1,0 +1,48 @@
+{
+  "name": "lg-peruse-a-rue",
+  "version": "0.5.1",
+  "author": "End Point Corp <lg@endpoint.com>",
+  "description": "A street view implementation for Liquid Galaxy",
+  "contributors": [ 
+    {
+      "name": "Matt Vollrath",
+      "email": "matt@endpoint.com"
+    },
+    {
+      "name": "Josh Ausborne",
+      "email": "jausborne@endpoint.com"
+    },
+    {
+      "name": "Greg Davidson",
+      "email": "gdavidson@endpoint.com"
+    },
+    {
+      "name": "David Christensen",
+      "email": "david@endpoint.com"
+    }
+  ],
+  "bin": {
+    "peruse-a-rue": "./bin/peruse-a-rue"
+  },
+  "main": "./index.js",
+  "scripts": {
+    "start": "./bin/peruse-a-rue"
+  },
+  "keywords": [
+    "panorama",
+    "pano",
+    "streetview",
+    "google"
+  ],
+  "dependencies" : {
+    "connect"   : "2.x.x",
+    "socket.io" : "0.9.x",
+    "stylus"    : "*",
+    "commander" : "*"
+  },
+  "analyze": false,
+  "license": "Apache 2.0",
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}

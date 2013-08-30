@@ -1,0 +1,174 @@
+/*
+** Copyright 2013 Google Inc.
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**    http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+
+no-select()
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+
+html
+  height: 100%
+
+body
+  height: 100%
+  margin: 0
+  padding: 0
+  background-color: black
+  font-family: arial, sans-serif
+
+#map_canvas
+  height: 100%
+  width: 100%
+
+h2
+  margin: auto
+  padding: 0px
+  text-align: center
+  font-size: 1.1em
+  color: white
+  no-select()
+
+box()
+  background-color: rgba(0,0,0,0.4)
+  -webkit-border-radius: 5px
+  font-size: 1.0em
+  color: white
+  no-select()
+
+item()
+  width: 160px
+  margin: 8px
+  padding: 6px
+  text-align: center
+  vertical-align: middle
+  display: inline-block
+  no-select()
+  font-size: 1.0em
+  -webkit-border-radius: 5px
+
+list()
+  margin: 0px
+  padding: 0px
+  no-select()
+
+hidden()
+  opacity: 0
+  position: absolute
+  no-select()
+
+#activities-box
+  padding: 4px
+  position: absolute
+  left: 8px
+  bottom: 40px
+  box()
+
+#activities-list
+  list()
+
+#activities-list>li
+  background-color: white
+  border: 1px solid silver
+  color: black
+  item()
+
+#poi-box
+  padding: 4px
+  position: absolute
+  left: 8px
+  bottom: 140px
+  width: 384px
+  box()
+
+.poi-list-active
+  list()
+
+.poi-list-active>li
+  background-color: white
+  border: 1px solid silver
+  color: black
+  item()
+
+.poi-list-inactive
+  hidden()
+
+.poi-list-inactive>li
+  hidden()
+
+#poi-categories
+  list()
+
+#poi-categories>li
+  background-color: black
+  border: none
+  color: white
+  font-weight: bold
+  item()
+
+#poi-categories>li a
+  color: white
+  font-weight: bold
+  text-decoration: none
+
+#poi-categories>li.poi-tab-active
+  background-color: green
+
+#poi-categories>li.poi-tab-inactive
+  background-color: black
+
+#instructions-box
+  padding: 8px
+  position: absolute
+  left: 8px
+  top: 10px
+  width: 384px
+  box()
+
+#zoom-control-box
+  position: absolute
+  bottom: 40px
+  left: 50%
+  width: 150px
+  margin-left: -75px
+  padding: 5px
+  text-align: center
+  box()
+
+.zoom-control-button
+  display: inline-block
+  padding: 0px
+  width: 50px
+  height: 50px
+  margin: 10px
+  background-color: white
+  color: black
+  border: 1px solid silver
+  text-align: center
+  vertical-align: middle
+  cursor: default
+  user-select: none
+  -webkit-border-radius: 5px
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+
+#zoom-in
+  font-size: 45px
+
+#zoom-out
+  font-size: 40px
+

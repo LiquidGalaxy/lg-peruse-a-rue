@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+** Copyright 2013 Google Inc.
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**    http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+-->
+<html>
+  <head>
+    <title>Peruse-a-Rue - Touchscreen</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/touchscreen.css" />
+    <script data-main="js/main" src="/js/lib/require/require.min.js"></script>
+  </head>
+  <body>
+    <noscript>
+      <div><p>ERROR: JavaScript not activated</p><div>
+    </noscript>
+    <div id="map_canvas"></div>
+    <div id="instructions-box">
+      Click on a street to load it in Street View.<br />
+      <br />
+      Spin the joystick to look around.<br />
+      <br />
+      Push the joystick forward to move.
+    </div>
+    <div id="zoom-control-box">
+      <div id="zoom-out" class="zoom-control-button">&#8211;</div>
+      <div id="zoom-in"  class="zoom-control-button">+</div>
+    </div>
+    <div id="poi-box">
+      <h2>Points of Interest</h2>
+      <ul id="poi-categories"></ul>
+    </div>
+    <div id="activities-box">
+      <h2>Other Activities</h2>
+      <ul id="activities-list"></ul>
+    </div>
+  </body>
+</html>
