@@ -79,12 +79,7 @@ module.exports.main = function() {
   // start up the viewsync app
   //
 
-  var viewsyncKeys = [
-    'pov',
-    'pano'
-  ];
-
-  var viewsync = require('./lib/viewsync').relay( io, viewsyncKeys );
+  var viewsync = require('./lib/viewsync').relay( io );
 
   //
   // spacenav/multiaxis device interface
