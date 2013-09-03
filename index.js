@@ -15,13 +15,23 @@
 ** limitations under the License.
 */
 
-var config = require('./lib/config');
-var program = require('commander');
-var path = require('path');
-var stylus = require('stylus');
-
 module.exports.main = function() {
 
+  var program = require('commander');
+  var path = require('path');
+  var stylus = require('stylus');
+
+  //
+  // sort out configuration/settings
+  //
+
+  // serve http from this path
+  var docRoot = path.join(__dirname, 'public');
+
+  // merge config files
+  var config = require('./lib/config');
+
+  // read command line args
   program
     .option( '-p, --port [port]', 'Listen port ['+config.port+']', config.port )
     .option( '-u, --udp [port]', 'UDP port ['+config.udp_port+']', config.udp_port )
@@ -31,9 +41,6 @@ module.exports.main = function() {
   var udpPort = listenPort;
   if( program.udp ) udpPort = Number(program.udp);
 
-  // serve http from this path
-  var docRoot = path.join(__dirname, 'public');
-
   //
   // start up the HTTP server
   //
@@ -41,7 +48,7 @@ module.exports.main = function() {
   var connect = require('connect');
 
   var app = connect()
-      //.use( connect.logger( 'dev' ) )
+      // compile stylesheets on demand
       .use( stylus.middleware({
         src: docRoot,
         dest: docRoot,
@@ -52,8 +59,11 @@ module.exports.main = function() {
           .set('compress', true)
         }
       }))
+      // serve static files
       .use( connect.static( docRoot ) )
+      // serve the global configuration script
       .use( config.middleware )
+      // no url match? send a 404
       .use( function( req, res ) {
         res.statusCode = 404;
         res.end('<h1>404</h1>');
