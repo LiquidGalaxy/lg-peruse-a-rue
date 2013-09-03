@@ -2,16 +2,30 @@ Peruse-a-Rue
 ============
 A Street View implementation for Liquid Galaxy.
 
+### Installing Node.js
+
+The Peruse-a-Rue server requires Node.js and npm.  Instructions for installing
+Node.js on all supported platforms can be found on their website:
+
+    http://nodejs.org/
+
 ### Installing Peruse-a-Rue
 
+Peruse-a-Rue can be installed from git:
+
     $ git clone https://code.google.com/p/liquid-galaxy.lg-peruse-a-rue/
-    $ cd peruse-a-rue
+    $ cd liquid-galaxy.lg-peruse-a-rue
 
 ### Installing Node deps
 
-    $ npm install ### while in the peruse-a-rue git root
+npm can read the dependency list from package.json in the current directory.
+While in the Peruse-a-Rue git root:
+
+    $ npm install
 
 ### Usage
+
+The Peruse-a-Rue server can be started with the launcher script:
 
     $ bin/peruse-a-rue
 
@@ -26,14 +40,8 @@ The default port for this traffic is 8086.  To override it, launch with the
 
 ##### UDP
 
-Peruse-a-Rue also receives UDP datagrams from input device listeners.  These
-datagrams are forwarded Linux input event structures, see:
-
-    http://lxr.free-electrons.com/source/include/linux/input.h?v=3.2#L26
-
-..with an appended device identifier string.
-
-The default port for this traffic is 8086.  To override it, launch with the
+Peruse-a-Rue also receives UDP datagrams from input device listeners.  The
+default port for this traffic is 8086.  To override it, launch with the
 -u/--udp-port option:
 
     $ bin/peruse-a-rue --udp-port 7702
@@ -99,12 +107,12 @@ Examples:
 
 Copyright 2013 Google Inc.
 
-Licensed under the [Apache License, Version 2.0][license] (the "License");
+Licensed under the Apache License, Version 2.0 (the "License"):
+
+    http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
-[license]: <http://www.apache.org/licenses/LICENSE-2.0>

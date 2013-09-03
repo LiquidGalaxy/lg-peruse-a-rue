@@ -15,13 +15,28 @@
 ** limitations under the License.
 */
 
-var config = require('./lib/config');
-var program = require('commander');
-var path = require('path');
-var stylus = require('stylus');
-
 module.exports.main = function() {
 
+  var program = require('commander');
+  var path = require('path');
+  var stylus = require('stylus');
+  var connect = require('connect');
+  var SocketIO = require('socket.io');
+  var BigL = require('./lib/bigl');
+  var ViewSync = require('./lib/viewsync');
+  var MultiAxis = require('./lib/multiaxis');
+
+  //
+  // sort out configuration/settings
+  //
+
+  // serve http from this path
+  var docRoot = path.join(__dirname, 'public');
+
+  // merge config files
+  var config = require('./lib/config');
+
+  // read command line args
   program
     .option( '-p, --port [port]', 'Listen port ['+config.port+']', config.port )
     .option( '-u, --udp [port]', 'UDP port ['+config.udp_port+']', config.udp_port )
@@ -31,17 +46,12 @@ module.exports.main = function() {
   var udpPort = listenPort;
   if( program.udp ) udpPort = Number(program.udp);
 
-  // serve http from this path
-  var docRoot = path.join(__dirname, 'public');
-
   //
   // start up the HTTP server
   //
 
-  var connect = require('connect');
-
   var app = connect()
-      //.use( connect.logger( 'dev' ) )
+      // compile stylesheets on demand
       .use( stylus.middleware({
         src: docRoot,
         dest: docRoot,
@@ -52,8 +62,11 @@ module.exports.main = function() {
           .set('compress', true)
         }
       }))
+      // serve static files
       .use( connect.static( docRoot ) )
+      // serve the global configuration script
       .use( config.middleware )
+      // no url match? send a 404
       .use( function( req, res ) {
         res.statusCode = 404;
         res.end('<h1>404</h1>');
@@ -64,30 +77,28 @@ module.exports.main = function() {
   // begin socket.io
   //
 
-  var io = require('socket.io').listen(app);
+  var io = SocketIO.listen(app);
   io.set( 'log level', 1 );
+  io.enable( 'browser client minification' );
+  io.enable( 'browser client gzip' );
 
   //
   // start up the client exception logger
   //
 
-  var logger = require('./lib/bigl').handler(io);
+  var logger = BigL.handler(io);
 
   //
   // start up the viewsync app
   //
 
-  var viewsyncKeys = [
-    'pov',
-    'pano'
-  ];
-
-  var viewsync = require('./lib/viewsync').relay( io, viewsyncKeys );
+  var viewsync = ViewSync.relay( io );
 
   //
   // spacenav/multiaxis device interface
   //
 
+  var multiaxis = MultiAxis.relay( io, config.udp_port );
   var multiaxis = require('./lib/multiaxis').relay( io, udpPort );
 
 } // exports.main
