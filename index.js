@@ -20,6 +20,11 @@ module.exports.main = function() {
   var program = require('commander');
   var path = require('path');
   var stylus = require('stylus');
+  var connect = require('connect');
+  var SocketIO = require('socket.io');
+  var BigL = require('./lib/bigl');
+  var ViewSync = require('./lib/viewsync');
+  var MultiAxis = require('./lib/multiaxis');
 
   //
   // sort out configuration/settings
@@ -44,8 +49,6 @@ module.exports.main = function() {
   //
   // start up the HTTP server
   //
-
-  var connect = require('connect');
 
   var app = connect()
       // compile stylesheets on demand
@@ -74,7 +77,7 @@ module.exports.main = function() {
   // begin socket.io
   //
 
-  var io = require('socket.io').listen(app);
+  var io = SocketIO.listen(app);
   io.set( 'log level', 1 );
   io.enable( 'browser client minification' );
   io.enable( 'browser client gzip' );
@@ -83,18 +86,19 @@ module.exports.main = function() {
   // start up the client exception logger
   //
 
-  var logger = require('./lib/bigl').handler(io);
+  var logger = BigL.handler(io);
 
   //
   // start up the viewsync app
   //
 
-  var viewsync = require('./lib/viewsync').relay( io );
+  var viewsync = ViewSync.relay( io );
 
   //
   // spacenav/multiaxis device interface
   //
 
+  var multiaxis = MultiAxis.relay( io, config.udp_port );
   var multiaxis = require('./lib/multiaxis').relay( io, udpPort );
 
 } // exports.main
