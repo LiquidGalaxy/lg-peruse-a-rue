@@ -66,6 +66,8 @@ module.exports.main = function() {
 
   var io = require('socket.io').listen(app);
   io.set( 'log level', 1 );
+  io.enable( 'browser client minification' );
+  io.enable( 'browser client gzip' );
 
   //
   // start up the client exception logger
