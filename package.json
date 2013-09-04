@@ -19,6 +19,10 @@
     {
       "name": "David Christensen",
       "email": "david@endpoint.com"
+    },
+    {
+      "name": "Kiel Christofferson",
+      "email": "kiel@endpoint.com"
     }
   ],
   "bin": {
