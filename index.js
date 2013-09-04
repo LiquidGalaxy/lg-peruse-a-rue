@@ -80,7 +80,10 @@ module.exports.main = function() {
   var io = SocketIO.listen(app);
   io.set( 'log level', 1 );
   io.enable( 'browser client minification' );
-  io.enable( 'browser client gzip' );
+
+  // XXX: Socket.IO 0.9 gzip is broken in Windows
+  if (!process.platform.match(/^win/))
+    io.enable( 'browser client gzip' );
 
   //
   // start up the client exception logger
