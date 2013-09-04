@@ -38,7 +38,7 @@ function(config, L, Stapes, io) {
     resize: function(fov) {
       this.yawshift = this.yawoffset * fov.hfov;
       this.pitchshift = this.pitchoffset * fov.vfov;
-      if (this.origin) {
+      if (this.origin !== null) {
         this._applyPov(this._translatePov(this.origin));
       }
     },
@@ -74,19 +74,13 @@ function(config, L, Stapes, io) {
         this.emit('ready');
       }.bind(this));
 
-      if(!this.master) {
-        console.debug('ViewSync: happiness in slavery');
-
-        // events for slaves
-        this.socket.on('sync pov', function(pov) {
-          this._recvPov(pov);
-        }.bind(this));
-      }
-
-      // events for all
       this.socket.on('sync pano', function(pano) {
         console.debug('ViewSync: sync pano', pano);
         this._recvPano(pano);
+      }.bind(this));
+
+      this.socket.on('sync pov', function(pov) {
+        this._recvPov(pov);
       }.bind(this));
 
       this.socket.on('connect_failed', function() {

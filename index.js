@@ -25,6 +25,7 @@ module.exports.main = function() {
   var BigL = require('./lib/bigl');
   var ViewSync = require('./lib/viewsync');
   var MultiAxis = require('./lib/multiaxis');
+  //var geRecv = require('./lib/ge_nl_rec');
 
   //
   // sort out configuration/settings
@@ -66,6 +67,8 @@ module.exports.main = function() {
       .use( connect.static( docRoot ) )
       // serve the global configuration script
       .use( config.middleware )
+      // Google Earth NetworkLink handler
+      //.use( geRecv.handler )
       // no url match? send a 404
       .use( function( req, res ) {
         res.statusCode = 404;
@@ -80,7 +83,10 @@ module.exports.main = function() {
   var io = SocketIO.listen(app);
   io.set( 'log level', 1 );
   io.enable( 'browser client minification' );
-  io.enable( 'browser client gzip' );
+
+  // XXX: Socket.IO 0.9 gzip is broken in Windows
+  if (!process.platform.match(/^win/))
+    io.enable( 'browser client gzip' );
 
   //
   // start up the client exception logger
@@ -92,14 +98,16 @@ module.exports.main = function() {
   // start up the viewsync app
   //
 
-  var viewsync = ViewSync.relay( io );
+  var viewsync = ViewSync.relay( io, config );
+  //geRecv.on('view_changed', function(ge) {
+    //send a pano to viewsync somehow
+  //});
 
   //
   // spacenav/multiaxis device interface
   //
 
   var multiaxis = MultiAxis.relay( io, config.udp_port );
-  var multiaxis = require('./lib/multiaxis').relay( io, udpPort );
 
 } // exports.main
 

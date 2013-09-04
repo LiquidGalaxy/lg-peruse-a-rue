@@ -7,7 +7,7 @@ A Street View implementation for Liquid Galaxy.
 The Peruse-a-Rue server requires Node.js and npm.  Instructions for installing
 Node.js on all supported platforms can be found on their website:
 
-    http://nodejs.org/
+    <http://nodejs.org/>
 
 ### Installing Peruse-a-Rue
 
@@ -109,7 +109,7 @@ Copyright 2013 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"):
 
-    http://www.apache.org/licenses/LICENSE-2.0
+    <http://www.apache.org/licenses/LICENSE-2.0>
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
