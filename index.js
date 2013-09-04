@@ -102,7 +102,6 @@ module.exports.main = function() {
   //
 
   var multiaxis = MultiAxis.relay( io, config.udp_port );
-  var multiaxis = require('./lib/multiaxis').relay( io, udpPort );
 
 } // exports.main
 
