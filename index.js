@@ -95,7 +95,7 @@ module.exports.main = function() {
   // start up the viewsync app
   //
 
-  var viewsync = ViewSync.relay( io );
+  var viewsync = ViewSync.relay( io, config );
 
   //
   // spacenav/multiaxis device interface

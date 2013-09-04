@@ -60,6 +60,7 @@ function(config, L, Stapes, GMaps) {
       this.streetview = null;
       this.meta = null;
       this.pano = pano || config.display.default_pano;
+      this.pov = null;
       this.mode = config.display.mode;
       this.zoom = config.display.zoom;
       this.fov_table = this.SV_HFOV_TABLES[this.mode];
@@ -131,7 +132,10 @@ function(config, L, Stapes, GMaps) {
 
       // *** handle view change events from the streetview object
       GMaps.event.addListener(this.streetview, 'pov_changed', function() {
-        this.emit('pov_changed', this.streetview.getPov());
+        var pov = this.streetview.getPov();
+
+        this._broadcastPov(pov);
+        this.pov = pov;
       }.bind(this));
 
       // *** handle pano change events from the streetview object
@@ -154,16 +158,9 @@ function(config, L, Stapes, GMaps) {
         }
       }.bind(this.$canvas));
 
-      // *** go to a location if specified in url
+      // *** request the last known state from the server
       this.on('ready', function() {
-        if (this.pano && this.master) {
-          L.info('StreetView: loading init pano:', this.pano);
-          this.setPano(this.pano);
-          this._broadcastPano(this.pano);
-        } else {
-          // otherwise, request last known state
-          this.emit('refresh');
-        }
+        this.emit('refresh');
       }.bind(this));
 
       // *** wait for an idle event before reporting module readiness
@@ -228,6 +225,12 @@ function(config, L, Stapes, GMaps) {
       this.vfov = this.hfov * screenratio;
       this.emit('size_changed', {hfov: this.hfov, vfov: this.vfov});
       console.debug('StreetView: resize', this.hfov, this.vfov);
+    },
+
+    // *** _broadcastPov(GMaps.StreetViewPov)
+    // report a pov change to listeners
+    _broadcastPov: function(pov) {
+      this.emit('pov_changed', pov);
     },
 
     // *** _broadcastPano(panoid)
