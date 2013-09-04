@@ -130,23 +130,26 @@ function(config, L, Stapes, GMaps) {
       // *** apply the custom streetview object to the map
       this.map.setStreetView( this.streetview );
 
-      // *** handle view change events from the streetview object
-      GMaps.event.addListener(this.streetview, 'pov_changed', function() {
-        var pov = this.streetview.getPov();
+      // *** events for master only
+      if (this.master) {
+        // *** handle view change events from the streetview object
+        GMaps.event.addListener(this.streetview, 'pov_changed', function() {
+          var pov = this.streetview.getPov();
 
-        this._broadcastPov(pov);
-        this.pov = pov;
-      }.bind(this));
+          this._broadcastPov(pov);
+          this.pov = pov;
+        }.bind(this));
 
-      // *** handle pano change events from the streetview object
-      GMaps.event.addListener(this.streetview, 'pano_changed', function() {
-        var panoid = this.streetview.getPano();
+        // *** handle pano change events from the streetview object
+        GMaps.event.addListener(this.streetview, 'pano_changed', function() {
+          var panoid = this.streetview.getPano();
 
-        if (panoid != this.pano) {
-          this._broadcastPano(panoid);
-          this.pano = panoid;
-        }
-      }.bind(this));
+          if (panoid != this.pano) {
+            this._broadcastPano(panoid);
+            this.pano = panoid;
+          }
+        }.bind(this));
+      }
 
       // *** disable <a> tags at the bottom of the canvas
       GMaps.event.addListenerOnce(this.map, 'idle', function() {
