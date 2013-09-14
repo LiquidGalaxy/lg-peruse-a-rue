@@ -42,7 +42,8 @@
     "connect"   : "2.x.x",
     "socket.io" : "0.9.x",
     "stylus"    : "*",
-    "commander" : "*"
+    "commander" : "*",
+    "extend"    : "1.2.0"
   },
   "analyze": false,
   "license": "Apache 2.0",
