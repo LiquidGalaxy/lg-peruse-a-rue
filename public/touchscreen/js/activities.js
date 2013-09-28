@@ -39,6 +39,11 @@ function(config, L, Stapes, $, doT) {
         return;
       }
 
+      if (activities.length == 0) {
+        console.debug('Activities: empty array');
+        return;
+      }
+
       var activity_div = this.template(activities);
 
       $(activity_div).appendTo('body');
