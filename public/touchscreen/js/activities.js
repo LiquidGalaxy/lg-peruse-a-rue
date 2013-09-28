@@ -34,7 +34,7 @@ function(config, L, Stapes, $, doT) {
         return;
       }
 
-      if (!activities instanceof Array) {
+      if (!(activities instanceof Array)) {
         L.error('Activities: not an array');
         return;
       }
