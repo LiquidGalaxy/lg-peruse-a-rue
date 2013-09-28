@@ -34,62 +34,67 @@ function(config, L, Stapes, io) {
 
       this.socket = io.connect('/multiaxis');
 
-      this.socket.on('connect',function() {
+      this.socket.once('connect',function() {
         console.debug('MultiAxis: connected');
-        this.socket.on('button',function(state) {
-          if (Number(state) > 0)
-            this.moveForward();
-        }.bind(this));
-
-        this.socket.on('state',function(data) {
-          //console.log('multiaxis abs:', data.abs);
-          var yaw = 0;
-          var zoom = 0;
-          var value;
-          var dirty = false;
-          for( var axis in data.abs ) {
-            switch(axis) {
-              case '3':
-                value = data.abs[axis];
-                if( Math.abs( value ) > NAV_GUTTER_VALUE && value < 0 ) {
-                  zoom += value * NAV_SENSITIVITY;
-                  dirty = true;
-                }
-                break;
-              case '5':
-                value = data.abs[axis];
-                if( Math.abs( value ) > NAV_GUTTER_VALUE ) {
-                  yaw = value * NAV_SENSITIVITY;
-                  dirty = true;
-                }
-                break;
-              case '1':
-                value = data.abs[axis];
-                if( Math.abs( value ) > NAV_GUTTER_VALUE && value < 0 ) {
-                  zoom += value * NAV_SENSITIVITY;
-                  dirty = true;
-                }
-                break;
-            }
-          }
-          if (dirty) {
-            this.emit('abs', {yaw: yaw, pitch: 0});
-            if (-zoom >= MOVEMENT_THRESHOLD) {
-              this.addPush()
-            } else {
-              this.subtractPush();
-              this.moving = false;
-            }
-          }
-        }.bind(this));
-
-        console.debug( 'MultiAxis: ready' );
         this.emit( 'ready' );
-      }.bind( this ));
+      }.bind(this));
 
+      this.socket.on('button',function(state) {
+        if (Number(state) > 0)
+          this.moveForward();
+      }.bind(this));
+
+      this.socket.on('state',function(data) {
+        //console.log('multiaxis abs:', data.abs);
+        var yaw = 0;
+        var zoom = 0;
+        var value;
+        var dirty = false;
+        for( var axis in data.abs ) {
+          switch(axis) {
+            case '3':
+              value = data.abs[axis];
+              if( Math.abs( value ) > NAV_GUTTER_VALUE && value < 0 ) {
+                zoom += value * NAV_SENSITIVITY;
+                dirty = true;
+              }
+              break;
+            case '5':
+              value = data.abs[axis];
+              if( Math.abs( value ) > NAV_GUTTER_VALUE ) {
+                yaw = value * NAV_SENSITIVITY;
+                dirty = true;
+              }
+              break;
+            case '1':
+              value = data.abs[axis];
+              if( Math.abs( value ) > NAV_GUTTER_VALUE && value < 0 ) {
+                zoom += value * NAV_SENSITIVITY;
+                dirty = true;
+              }
+              break;
+          }
+        }
+        if (dirty) {
+          this.emit('abs', {yaw: yaw, pitch: 0});
+          if (-zoom >= MOVEMENT_THRESHOLD) {
+            this.addPush()
+          } else {
+            this.subtractPush();
+            this.moving = false;
+          }
+        }
+      }.bind(this));
+
+      this.socket.on('connect_failed',function() {
+        L.error('MultiAxis: connect failed!');
+      });
       this.socket.on('disconnect',function() {
-        console.debug('MultiAxis: disconnected');
-      }.bind( this ));
+        L.error('MultiAxis: disconnected');
+      });
+      this.socket.on('reconnect',function() {
+        console.debug('MultiAxis: reconnected');
+      });
     },
 
     clearPush: function() {

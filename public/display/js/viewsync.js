@@ -69,7 +69,7 @@ function(config, L, Stapes, io) {
 
       this.socket = io.connect('/viewsync');
 
-      this.socket.on('connect', function() {
+      this.socket.once('connect', function() {
         console.debug('ViewSync: ready');
         this.emit('ready');
       }.bind(this));
@@ -86,9 +86,11 @@ function(config, L, Stapes, io) {
       this.socket.on('connect_failed', function() {
         L.error('ViewSync: connect failed!');
       });
-
       this.socket.on('disconnect', function() {
         L.error('ViewSync: disconnected');
+      });
+      this.socket.on('reconnect', function() {
+        console.debug('ViewSync: reconnected');
       });
     },
 
