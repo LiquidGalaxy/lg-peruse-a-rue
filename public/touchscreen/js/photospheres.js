@@ -23,9 +23,13 @@ function(config, L, Stapes, $) {
 
   var PhotoSpheresModule = Stapes.subclass({
     init: function() {
+      if (!config.touchscreen.show_photospheres) {
+        console.debug('Photospheres: disabled by config');
+        return;
+      }
+
       $(document).ready(function() {
         $.getJSON(this._get_content_url(), function(photospheres) {
-          console.log(photospheres);
           $.each(photospheres.result, function(key, val) {
             this._add_photosphere(val);
           }.bind(this));

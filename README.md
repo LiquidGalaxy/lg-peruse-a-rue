@@ -66,6 +66,8 @@ defaults when the server starts.
 
 - `config['touchscreen']['activities']` : list of activities for relaunch
 
+- `config['touchscreen']['show_photospheres']` : photosphere markers
+
 - `config['display']['default_pano']` : panoid to start with
 
 - `config['display']['zoom']` : street view zoom level (Integer 0-4)

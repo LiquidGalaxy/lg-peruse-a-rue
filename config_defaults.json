@@ -7,7 +7,8 @@
     "poi_url": "/touchscreen/poi-defaults.json",
     "activities": [
       { "title": "Google Earth", "app": "earth" }
-    ]
+    ],
+    "show_photospheres": true
   },
   "display": {
     "default_pano": "rERiG4FHdYnqLBqpkVOUdg",
