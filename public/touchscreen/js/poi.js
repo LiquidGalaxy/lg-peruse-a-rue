@@ -77,6 +77,8 @@ function(config, L, Stapes, $, doT) {
       $('.poi-item').each(function(index, item) {
         this.emit('add_location', $(item).attr('panoid'));
       }.bind(this));
+
+      this._activate($('.poi-tab-inactive').first());
     },
 
     _get_content_url: function() {
