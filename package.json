@@ -1,6 +1,6 @@
 {
   "name": "lg-peruse-a-rue",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "author": "End Point Corp <lg@endpoint.com>",
   "description": "A street view implementation for Liquid Galaxy",
   "contributors": [ 
