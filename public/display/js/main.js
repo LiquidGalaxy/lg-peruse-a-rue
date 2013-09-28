@@ -60,8 +60,7 @@ function(
   // *** initialize the StreetView module
   var sv = new StreetViewModule(
     document.getElementById('pano'),
-    LOCAL_CONFIG.master,
-    LOCAL_CONFIG.pano
+    LOCAL_CONFIG.master
   );
 
   // *** initialize the ViewSync module
@@ -90,6 +89,9 @@ function(
   if (fields.master) {
     // *** link StretView state changes to ViewSync
     viewsync.on('ready', function() {
+      if (LOCAL_CONFIG.pano) {
+        viewsync.sendPano(LOCAL_CONFIG.pano);
+      }
       sv.on('pov_changed', function(pov) {
         viewsync.sendPov(pov);
       });
@@ -118,5 +120,4 @@ function(
 
   // *** connect the ViewSync socket
   viewsync.init();
-
 });

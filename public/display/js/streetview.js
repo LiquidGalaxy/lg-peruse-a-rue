@@ -53,13 +53,12 @@ function(config, L, Stapes, GMaps) {
       ]
     },
 
-    constructor: function($canvas, master, pano) {
+    constructor: function($canvas, master) {
       this.$canvas = $canvas;
       this.master = master;
       this.map = null;
       this.streetview = null;
       this.meta = null;
-      this.pano = pano || config.display.default_pano;
       this.pov = null;
       this.mode = config.display.mode;
       this.zoom = config.display.zoom;
