@@ -15,32 +15,60 @@
 */
 
 define(
-['config', 'bigl', 'stapes', 'zepto'],
-function(config, L, Stapes, $) {
+['config', 'bigl', 'stapes', 'zepto', 'doT'],
+function(config, L, Stapes, $, doT) {
 
   var POIModule = Stapes.subclass({
-    constructor: function($box, $categories) {
-      this.$box = $box;
-      this.$categories = $categories;
+    constructor: function($template) {
+      this.template = doT.template($template.innerHTML);
     },
 
     init: function() {
-      this.categories = this._load_poi_from_url();
+      console.debug('POI: init');
 
-      for (var key in this.categories) {
-        this._create_category( this.categories[key] );
+      var content_url = this._get_content_url();
+
+      if (content_url == null) {
+        console.debug('POI: content url is null or undefined');
+        return;
       }
 
-      // activate the first item
-      this._activate( this.categories[Object.keys(this.categories)[0]] );
+      var categories = this._load_poi_from_url(content_url);
+
+      if (categories == null) {
+        console.debug('POI: null or undefined');
+        return;
+      }
+
+      if (!categories instanceof Array) {
+        L.error('POI: not an array');
+        return;
+      }
+
+      if (categories.length == 0) {
+        console.debug('POI: empty array');
+        return;
+      }
+
+      var poi_div = this.template(categories);
+
+      $(poi_div).appendTo('body');
+
+      $('.poi-tab-inactive').on('click', function(e) {
+        this._activate(e.target);
+      }.bind(this));
+
+      $('.poi-item').each(function(index, item) {
+        this.emit('add_location', $(item).attr('panoid'));
+      }.bind(this));
     },
 
     // return content from URL
-    _load_poi_from_url: function() {
+    _load_poi_from_url: function(content_url) {
       var categories = null;
 
       $.ajax({
-          url: this._get_content_url(),
+          url: content_url,
           dataType: 'json',
           async: false,
           success: function(remote_data) { categories = remote_data },
@@ -54,60 +82,33 @@ function(config, L, Stapes, $) {
     },
 
     _get_content_url: function() {
-      return config.touchscreen.poi_url || "/touchscreen/poi-defaults.json";
+      return config.touchscreen.poi_url;
     },
 
     _activate: function(category) {
       this._deactivate_all();
-      category.$tab.className="poi-tab-active";
-      category.$list.className="poi-list-active";
+
+      var $category = $(category);
+      $category.attr('class', 'poi-tab-active');
+
+      var title = $category.html();
+      var $list = $('.poi-list-inactive[category="'+title+'"]');
+      $list.attr('class', 'poi-list-active');
+      $list.children().on('click', function(e) {
+        this._clicked(e.target);
+      }.bind(this));
     },
 
     _deactivate_all: function() {
-      for (var key in this.categories) {
-        var category = this.categories[key];
-        category.$tab.className="poi-tab-inactive";
-        category.$list.className="poi-list-inactive";
-      }
-    },
-
-    _create_category: function(category) {
-      var that = this;
-
-      category.$tab = document.createElement('li');
-      category.$tab.innerHTML = category.title;
-      category.$tab.className="poi-tab-inactive";
-
-      category.$tab.addEventListener("click", function(e) {
-        that._activate(this);
-      }.bind(category), true);
-
-      this.$categories.appendChild( category.$tab );
-
-      category.$div = document.createElement('div');
-      this.$box.appendChild( category.$div );
-
-      category.$list = document.createElement('ul');
-      category.$list.className="poi-list-inactive";
-      category.$div.appendChild( category.$list );
-
-      for (var key in category.objects) {
-        var loc = category.objects[key];
-        var $li = document.createElement('li');
-        $li.innerHTML = loc.title;
-        category.$list.appendChild($li);
-
-        // handle click events on the item
-        $li.addEventListener("click", function(e) {
-          that._clicked(this);
-        }.bind(loc), true);
-
-        this.emit('add_location', loc);
-      }
+      $('.poi-tab-active').attr('class', 'poi-tab-inactive');
+      $('.poi-list-active').attr('class', 'poi-list-inactive');
+      $('.poi-item').off('click');
     },
 
     _clicked: function(loc) {
-      this.emit('select_location', loc);
+      var $loc = $(loc);
+      var panoid = $loc.attr('panoid');
+      this.emit('select_location', panoid);
     }
   });
 

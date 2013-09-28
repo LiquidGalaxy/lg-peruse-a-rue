@@ -54,8 +54,7 @@ function(
   var map = new MapModule(document.getElementById('map_canvas'));
 
   var poi = new POIModule(
-    document.getElementById('poi-box'),
-    document.getElementById('poi-categories')
+    document.getElementById('poi-template')
   );
 
   var photospheres = new PhotoSpheresModule();
@@ -91,12 +90,12 @@ function(
 
   poi.on('add_location', function(loc) {
     // TODO: support for latlng lookup
-    map.add_location_by_id(loc.identifier);
+    map.add_location_by_id(loc);
   });
 
   poi.on('select_location', function(loc) {
     // TODO: support for latlng lookup
-    map.select_pano_by_id(loc.identifier);
+    map.select_pano_by_id(loc);
   });
 
   photospheres.on('add_location', function(panoid) {

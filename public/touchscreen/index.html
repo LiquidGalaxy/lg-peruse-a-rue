@@ -31,10 +31,23 @@
       <div id="zoom-out" class="zoom-control-button">&#8211;</div>
       <div id="zoom-in"  class="zoom-control-button">+</div>
     </div>
+    <script id="poi-template" type="text/template">
     <div id="poi-box">
       <h2>Points of Interest</h2>
-      <ul id="poi-categories"></ul>
+      <ul id="poi-categories">
+      {{~it :category}}
+        <li class="poi-tab-inactive" category="{{=category.title}}">{{=category.title}}</li>
+      {{~}}
+      </ul>
+      {{~it :category}}
+        <ul class="poi-list-inactive" category="{{=category.title}}">
+        {{~category.objects :poi}}
+          <li class="poi-item" panoid="{{=poi.identifier}}">{{=poi.title}}</li>
+        {{~}}
+        </ul>
+      {{~}}
     </div>
+    </script>
     <script id="activities-template" type="text/template">
     <div id="activities-box">
       <h2>Other Activities</h2>
