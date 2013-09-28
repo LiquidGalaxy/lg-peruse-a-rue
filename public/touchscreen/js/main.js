@@ -68,7 +68,7 @@ function(
   );
 
   var activities = new ActivitiesModule(
-    document.getElementById('activities-list')
+    document.getElementById('activities-template')
   );
 
   zoom_ctl.on('zoom_in', function() {
