@@ -33,14 +33,30 @@ function(config, L, Stapes, $, doT) {
         return;
       }
 
-      var categories = this._load_poi_from_url(content_url);
+      this._load_poi_from_url(content_url);
+    },
 
+    // return content from URL
+    _load_poi_from_url: function(content_url) {
+      $.ajax({
+          url: content_url,
+          dataType: 'json',
+          success: function(remote_data) {
+            this._apply_categories(remote_data);
+          }.bind(this),
+          error: function(jqXHR, textStatus, errorThrown) {
+            L.error('load_poi_from_url():', textStatus, ':', errorThrown);
+          }
+      });
+    },
+
+    _apply_categories: function(categories) {
       if (categories == null) {
         console.debug('POI: null or undefined');
         return;
       }
 
-      if (!categories instanceof Array) {
+      if (!(categories instanceof Array)) {
         L.error('POI: not an array');
         return;
       }
@@ -61,24 +77,6 @@ function(config, L, Stapes, $, doT) {
       $('.poi-item').each(function(index, item) {
         this.emit('add_location', $(item).attr('panoid'));
       }.bind(this));
-    },
-
-    // return content from URL
-    _load_poi_from_url: function(content_url) {
-      var categories = null;
-
-      $.ajax({
-          url: content_url,
-          dataType: 'json',
-          async: false,
-          success: function(remote_data) { categories = remote_data },
-          error: function(jqXHR, textStatus, errorThrown) {
-            L.error('load_poi_from_url():', textStatus, ':', errorThrown);
-            this.$box.style.display = 'none';
-          }
-      });
-
-      return categories;
     },
 
     _get_content_url: function() {
