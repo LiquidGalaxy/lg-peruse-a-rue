@@ -55,7 +55,8 @@ function(
     yawoffset   : ('yawoffset' in fields)   ? fields.yawoffset   : 0,
     pitchoffset : ('pitchoffset' in fields) ? fields.pitchoffset : 0,
     rolloffset  : ('rolloffset' in fields)  ? fields.rolloffset  : 0,
-    pano        : ('pano' in fields)        ? fields.pano        : null
+    pano        : ('pano' in fields)        ? fields.pano        : null,
+    heading     : ('heading' in fields)     ? Number(fields.heading)     : null
   };
 
   // *** initialize the StreetView module

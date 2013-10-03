@@ -203,6 +203,17 @@ function(config, L, validate, Stapes, GMaps) {
       this.streetview.setPov(pov);
     },
 
+    // *** setHdg(heading)
+    // set just the heading of the POV, zero the pitch
+    setHdg: function(heading) {
+      if (!validate.number(heading)) {
+        L.error('StreetView: bad heading to setHdg!');
+        return;
+      }
+
+      this.setPov({ heading: heading, pitch: 0 });
+    },
+
     // *** translatePov({yaw, pitch})
     // translate the view by a relative pov
     translatePov: function(abs) {
