@@ -42,7 +42,10 @@
       {{~it :category}}
         <ul class="poi-list-inactive" category="{{=category.title}}">
         {{~category.objects :poi}}
-          <li class="poi-item" panoid="{{=poi.identifier}}">{{=poi.title}}</li>
+          <li class="poi-item"
+              panoid="{{=poi.identifier}}"
+              {{? poi.heading != null }}heading="{{=poi.heading}}"{{?}}
+          >{{=poi.title}}</li>
         {{~}}
         </ul>
       {{~}}

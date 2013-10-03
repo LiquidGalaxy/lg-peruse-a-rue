@@ -21,6 +21,7 @@ function(config, L, Stapes, io) {
   var ViewSyncModule = Stapes.subclass({
     constructor: function() {
       this.socket = null;
+      this.pov = null;
     },
 
     init: function() {
@@ -37,6 +38,10 @@ function(config, L, Stapes, io) {
         this.emit('pano', panoid);
       }.bind(this));
 
+      this.socket.on('sync pov', function(pov) {
+        this.pov = pov;
+      }.bind(this));
+
       this.socket.on('connect_failed', function() {
         L.error('ViewSync: connection failed!');
       });
@@ -51,6 +56,13 @@ function(config, L, Stapes, io) {
     sendPano: function(panoid) {
       this.socket.emit('pano', panoid);
       L.info('ViewSync: sendPano', panoid);
+    },
+
+    sendHdg: function(hdg) {
+      this.socket.emit('pov', {
+        heading: hdg,
+        pitch: this.pov.pitch,
+      });
     },
 
     refresh: function() {

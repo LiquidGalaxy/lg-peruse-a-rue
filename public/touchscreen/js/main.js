@@ -98,6 +98,10 @@ function(
     map.select_pano_by_id(loc);
   });
 
+  poi.on('location_heading', function(hdg) {
+    viewsync.sendHdg(hdg);
+  });
+
   photospheres.on('add_location', function(panoid) {
     map.add_location_by_id(panoid);
   });
