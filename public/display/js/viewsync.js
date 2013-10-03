@@ -15,16 +15,28 @@
 */
 
 define(
-['config', 'bigl', 'stapes', 'socketio'],
-function(config, L, Stapes, io) {
+['config', 'bigl', 'validate', 'stapes', 'socketio'],
+function(config, L, validate, Stapes, io) {
 
   var ViewSyncModule = Stapes.subclass({
 
     constructor: function(opts) {
       this.master      = opts.master;
-      this.fov         = opts.fov;
-      this.yawoffset   = opts.yawoffset;
-      this.pitchoffset = opts.pitchoffset;
+
+      if (validate.number(opts.yawoffset)) {
+        this.yawoffset   = opts.yawoffset;
+      } else {
+        L.error('ViewSync: bad yawoffset to constructor!');
+        this.yawoffset = 0;
+      }
+
+      if (validate.number(opts.pitchoffset)) {
+        this.pitchoffset = opts.pitchoffset;
+      } else {
+        L.error('ViewSync: bad pitchoffset to constructor!');
+        this.pitchoffset = 0;
+      }
+
       this.yawshift    = null;
       this.pitchshift  = null;
       this.origin      = null;
@@ -36,6 +48,11 @@ function(config, L, Stapes, io) {
     // *** resize({hfov, vfov})
     // should be called when the streetview object reports a size change
     resize: function(fov) {
+      if (!validate.fov(fov)) {
+        L.error('ViewSync: bad fov to resize!');
+        return;
+      }
+
       this.yawshift = this.yawoffset * fov.hfov;
       this.pitchshift = this.pitchoffset * fov.vfov;
       if (this.origin !== null) {
@@ -46,12 +63,22 @@ function(config, L, Stapes, io) {
     // *** sendPov(google.maps.StreetViewPov)
     // send a view change to the ViewSync relay
     sendPov: function(pov) {
+      if (!validate.pov(pov)) {
+        L.error('ViewSync: bad pov to sendPov!');
+        return;
+      }
+
       this.socket.emit('pov', pov);
     },
 
     // *** sendPano(panoid)
     // send a pano change to the ViewSync relay
     sendPano: function(panoid) {
+      if (!validate.panoid(panoid)) {
+        L.error('ViewSync: bad panoid to sendPano!');
+        return;
+      }
+
       L.info('ViewSync: sendPano', panoid);
       this.socket.emit('pano', panoid);
     },
@@ -74,12 +101,21 @@ function(config, L, Stapes, io) {
         this.emit('ready');
       }.bind(this));
 
-      this.socket.on('sync pano', function(pano) {
-        console.debug('ViewSync: sync pano', pano);
-        this._recvPano(pano);
+      this.socket.on('sync pano', function(panoid) {
+        if (!validate.panoid(panoid)) {
+          L.error('ViewSync: bad panoid from socket!');
+          return;
+        }
+
+        this._recvPano(panoid);
       }.bind(this));
 
       this.socket.on('sync pov', function(pov) {
+        if (!validate.pov(pov)) {
+          L.error('ViewSync: bad pov from socket!');
+          return;
+        }
+
         this._recvPov(pov);
       }.bind(this));
 

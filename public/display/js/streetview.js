@@ -15,9 +15,8 @@
 */
 
 define(
-['config', 'bigl', 'stapes', 'googlemaps'],
-function(config, L, Stapes, GMaps) {
-
+['config', 'bigl', 'validate', 'stapes', 'googlemaps'],
+function(config, L, validate, Stapes, GMaps) {
   var StreetViewModule = Stapes.subclass({
 
     // street view horizontal field of view per zoom level
@@ -180,6 +179,11 @@ function(config, L, Stapes, GMaps) {
     // *** setPano(panoid)
     // switch to the provided pano, immediately
     setPano: function(panoid) {
+      if (!validate.panoid(panoid)) {
+        L.error('StreetView: bad panoid to setPano!');
+        return;
+      }
+
       if (panoid != this.streetview.getPano()) {
         this.pano = panoid;
         this.streetview.setPano(panoid);
@@ -191,12 +195,22 @@ function(config, L, Stapes, GMaps) {
     // *** setPov(GMaps.StreetViewPov)
     // set the view to the provided pov, immediately
     setPov: function(pov) {
+      if (!validate.number(pov.heading) || !validate.number(pov.pitch)) {
+        L.error('StreetView: bad pov to setPov!');
+        return;
+      }
+
       this.streetview.setPov(pov);
     },
 
     // *** translatePov({yaw, pitch})
     // translate the view by a relative pov
     translatePov: function(abs) {
+      if (!validate.number(abs.yaw) || !validate.number(abs.pitch)) {
+        L.error('StreetView: bad abs to translatePov!');
+        return;
+      }
+
       var pov = this.streetview.getPov();
 
       pov.heading += abs.yaw;

@@ -27,7 +27,8 @@ requirejs.config({
     'zepto': '/js/lib/zepto/zepto.min',
     'doT': '/js/lib/doT/doT.min',
     'socketio': '/socket.io/socket.io',
-    'googlemaps': '/js/googlemaps'
+    'googlemaps': '/js/googlemaps',
+    'validate': '/js/validate'
   },
   shim: {
     'zepto': { exports: 'Zepto' },
@@ -89,7 +90,7 @@ function(
   if (fields.master) {
     // *** link StretView state changes to ViewSync
     viewsync.on('ready', function() {
-      if (LOCAL_CONFIG.pano) {
+      if (LOCAL_CONFIG.pano != null) {
         viewsync.sendPano(LOCAL_CONFIG.pano);
       }
       sv.on('pov_changed', function(pov) {
@@ -104,6 +105,9 @@ function(
     var multiaxis = new MultiAxisModule();
 
     sv.on('ready', function() {
+      if (LOCAL_CONFIG.heading != null) {
+        sv.setHdg(LOCAL_CONFIG.heading);
+      }
       multiaxis.on('abs', function(abs) {
         sv.translatePov(abs);
       });
