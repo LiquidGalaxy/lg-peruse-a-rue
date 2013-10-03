@@ -6,42 +6,76 @@
         "identifier": "CWskcsTEZBNXaD8gG-zATA",
         "lookup": "panoid",
         "slug": "heron-island",
-        "title": "Heron Island"
+        "title": "Heron Island",
+        "heading": 342
       },
       {
         "description": "Great Barrier Reef, Australia",
         "identifier": "TNE1NPAnEUNYhGk9kFWyJw",
         "lookup": "panoid",
         "slug": "wilson-island",
-        "title": "Wilson Island"
+        "title": "Wilson Island",
+        "heading": 283
       },
       {
         "description": "Great Barrier Reef, Australia",
-        "identifier": "8OSpK11Y4NvG0nJCdw-QVg",
+        "identifier": "x6cl4DcO0kwXqU4UKK9DWQ",
         "lookup": "panoid",
         "slug": "lady-elliot-island",
-        "title": "Lady Elliot Island"
+        "title": "Lady Elliot Island",
+        "heading": 160
       },
       {
         "description": "Dauin, Philippines",
-        "identifier": "LlWBCazw4YZXBkEB7WXVqw",
+        "identifier": "MR7U6ji0NDZ1j5feP2Dcdg",
         "lookup": "panoid",
         "slug": "apo-islands",
-        "title": "Apo Islands"
+        "title": "Apo Islands",
+        "heading": 225
       },
       {
         "description": "Hawaii, United States",
         "identifier": "_HKq3kJG3NNXV9ElI9J8Wg",
         "lookup": "panoid",
         "slug": "hanauma-bay",
-        "title": "Hanauma Bay"
+        "title": "Hanauma Bay",
+        "heading": 220
       },
       {
         "description": "Hawaii, United States",
-        "identifier": "FUMjYMh38n_EitPWdt70RA",
+        "identifier": "GQ4AkG9eGKzbhzDGtyvi1A",
         "lookup": "panoid",
         "slug": "molokini-crater",
-        "title": "Molokini Crater"
+        "title": "Molokini Crater",
+        "heading": 30
+      },
+      {
+        "identifier": "evECSTueMhYAAAQIt--IIg",
+        "lookup": "panoid",
+        "slug": "galapagos-sea-lions",
+        "title": "Galapagos: Playful Sea Lions",
+        "heading": 345
+      },
+      {
+        "identifier": "AIS1dRsr80EAAAQIt-rwkw",
+        "lookup": "panoid",
+        "slug": "galapagos-diving-at-champion",
+        "title": "Galapagos: Diving at Champion",
+        "heading": 205
+      },
+      {
+        "identifier": "v05O4YzTx6N3u5_ZP4zfTw",
+        "lookup": "panoid",
+        "slug": "galapagos-mangrove-habitat",
+        "title": "Galapagos: Mangrove Habitat",
+        "heading": 185
+      },
+      {
+        "identifier": "D_QiN99oipvKGnFyhidcRg",
+        "lookup": "panoid",
+        "slug": "galapagos-san-cristobal-island",
+        "title": "Galapagos: San Cristóbal Island",
+        "heading": 265
       }
     ],
     "description": "Underwater panoramas of coral reefs provided by Catlin Seaview Survey.",
@@ -50,40 +84,60 @@
   {
     "objects": [
       {
-        "identifier": "EK_6kUhrzXpw8B3kAHIUmw",
+        "identifier": "UeCMBsfBTX2Zn616cSjz0Q",
         "lookup": "panoid",
         "slug": "amazon-rainforest",
-        "title": "Amazon Rainforest"
+        "title": "Amazon Rainforest",
+        "heading": 117
       },
       {
-        "identifier": "HgDl05uSWkaMp9pPsHA1RQ",
+        "identifier": "bBFBtYA_XV4CcUgDhPMTOA",
         "lookup": "panoid",
         "slug": "mayan-ruins",
-        "title": "Mayan Ruins"
+        "title": "Mayan Ruins",
+        "heading": 18
       },
       {
-        "identifier": "Fa-wHCWazJG6bn7ZjISQCA",
+        "identifier": "iGjThi1QBZJArzMcX1xxMg",
         "lookup": "panoid",
         "slug": "grand-canyon",
-        "title": "Grand Canyon"
+        "title": "Grand Canyon",
+        "heading": 67
       },
       {
-        "identifier": "1QrhtxzQDTChV6nJievKSQ",
+        "identifier": "CDoCOKMLIOdaWqdeZe-YEg",
         "lookup": "panoid",
         "slug": "stonehenge",
-        "title": "Stonehenge"
+        "title": "Stonehenge",
+        "heading": 47
       },
       {
-        "identifier": "yUjSt5wVLucSEgIR5PHRuQ",
+        "identifier": "XcrqqDmFvmjz305qV2SRgA",
         "lookup": "panoid",
         "slug": "versailles",
-        "title": "Versailles"
+        "title": "Versailles",
+        "heading": 123
       },
       {
         "identifier": "VDBXyJ1gOnKsxaoiRtSfjg",
         "lookup": "panoid",
         "slug": "pompeii",
-        "title": "Pompeii"
+        "title": "Pompeii",
+        "heading": 327
+      },
+      {
+        "identifier": "g5YvV4GFwFyYSIuMy5E0VQ",
+        "lookup": "panoid",
+        "slug": "mount-fuji",
+        "title": "Mount Fuji",
+        "heading": 270
+      },
+      {
+        "identifier": "XPAF13EigYrQhZe6NsQ7TA",
+        "lookup": "panoid",
+        "slug": "half-moon-island",
+        "title": "Half Moon Island",
+        "heading": 75
       }
     ],
     "title": "Earth"
@@ -91,64 +145,74 @@
   {
     "objects": [
       {
-        "identifier": "Lzy3sMvFhrhmvzu8QirwLA",
+        "identifier": "3_bYfC_dAE0Unh_ysYMEoA",
         "lookup": "panoid",
         "slug": "adachi-museum-art",
-        "title": "Adachi Museum of Art"
+        "title": "Adachi Museum of Art",
+        "heading": 115
       },
       {
-        "identifier": "asOQU0roVfhaN_TbFFYK_g",
+        "identifier": "WlAty8ELmF7C6s5wGw1WQA",
         "lookup": "panoid",
         "slug": "art-gallery-new-south-wales",
-        "title": "Art Gallery of New South Wales"
+        "title": "Art Gallery of New South Wales",
+        "heading": 192
       },
       {
         "identifier": "FsSQSl8hX2jWawMfuE8K1w",
         "lookup": "panoid",
         "slug": "ateneum-art-museum",
-        "title": "Ateneum Art Museum"
+        "title": "Ateneum Art Museum",
+        "heading": 277
       },
       {
-        "identifier": "cX5q7kTDQOKkpDkmKfUfBQ",
+        "identifier": "G92BZF4Sjg9-6uvVROk0rQ",
         "lookup": "panoid",
         "slug": "chateau-de-fontainebleau",
-        "title": "Ch\u00e2teau de Fontainebleau"
+        "title": "Ch\u00e2teau de Fontainebleau",
+        "heading": 177
       },
       {
         "identifier": "bw9RhAzNyFuE8ALzgIHK3A",
         "lookup": "panoid",
         "slug": "monastery-st-john-theologian",
-        "title": "Monastery of St. John the Theologian"
+        "title": "Monastery of St. John the Theologian",
+        "heading": 112
       },
       {
         "identifier": "of3znKyi1Dfd2qtRWMbHaQ",
         "lookup": "panoid",
         "slug": "musee-dorsay",
-        "title": "Musee d'Orsay"
+        "title": "Musee d'Orsay",
+        "heading": 207
       },
       {
         "identifier": "NTLCqsIo6Vkyq--jBjBKpA",
         "lookup": "panoid",
         "slug": "musee-dart-moderne-andre-malraux",
-        "title": "Musee d'art moderne Andr\u00e9 Malraux"
+        "title": "Musee d'art moderne Andr\u00e9 Malraux",
+        "heading": 0
       },
       {
-        "identifier": "mDJDCo4iWSZHD9NC1ymvdw",
+        "identifier": "a-nx4mfm1fsSZ6aHmTcdHQ",
         "lookup": "panoid",
         "slug": "national-museum-denmark",
-        "title": "National Museum of Denmark"
+        "title": "National Museum of Denmark",
+        "heading": 232
       },
       {
         "identifier": "GiXlbyE_W0XZEK7lOdvq8w",
         "lookup": "panoid",
         "slug": "nationalmuseum-sweden",
-        "title": "Nationalmuseum Sweden"
+        "title": "Nationalmuseum Sweden",
+        "heading": 0
       },
       {
-        "identifier": "FZi7S_975gyT3AGiZRruew",
+        "identifier": "39oOC_e2Oryqu6gMWimD0w",
         "lookup": "panoid",
         "slug": "state-tretyakov-gallery",
-        "title": "The State Tretyakov Gallery"
+        "title": "The State Tretyakov Gallery",
+        "heading": 308
       }
     ],
     "description": "Art museums captured by Google Art Project.",
