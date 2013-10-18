@@ -51,6 +51,8 @@ function(
   ActivitiesModule
 ) {
 
+  document.body.style['font-size'] = config.touchscreen.font_scale + 'em';
+
   var map = new MapModule(document.getElementById('map_canvas'));
 
   var poi = new POIModule(

@@ -9,7 +9,8 @@
       { "title": "Google Earth", "app": "earth" }
     ],
     "show_photospheres": true,
-    "show_zoomctl": true
+    "show_zoomctl": true,
+    "font_scale": 1.0
   },
   "display": {
     "default_pano": "rERiG4FHdYnqLBqpkVOUdg",

@@ -70,6 +70,8 @@ defaults when the server starts.
 
 - `config['touchscreen']['show_zoomctl']` : zoom buttons
 
+- `config['touchscreen']['font_scale']` : scale fonts by this ratio
+
 - `config['display']['default_pano']` : panoid to start with
 
 - `config['display']['zoom']` : street view zoom level (Integer 0-4)
