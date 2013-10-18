@@ -46,7 +46,7 @@ function(config, L, Stapes, $, doT) {
 
       var activity_div = this.template(activities);
 
-      $(activity_div).appendTo('body');
+      $(activity_div).appendTo('#left-ui');
 
       $('.activities-item').on('click', function(e) {
         this._clicked(e.target);

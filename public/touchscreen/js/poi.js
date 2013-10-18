@@ -68,7 +68,7 @@ function(config, L, Stapes, $, doT) {
 
       var poi_div = this.template(categories);
 
-      $(poi_div).appendTo('body');
+      $('#left-ui').prepend(poi_div);
 
       $('.poi-tab-inactive').on('click', function(e) {
         this._activate(e.target);
