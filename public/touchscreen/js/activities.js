@@ -15,8 +15,8 @@
 */
 
 define(
-['config', 'bigl', 'stapes', 'jquery', 'doT'],
-function(config, L, Stapes, $, doT) {
+['config', 'bigl', 'stapes', 'jquery', 'leftui', 'doT'],
+function(config, L, Stapes, $, leftUI, doT) {
 
   var ActivitiesModule = Stapes.subclass({
     constructor: function($template) {
@@ -46,7 +46,7 @@ function(config, L, Stapes, $, doT) {
 
       var activity_div = this.template(activities);
 
-      $(activity_div).appendTo('#left-ui');
+      leftUI.append(activity_div);
 
       $('.activities-item').on('click', function(e) {
         this._clicked(e.target);

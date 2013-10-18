@@ -15,8 +15,8 @@
 */
 
 define(
-['config', 'bigl', 'stapes', 'jquery', 'doT'],
-function(config, L, Stapes, $, doT) {
+['config', 'bigl', 'stapes', 'jquery', 'leftui', 'doT'],
+function(config, L, Stapes, $, leftUI, doT) {
 
   var POIModule = Stapes.subclass({
     constructor: function($template) {
@@ -68,7 +68,7 @@ function(config, L, Stapes, $, doT) {
 
       var poi_div = this.template(categories);
 
-      $('#left-ui').prepend(poi_div);
+      leftUI.prepend(poi_div);
 
       $('.poi-tab-inactive').on('click', function(e) {
         this._activate(e.target);

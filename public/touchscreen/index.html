@@ -34,6 +34,7 @@
     <script id="poi-template" type="text/template">
     <div id="poi-box">
       <h2>Points of Interest</h2>
+      <div>
       <ul id="poi-categories">
       {{~it :category}}
         <li class="poi-tab-inactive" category="{{=category.title}}">{{=category.title}}</li>
@@ -49,6 +50,7 @@
         {{~}}
         </ul>
       {{~}}
+      </div>
     </div>
     </script>
 

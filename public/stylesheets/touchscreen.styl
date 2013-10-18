@@ -31,6 +31,9 @@ body
   background-color: black
   font-family: arial, sans-serif
 
+a
+  color: white
+
 #map_canvas
   height: 100%
   width: 100%
@@ -42,6 +45,7 @@ body
   width: 384px
   margin-left: 8px
   margin-bottom: 40px
+  overflow: hidden
 
 h2
   margin: 4px
@@ -79,11 +83,13 @@ hidden()
   no-select()
 
 #activities-box
-  display: inline-block
-  margin-top: 40px
+  display: block
+  margin-top: 20px
+  padding: 0
   box()
 
 #activities-list
+  text-align: center
   list()
 
 #activities-list>li
@@ -93,11 +99,13 @@ hidden()
   item()
 
 #poi-box
-  display: inline-block
-  margin-top: 40px
+  display: block
+  margin-top: 20px
+  padding: 0
   box()
 
 .poi-list-active
+  text-align: center
   list()
 
 .poi-list-active>li

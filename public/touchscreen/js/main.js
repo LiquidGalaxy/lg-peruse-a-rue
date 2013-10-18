@@ -26,6 +26,7 @@ requirejs.config({
     'stapes': '/js/lib/stapes/stapes.min',
     'jquery': '/js/lib/jquery/jquery-2.0.3.min',
     'jquery-private': '/js/jquery-private',
+    'jquery-collapse': '/js/lib/jquery/jquery.collapse',
     'doT': '/js/lib/doT/doT.min',
     'socketio': '/socket.io/socket.io',
     'googlemaps': '/js/googlemaps'
