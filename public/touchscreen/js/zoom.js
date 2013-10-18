@@ -15,21 +15,34 @@
 */
 
 define(
-['config', 'bigl', 'stapes'],
-function(config, L, Stapes) {
+['config', 'bigl', 'stapes', 'zepto'],
+function(config, L, Stapes, $) {
 
   var ZoomModule = Stapes.subclass({
-    constructor: function($zoom_in, $zoom_out) {
-      this.$zoom_in = $zoom_in;
-      this.$zoom_out = $zoom_out;
+    constructor: function() {
+      this.$zoom_box = $('<div></div>')
+                       .attr('id', 'zoom-control-box');
 
-      this.$zoom_in.onclick = function() {
+      this.$zoom_in = $('<div></div>')
+                      .attr('id', 'zoom-in')
+                      .addClass('zoom-control-button')
+                      .html('+');
+
+      this.$zoom_out = $('<div></div>')
+                       .attr('id', 'zoom-out')
+                       .addClass('zoom-control-button')
+                       .html('&#8211;');
+
+      this.$zoom_box.append(this.$zoom_out).append(this.$zoom_in);
+      $('body').append(this.$zoom_box);
+
+      this.$zoom_in.click(function() {
         this.emit('zoom_in');
-      }.bind(this);
+      }.bind(this));
 
-      this.$zoom_out.onclick = function() {
+      this.$zoom_out.click(function() {
         this.emit('zoom_out');
-      }.bind(this);
+      }.bind(this));
     }
   });
 

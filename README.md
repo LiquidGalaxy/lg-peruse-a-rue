@@ -68,6 +68,8 @@ defaults when the server starts.
 
 - `config['touchscreen']['show_photospheres']` : photosphere markers
 
+- `config['touchscreen']['show_zoomctl']` : zoom buttons
+
 - `config['display']['default_pano']` : panoid to start with
 
 - `config['display']['zoom']` : street view zoom level (Integer 0-4)

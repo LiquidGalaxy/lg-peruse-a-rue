@@ -61,22 +61,21 @@ function(
 
   var viewsync = new ViewSyncModule();
 
-  var zoom_ctl = new ZoomModule(
-    document.getElementById('zoom-in'),
-    document.getElementById('zoom-out')
-  );
-
   var activities = new ActivitiesModule(
     document.getElementById('activities-template')
   );
 
-  zoom_ctl.on('zoom_in', function() {
-    map.zoom_in();
-  });
+  if (config.touchscreen.show_zoomctl) {
+    var zoom_ctl = new ZoomModule();
 
-  zoom_ctl.on('zoom_out', function() {
-    map.zoom_out();
-  });
+    zoom_ctl.on('zoom_in', function() {
+      map.zoom_in();
+    });
+
+    zoom_ctl.on('zoom_out', function() {
+      map.zoom_out();
+    });
+  }
 
   viewsync.on('ready', function() {
     map.on('pano', function(panoid) {
