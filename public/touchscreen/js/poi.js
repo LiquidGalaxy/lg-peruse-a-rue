@@ -15,7 +15,7 @@
 */
 
 define(
-['config', 'bigl', 'stapes', 'zepto', 'doT'],
+['config', 'bigl', 'stapes', 'jquery', 'doT'],
 function(config, L, Stapes, $, doT) {
 
   var POIModule = Stapes.subclass({

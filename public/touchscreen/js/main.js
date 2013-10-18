@@ -24,19 +24,23 @@ requirejs.config({
     'bigl': '/js/bigl',
     'fields': '/js/fields',
     'stapes': '/js/lib/stapes/stapes.min',
-    'zepto': '/js/lib/zepto/zepto.min',
+    'jquery': '/js/lib/jquery/jquery-2.0.3.min',
+    'jquery-private': '/js/jquery-private',
     'doT': '/js/lib/doT/doT.min',
     'socketio': '/socket.io/socket.io',
     'googlemaps': '/js/googlemaps'
   },
   shim: {
-    'zepto': { exports: 'Zepto' },
     'config': { exports: 'config' },
     'googlemaps': {
       deps: [
         'async!http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false!callback'
       ]
     }
+  },
+  map: {
+    '*': { 'jquery': 'jquery-private' },
+    'jquery-private': { 'jquery': 'jquery' }
   }
 });
 

@@ -15,7 +15,7 @@
 */
 
 define(
-['config', 'bigl', 'stapes', 'zepto'],
+['config', 'bigl', 'stapes', 'jquery'],
 function(config, L, Stapes, $) {
 
   // static url for photosphere content, for now

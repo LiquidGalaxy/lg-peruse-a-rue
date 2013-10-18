@@ -24,14 +24,13 @@ requirejs.config({
     'bigl': '/js/bigl',
     'fields': '/js/fields',
     'stapes': '/js/lib/stapes/stapes.min',
-    'zepto': '/js/lib/zepto/zepto.min',
+    'jquery': '/js/lib/jquery/jquery-2.0.3.min',
     'doT': '/js/lib/doT/doT.min',
     'socketio': '/socket.io/socket.io',
     'googlemaps': '/js/googlemaps',
     'validate': '/js/validate'
   },
   shim: {
-    'zepto': { exports: 'Zepto' },
     'config': { exports: 'config' },
     'googlemaps': {
       deps: [
