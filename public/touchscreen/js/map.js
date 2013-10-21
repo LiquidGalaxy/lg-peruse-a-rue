@@ -46,7 +46,11 @@ function(config, L, Stapes, PeruseMapStyles, GMaps, sv_svc) {
         center: this.default_center,
         zoom: 14,
         disableDefaultUI: true,
-        mapTypeId: GMaps.MapTypeId.HYBRID
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+          mapTypeIds: [ GMaps.MapTypeId.ROADMAP, GMaps.MapTypeId.HYBRID ]
+        },
+        mapTypeId: GMaps.MapTypeId.ROADMAP
       };
 
       this.map = new GMaps.Map(

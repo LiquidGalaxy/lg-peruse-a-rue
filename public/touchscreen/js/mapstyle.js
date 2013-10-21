@@ -31,25 +31,10 @@ define(['config'], function(config) {
       ]
     },
     {
-      featureType: "landscape",
-      elementType: "all",
-      stylers: [
-        { visibility: "off" }
-      ]
-    },
-    {
       featureType: "transit",
       elementType: "all",
       stylers: [
         { visibility: "off" }
-      ]
-    },
-    {
-      featureType: "road",
-      elementType: "geometry.stroke",
-      stylers: [
-        { color: "#0080ff" },
-        { weight: 1.2 }
       ]
     },
   ];
