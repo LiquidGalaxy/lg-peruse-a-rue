@@ -15,12 +15,13 @@
 */
 
 define(
-['config', 'bigl', 'stapes', 'mapstyle', 'googlemaps'],
-function(config, L, Stapes, PeruseMapStyles, GMaps) {
+['config', 'bigl', 'stapes', 'mapstyle', 'googlemaps', 'sv_svc'],
+function(config, L, Stapes, PeruseMapStyles, GMaps, sv_svc) {
+
+
+  var SEARCH_FAIL_BALLOON_TIME = 1100;
 
   var MapModule = Stapes.subclass({
-    click_search_radius: 250,
-
     constructor: function($canvas) {
       this.$canvas = $canvas;
       this.map = null;
@@ -32,7 +33,6 @@ function(config, L, Stapes, PeruseMapStyles, GMaps) {
 
       if (typeof GMaps === 'undefined') L.error('Maps API not loaded!');
 
-      this.sv_svc = new GMaps.StreetViewService();
       this.default_center = new GMaps.LatLng(
         config.touchscreen.default_center[0],
         config.touchscreen.default_center[1]
@@ -74,12 +74,39 @@ function(config, L, Stapes, PeruseMapStyles, GMaps) {
         clickable: false
       });
 
+      // initialize the balloon indicating a pano could not be found
+      this.search_fail_balloon = new GMaps.InfoWindow({
+        content: '<img src="icons/sv_fail.png" height="40" width="40" />',
+        disableAutoPan: true
+      });
+      this.balloon_close_timeout = null;
+
       // allow user to click on a street to load it in street view
       GMaps.event.addListener(this.map, 'click', function(event) {
-        this.sv_svc.getPanoramaByLocation(
+        // determine min/max search radius based on zoom level
+        var min_search_radius;
+        var max_search_radius;
+
+        var current_zoom = this.map.getZoom();
+
+        if (current_zoom <= 10) {
+          min_search_radius = 400;
+          max_search_radius = 1600;
+        } else if (current_zoom <= 12) {
+          min_search_radius = 100;
+          max_search_radius = 400;
+        } else if (current_zoom <= 14) {
+          min_search_radius = 50;
+          max_search_radius = 200;
+        } else {
+          min_search_radius = 50;
+          max_search_radius = 50;
+        }
+
+        sv_svc.getPanoramaByLocation(
           event.latLng,
-          this.click_search_radius,
-          function(data, stat) {
+          min_search_radius,
+          function(data, stat, search_latlng) {
             if(stat == GMaps.StreetViewStatus.OK) {
               var latlng = data.location.latLng;
               var panoid = data.location.pano;
@@ -87,10 +114,13 @@ function(config, L, Stapes, PeruseMapStyles, GMaps) {
               this._broadcast_pano(panoid);
               this._pan_map(latlng);
               this._move_sv_marker(latlng);
+              this._close_search_fail_balloon();
             } else {
               console.debug('Map: could not find pano');
+              this._open_search_fail_balloon(search_latlng);
             }
-          }.bind(this)
+          }.bind(this),
+          max_search_radius
         );
       }.bind(this));
 
@@ -107,6 +137,21 @@ function(config, L, Stapes, PeruseMapStyles, GMaps) {
 
     zoom_out: function() {
       this.map.setZoom(this.map.getZoom() - 1);
+    },
+
+    _open_search_fail_balloon: function(latlng) {
+      this._close_search_fail_balloon();
+      this.search_fail_balloon.setPosition(latlng);
+      this.search_fail_balloon.open(this.map);
+      this.balloon_close_timeout = setTimeout(
+        this._close_search_fail_balloon.bind(this),
+        SEARCH_FAIL_BALLOON_TIME
+      );
+    },
+
+    _close_search_fail_balloon: function() {
+      clearTimeout(this.balloon_close_timeout);
+      this.search_fail_balloon.close();
     },
 
     _pan_map: function(latlng) {
@@ -143,7 +188,7 @@ function(config, L, Stapes, PeruseMapStyles, GMaps) {
     // interface (poi).  it should pan the map, move the marker, and broadcast
     // the location to displays.
     select_pano_by_id: function(panoid) {
-      this.sv_svc.getPanoramaById(
+      sv_svc.getPanoramaById(
         panoid,
         this._select_pano_cb.bind(this)
       );
@@ -164,7 +209,7 @@ function(config, L, Stapes, PeruseMapStyles, GMaps) {
     // update is called when the streetview location is changed by display
     // clients.  it should pan the map and move the marker to the new location.
     update_pano_by_id: function(panoid) {
-      this.sv_svc.getPanoramaById(
+      sv_svc.getPanoramaById(
         panoid,
         this._update_pano_cb.bind(this)
       );
@@ -202,7 +247,7 @@ function(config, L, Stapes, PeruseMapStyles, GMaps) {
     },
 
     add_location_by_id: function(panoid) {
-      this.sv_svc.getPanoramaById(
+      sv_svc.getPanoramaById(
         panoid,
         this._location_cb.bind(this)
       );

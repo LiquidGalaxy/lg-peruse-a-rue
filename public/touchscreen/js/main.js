@@ -29,7 +29,8 @@ requirejs.config({
     'jquery-collapse': '/js/lib/jquery/jquery.collapse',
     'doT': '/js/lib/doT/doT.min',
     'socketio': '/socket.io/socket.io',
-    'googlemaps': '/js/googlemaps'
+    'googlemaps': '/js/googlemaps',
+    'sv_svc': '/js/sv_svc'
   },
   shim: {
     'config': { exports: 'config' },
