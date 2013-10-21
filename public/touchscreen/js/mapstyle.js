@@ -31,6 +31,20 @@ define(['config'], function(config) {
       ]
     },
     {
+      featureType: "administrative.province",
+      elementType: "all",
+      stylers: [
+        { visibility: "on" }
+      ]
+    },
+    {
+      featureType: "administrative.country",
+      elementType: "all",
+      stylers: [
+        { visibility: "on" }
+      ]
+    },
+    {
       featureType: "transit",
       elementType: "all",
       stylers: [
