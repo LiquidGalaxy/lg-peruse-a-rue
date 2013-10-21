@@ -14,6 +14,14 @@
 ** limitations under the License.
 */
 
+@import "peruse.styl"
+
+peruse_primary = #DE8427
+peruse_light = white
+peruse_dark = black
+peruse_gray = #434343
+peruse_box_bg = rgba(0, 0, 0, 0.5)
+
 no-select()
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -28,11 +36,11 @@ body
   height: 100%
   margin: 0
   padding: 0
-  background-color: black
+  background-color: peruse_light
   font-family: arial, sans-serif
 
 a
-  color: white
+  color: peruse_light
 
 #map_canvas
   height: 100%
@@ -52,13 +60,13 @@ h2
   padding: 0px
   text-align: center
   font-size: 110%
-  color: white
+  color: peruse_light
   no-select()
 
 box()
-  background-color: rgba(0,0,0,0.4)
+  background-color: peruse_box_bg
   -webkit-border-radius: 5px
-  color: white
+  color: peruse_light
   no-select()
 
 item()
@@ -93,9 +101,9 @@ hidden()
   list()
 
 #activities-list>li
-  background-color: white
-  border: 1px solid silver
-  color: black
+  background-color: peruse_light
+  border: 1px solid peruse_gray
+  color: peruse_dark
   item()
 
 #poi-box
@@ -109,9 +117,9 @@ hidden()
   list()
 
 .poi-list-active>li
-  background-color: white
-  border: 1px solid silver
-  color: black
+  background-color: peruse_light
+  border: 1px solid peruse_gray
+  color: peruse_dark
   item()
 
 .poi-list-inactive
@@ -124,22 +132,22 @@ hidden()
   list()
 
 #poi-categories>li
-  background-color: black
-  border: none
-  color: white
+  background-color: peruse_dark
+  border: 1px solid peruse_gray
+  color: peruse_light
   font-weight: bold
   item()
 
 #poi-categories>li a
-  color: white
+  color: peruse_light
   font-weight: bold
   text-decoration: none
 
 #poi-categories>li.poi-tab-active
-  background-color: green
+  background-color: peruse_primary
 
 #poi-categories>li.poi-tab-inactive
-  background-color: black
+  background-color: peruse_dark
 
 #zoom-control-box
   position: absolute
@@ -157,9 +165,9 @@ hidden()
   width: 50px
   height: 50px
   margin: 10px
-  background-color: white
-  color: black
-  border: 1px solid silver
+  background-color: peruse_light
+  color: peruse_dark
+  border: 1px solid peruse_gray
   text-align: center
   vertical-align: middle
   cursor: default
