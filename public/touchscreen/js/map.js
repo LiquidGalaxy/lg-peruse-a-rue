@@ -18,7 +18,7 @@ define(
 ['config', 'bigl', 'stapes', 'mapstyle', 'googlemaps', 'sv_svc'],
 function(config, L, Stapes, PeruseMapStyles, GMaps, sv_svc) {
 
-
+  var MIN_COVERAGE_ZOOM_LEVEL = 14;
   var SEARCH_FAIL_BALLOON_TIME = 1100;
 
   var MapModule = Stapes.subclass({
@@ -60,6 +60,9 @@ function(config, L, Stapes, PeruseMapStyles, GMaps, sv_svc) {
 
       this.map.setOptions({styles: PeruseMapStyles});
 
+      // instantiate street view coverage layer
+      this.sv_coverage_layer = new GMaps.StreetViewCoverageLayer();
+
       // disable all <a> tags on the map canvas
       GMaps.event.addListenerOnce(this.map, 'idle', function() {
         var links = this.getElementsByTagName("a");
@@ -84,6 +87,14 @@ function(config, L, Stapes, PeruseMapStyles, GMaps, sv_svc) {
         disableAutoPan: true
       });
       this.balloon_close_timeout = null;
+
+      // enable/disable map coverage layer based on zoom level
+      GMaps.event.addListener(this.map, 'zoom_changed', function(event) {
+        if (this.map.getZoom() >= MIN_COVERAGE_ZOOM_LEVEL)
+          this._show_coverage_layer();
+        else
+          this._hide_coverage_layer();
+      }.bind(this));
 
       // allow user to click on a street to load it in street view
       GMaps.event.addListener(this.map, 'click', function(event) {
@@ -130,6 +141,9 @@ function(config, L, Stapes, PeruseMapStyles, GMaps, sv_svc) {
 
       // signal that the map is ready
       GMaps.event.addListenerOnce(this.map, 'idle', function() {
+        // trigger a zoom change
+        GMaps.event.trigger(this.map, 'zoom_changed');
+
         console.debug('Map: ready');
         this.emit('ready');
       }.bind(this));
@@ -156,6 +170,14 @@ function(config, L, Stapes, PeruseMapStyles, GMaps, sv_svc) {
     _close_search_fail_balloon: function() {
       clearTimeout(this.balloon_close_timeout);
       this.search_fail_balloon.close();
+    },
+
+    _show_coverage_layer: function() {
+      this.sv_coverage_layer.setMap(this.map);
+    },
+
+    _hide_coverage_layer: function() {
+      this.sv_coverage_layer.setMap(null);
     },
 
     _pan_map: function(latlng) {
