@@ -15,17 +15,21 @@
 */
 
 define(
-['config', 'bigl', 'stapes', 'mapstyle', 'googlemaps', 'sv_svc'],
-function(config, L, Stapes, PeruseMapStyles, GMaps, sv_svc) {
-
-  var MIN_COVERAGE_ZOOM_LEVEL = 14;
-  var SEARCH_FAIL_BALLOON_TIME = 1100;
+[
+  'config', 'bigl', 'stapes', 'mapstyle', 'googlemaps', 'sv_svc',
+  // map submodules
+  'map/coverage', 'map/svmarker', 'map/clicksearch', 'map/poimarkers'
+],
+function(
+  config, L, Stapes, PeruseMapStyles, GMaps, sv_svc,
+  // map submodules
+  SVCoverageModule, SVMarkerModule, ClickSearchModule, POIMarkerModule
+) {
 
   var MapModule = Stapes.subclass({
     constructor: function($canvas) {
       this.$canvas = $canvas;
       this.map = null;
-      this.sv_marker = null;
     },
 
     init: function() {
@@ -60,8 +64,31 @@ function(config, L, Stapes, PeruseMapStyles, GMaps, sv_svc) {
 
       this.map.setOptions({styles: PeruseMapStyles});
 
-      // instantiate street view coverage layer
-      this.sv_coverage_layer = new GMaps.StreetViewCoverageLayer();
+      // instantiate map modules
+      this.sv_coverage = new SVCoverageModule(this.map);
+      this.sv_marker = new SVMarkerModule(this.map);
+      this.poi_markers = new POIMarkerModule(this.map);
+      this.click_search = new ClickSearchModule(this.map);
+
+      // handler for marker clicks
+      this.poi_markers.on('marker_selected', function(panodata) {
+        var latlng = panodata.location.latLng;
+        var panoid = panodata.location.pano;
+
+        this._broadcast_pano(panoid);
+        this._pan_map(latlng);
+        this.sv_marker.hide();
+      }.bind(this));
+
+      // handler for click search result
+      this.click_search.on('search_result', function(panodata) {
+        var latlng = panodata.location.latLng;
+        var panoid = panodata.location.pano;
+
+        this._broadcast_pano(panoid);
+        this._pan_map(latlng);
+        this.sv_marker.move(latlng);
+      }.bind(this));
 
       // disable all <a> tags on the map canvas
       GMaps.event.addListenerOnce(this.map, 'idle', function() {
@@ -73,77 +100,8 @@ function(config, L, Stapes, PeruseMapStyles, GMaps, sv_svc) {
         }
       }.bind(this.$canvas));
 
-      // initialize the marker indicating the current sv location
-      this.sv_marker = new GMaps.Marker({
-        position: this.default_center,
-        title: 'Street View',
-        icon: 'icons/sv_sprite.png',
-        clickable: false
-      });
-
-      // initialize the balloon indicating a pano could not be found
-      this.search_fail_balloon = new GMaps.InfoWindow({
-        content: '<img src="icons/sv_fail.png" height="40" width="40" />',
-        disableAutoPan: true
-      });
-      this.balloon_close_timeout = null;
-
-      // enable/disable map coverage layer based on zoom level
-      GMaps.event.addListener(this.map, 'zoom_changed', function(event) {
-        if (this.map.getZoom() >= MIN_COVERAGE_ZOOM_LEVEL)
-          this._show_coverage_layer();
-        else
-          this._hide_coverage_layer();
-      }.bind(this));
-
-      // allow user to click on a street to load it in street view
-      GMaps.event.addListener(this.map, 'click', function(event) {
-        // determine min/max search radius based on zoom level
-        var min_search_radius;
-        var max_search_radius;
-
-        var current_zoom = this.map.getZoom();
-
-        if (current_zoom <= 10) {
-          min_search_radius = 400;
-          max_search_radius = 1600;
-        } else if (current_zoom <= 12) {
-          min_search_radius = 100;
-          max_search_radius = 400;
-        } else if (current_zoom <= 14) {
-          min_search_radius = 50;
-          max_search_radius = 200;
-        } else {
-          min_search_radius = 50;
-          max_search_radius = 50;
-        }
-
-        sv_svc.getPanoramaByLocation(
-          event.latLng,
-          min_search_radius,
-          function(data, stat, search_latlng) {
-            if(stat == GMaps.StreetViewStatus.OK) {
-              var latlng = data.location.latLng;
-              var panoid = data.location.pano;
-
-              this._broadcast_pano(panoid);
-              this._pan_map(latlng);
-              this._move_sv_marker(latlng);
-              this._close_search_fail_balloon();
-            } else {
-              console.debug('Map: could not find pano');
-              this._open_search_fail_balloon(search_latlng);
-            }
-          }.bind(this),
-          max_search_radius
-        );
-      }.bind(this));
-
       // signal that the map is ready
       GMaps.event.addListenerOnce(this.map, 'idle', function() {
-        // trigger a zoom change
-        GMaps.event.trigger(this.map, 'zoom_changed');
-
         console.debug('Map: ready');
         this.emit('ready');
       }.bind(this));
@@ -157,57 +115,16 @@ function(config, L, Stapes, PeruseMapStyles, GMaps, sv_svc) {
       this.map.setZoom(this.map.getZoom() - 1);
     },
 
-    _open_search_fail_balloon: function(latlng) {
-      this._close_search_fail_balloon();
-      this.search_fail_balloon.setPosition(latlng);
-      this.search_fail_balloon.open(this.map);
-      this.balloon_close_timeout = setTimeout(
-        this._close_search_fail_balloon.bind(this),
-        SEARCH_FAIL_BALLOON_TIME
-      );
-    },
-
-    _close_search_fail_balloon: function() {
-      clearTimeout(this.balloon_close_timeout);
-      this.search_fail_balloon.close();
-    },
-
-    _show_coverage_layer: function() {
-      this.sv_coverage_layer.setMap(this.map);
-    },
-
-    _hide_coverage_layer: function() {
-      this.sv_coverage_layer.setMap(null);
-    },
-
     _pan_map: function(latlng) {
       this.map.panTo(latlng);
-    },
-
-    _move_sv_marker: function(latlng) {
-      this.sv_marker.setMap(this.map);
-      this.sv_marker.setPosition(latlng);
-    },
-
-    _hide_sv_marker: function() {
-      this.sv_marker.setMap(null);
     },
 
     _broadcast_pano: function(panoid) {
       this.emit('pano', panoid);
     },
 
-    _select_pano_cb: function(data, stat) {
-      if(stat == GMaps.StreetViewStatus.OK) {
-        var latlng = data.location.latLng;
-        var panoid = data.location.pano;
-
-        this._broadcast_pano(panoid);
-        this._pan_map(latlng);
-        this._hide_sv_marker();
-      } else {
-        L.error('Map: select query failed!');
-      }
+    add_location_by_id: function(panoid) {
+      this.poi_markers.add_location_by_id(panoid);
     },
 
     // select is called when the streetview location is selected from the local
@@ -216,20 +133,19 @@ function(config, L, Stapes, PeruseMapStyles, GMaps, sv_svc) {
     select_pano_by_id: function(panoid) {
       sv_svc.getPanoramaById(
         panoid,
-        this._select_pano_cb.bind(this)
+        function (data, stat) {
+          if(stat == GMaps.StreetViewStatus.OK) {
+            var result_latlng = data.location.latLng;
+            var result_panoid = data.location.pano;
+
+            this._broadcast_pano(result_panoid);
+            this._pan_map(result_latlng);
+            this.sv_marker.hide();
+          } else {
+            L.error('Map: select query failed!');
+          }
+        }.bind(this)
       );
-    },
-
-    _update_pano_cb: function(data, stat) {
-      if(stat == GMaps.StreetViewStatus.OK) {
-        var latlng = data.location.latLng;
-        var panoid = data.location.pano;
-
-        this._pan_map(latlng);
-        this._move_sv_marker(latlng);
-      } else {
-        L.error('Map: update query failed!');
-      }
     },
 
     // update is called when the streetview location is changed by display
@@ -237,47 +153,19 @@ function(config, L, Stapes, PeruseMapStyles, GMaps, sv_svc) {
     update_pano_by_id: function(panoid) {
       sv_svc.getPanoramaById(
         panoid,
-        this._update_pano_cb.bind(this)
+        function (data, stat) {
+          if(stat == GMaps.StreetViewStatus.OK) {
+            var result_latlng = data.location.latLng;
+            var result_panoid = data.location.pano;
+
+            this._pan_map(result_latlng);
+            this.sv_marker.move(result_latlng);
+          } else {
+            L.error('Map: update query failed!');
+          }
+        }.bind(this)
       );
     },
-
-    _add_marker_click_event: function(marker, latlng, panoid) {
-      GMaps.event.addListener(marker, 'click', function(mev) {
-        this._broadcast_pano(panoid);
-        this._pan_map(latlng);
-        this._hide_sv_marker();
-      }.bind(this));
-    },
-
-    _add_location_marker: function(panoid, name, latlng) {
-      var marker = new GMaps.Marker({
-        position  : latlng,
-        title     : name,
-        clickable : true,
-        map       : this.map
-      });
-
-      this._add_marker_click_event(marker, latlng, panoid);
-    },
-
-    _location_cb: function(data, stat) {
-      if(stat == GMaps.StreetViewStatus.OK) {
-        var latlng = data.location.latLng;
-        var name   = data.location.description;
-        var panoid = data.location.pano;
-
-        this._add_location_marker(panoid, name, latlng);
-      } else {
-        L.error('Map: location query failed!');
-      }
-    },
-
-    add_location_by_id: function(panoid) {
-      sv_svc.getPanoramaById(
-        panoid,
-        this._location_cb.bind(this)
-      );
-    }
   });
 
   return MapModule;
