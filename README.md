@@ -60,6 +60,8 @@ defaults when the server starts.
 
 - `config['lg_iface_base']` : address of the lg master's http interface
 
+- `config['earth_pos_url']` : json data representing Earth's last position
+
 - `config['touchscreen']['poi_url']` : url to touchscreen locations
 
 - `config['touchscreen']['default_center']` : [lat,lng]

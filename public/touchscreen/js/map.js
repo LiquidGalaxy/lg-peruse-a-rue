@@ -18,12 +18,14 @@ define(
 [
   'config', 'bigl', 'stapes', 'mapstyle', 'googlemaps', 'sv_svc',
   // map submodules
-  'map/coverage', 'map/svmarker', 'map/clicksearch', 'map/poimarkers'
+  'map/coverage', 'map/svmarker', 'map/clicksearch', 'map/poimarkers',
+  'map/earthpos'
 ],
 function(
   config, L, Stapes, PeruseMapStyles, GMaps, sv_svc,
   // map submodules
-  SVCoverageModule, SVMarkerModule, ClickSearchModule, POIMarkerModule
+  SVCoverageModule, SVMarkerModule, ClickSearchModule, POIMarkerModule,
+  EarthPosModule
 ) {
 
   var MapModule = Stapes.subclass({
@@ -69,6 +71,7 @@ function(
       this.sv_marker = new SVMarkerModule(this.map);
       this.poi_markers = new POIMarkerModule(this.map);
       this.click_search = new ClickSearchModule(this.map);
+      this.earth_pos = new EarthPosModule(this.map);
 
       // handler for marker clicks
       this.poi_markers.on('marker_selected', function(panodata) {
@@ -82,6 +85,16 @@ function(
 
       // handler for click search result
       this.click_search.on('search_result', function(panodata) {
+        var latlng = panodata.location.latLng;
+        var panoid = panodata.location.pano;
+
+        this._broadcast_pano(panoid);
+        this._pan_map(latlng);
+        this.sv_marker.move(latlng);
+      }.bind(this));
+
+      // handler for earth position report
+      this.earth_pos.on('found_location', function(panodata) {
         var latlng = panodata.location.latLng;
         var panoid = panodata.location.pano;
 
