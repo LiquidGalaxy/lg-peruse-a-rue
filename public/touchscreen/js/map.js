@@ -54,7 +54,8 @@ function(
         disableDefaultUI: true,
         mapTypeControl: true,
         mapTypeControlOptions: {
-          mapTypeIds: [ GMaps.MapTypeId.ROADMAP, GMaps.MapTypeId.HYBRID ]
+          mapTypeIds: [ GMaps.MapTypeId.ROADMAP, GMaps.MapTypeId.HYBRID ],
+          position: GMaps.ControlPosition.TOP_LEFT
         },
         mapTypeId: GMaps.MapTypeId.ROADMAP
       };
