@@ -25,9 +25,11 @@ requirejs.config({
     'fields': '/js/fields',
     'stapes': '/js/lib/stapes/stapes.min',
     'jquery': '/js/lib/jquery/jquery-2.0.3.min',
+    'jquery-private': '/js/jquery-private',
     'doT': '/js/lib/doT/doT.min',
     'socketio': '/socket.io/socket.io',
     'googlemaps': '/js/googlemaps',
+    'sv_svc': '/js/sv_svc',
     'validate': '/js/validate'
   },
   shim: {
@@ -37,6 +39,10 @@ requirejs.config({
         'async!http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false!callback'
       ]
     }
+  },
+  map: {
+    '*': { 'jquery': 'jquery-private' },
+    'jquery-private': { 'jquery': 'jquery' }
   }
 });
 
