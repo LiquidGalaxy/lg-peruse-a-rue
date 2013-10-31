@@ -64,7 +64,7 @@ defaults when the server starts.
 
 - `config['touchscreen']['default_center']` : [lat,lng]
 
-- `config['touchscreen']['activities']` : list of activities for relaunch
+- `config['touchscreen']['activities']` : list of activities on the system
 
 - `config['touchscreen']['show_photospheres']` : photosphere markers
 
@@ -77,6 +77,24 @@ defaults when the server starts.
 - `config['display']['zoom']` : street view zoom level (Integer 0-4)
 
 - `config['display']['mode']` : render mode ('html4', 'html5', 'webgl')
+
+##### Activities
+
+The touchscreen.activities key holds a list of other activities on the system.
+You can use this to send requests to http interfaces or navigate the page to
+another location.
+
+The format is:
+
+    {
+      "title"  : a string, the name of the activity
+      "method" : a string, can be POST, GET, PUT, or location
+      "url"    : the url to request or navigate to
+    }
+
+To send a blank request to an http interface, use 'POST', 'GET', or 'PUT'
+methods.  To simply navigate the browser to another page, use the 'location'
+method.  To disable the activities box entirely, set the key to null.
 
 ### Browser Interface
 

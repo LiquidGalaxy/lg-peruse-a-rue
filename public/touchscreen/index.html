@@ -59,7 +59,11 @@
       <h2>Other Activities</h2>
       <ul id="activities-list">
       {{~it :activity}}
-        <li class="activities-item" app="{{=activity.app}}">{{=activity.title}}</li>
+        <li class="activities-item"
+            url="{{=activity.url}}"
+            method="{{=activity.method}}">
+        {{=activity.title}}
+        </li>
       {{~}}
       </ul>
     </div>

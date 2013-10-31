@@ -5,9 +5,7 @@
   "touchscreen": {
     "default_center": [37.604555,-122.498633],
     "poi_url": "/touchscreen/poi-defaults.json",
-    "activities": [
-      { "title": "Google Earth", "app": "earth" }
-    ],
+    "activities": null,
     "show_photospheres": true,
     "show_zoomctl": true,
     "font_scale": 1.0

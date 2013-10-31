@@ -55,14 +55,21 @@ function(config, L, Stapes, $, leftUI, doT) {
 
     _clicked: function(activity) {
       var $activity = $(activity);
-      var name = $activity.html();
-      var app  = $activity.attr('app');
+      var name   = $activity.html();
+      var url    = $activity.attr('url');
+      var method = $activity.attr('method').toUpperCase();
 
-      L.info('switching to', name);
-      var url = this.iface+'/change.php?query=relaunch-'+app+'&name='+name;
-      var req = new XMLHttpRequest();
-      req.open('GET', url, true);
-      req.send(null);
+      if (method == 'LOCATION') {
+        L.info('Activities: navigating to', name, 'at', url);
+        window.location.href = url;
+      } else if (method == 'GET' || method == 'POST' || method == 'PUT') {
+        L.info('Activities: sending', method, 'to', name, 'at', url);
+        var req = new XMLHttpRequest();
+        req.open(method, url, true);
+        req.send(null);
+      } else {
+        L.error('Activities: bad method for', name);
+      }
     }
   });
 
