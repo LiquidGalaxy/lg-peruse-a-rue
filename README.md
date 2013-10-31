@@ -58,8 +58,6 @@ defaults when the server starts.
 
 - `config['udp_port']` : UDP port
 
-- `config['lg_iface_base']` : address of the lg master's http interface
-
 - `config['earth_pos_url']` : json data representing Earth's last position
 
 - `config['touchscreen']['poi_url']` : url to touchscreen locations
