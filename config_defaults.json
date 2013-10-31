@@ -1,7 +1,7 @@
 {
   "port": 8086,
   "udp_port": 8086,
-  "earth_pos_url": "http://lg-head:8888/window.json?window_slug=earth_center",
+  "earth_pos_url": null,
   "touchscreen": {
     "default_center": [37.604555,-122.498633],
     "poi_url": "/touchscreen/poi-defaults.json",

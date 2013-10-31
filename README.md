@@ -52,7 +52,7 @@ The default configuration is in `config_defaults.json`.  Any configuration key
 may be overridden by creating a `config.json`, which is merged with the
 defaults when the server starts.
 
-##### Configuration Keys
+#### Configuration Keys
 
 - `config['port']` : TCP port
 
@@ -78,18 +78,29 @@ defaults when the server starts.
 
 - `config['display']['mode']` : render mode ('html4', 'html5', 'webgl')
 
+##### Earth Position
+
+Peruse-a-Rue can check for the last known Google Earth position and search for
+street view panos in the area.  Set the `earth_pos_url` key to the location of
+json containing at least the following information:
+
+    {
+       "cameraLat": Number, latitude of last known Earth position
+       "cameraLon": Number, longitude of last known Earth position
+    }
+
 ##### Activities
 
-The touchscreen.activities key holds a list of other activities on the system.
-You can use this to send requests to http interfaces or navigate the page to
-another location.
+The `touchscreen.activities` key holds a list of other activities on the 
+system.  You can use this to send requests to http interfaces or navigate the
+page to another location.
 
 The format is:
 
     {
-      "title"  : a string, the name of the activity
-      "method" : a string, can be POST, GET, PUT, or location
-      "url"    : the url to request or navigate to
+      "title"  : String, the name of the activity
+      "method" : String, can be POST, GET, PUT, or location
+      "url"    : String, the url to request or navigate to
     }
 
 To send a blank request to an http interface, use 'POST', 'GET', or 'PUT'
