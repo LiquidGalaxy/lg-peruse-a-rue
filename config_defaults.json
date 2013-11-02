@@ -5,7 +5,12 @@
   "touchscreen": {
     "default_center": [37.604555,-122.498633],
     "poi_url": "/touchscreen/poi-defaults.json",
-    "activities": null,
+     "activities": [
+      {
+        "title": "Google Earth", "method": "location",
+        "url": "http://localhost:8000/control/template/touchscreen_retail.html?resume=true"
+      }
+    ],
     "show_photospheres": true,
     "show_zoomctl": true,
     "font_scale": 1.0
