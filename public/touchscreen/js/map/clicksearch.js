@@ -22,6 +22,8 @@ function(config, L, Stapes, GMaps, sv_svc) {
 
   var ClickSearchModule = Stapes.subclass({
     constructor: function(map) {
+      var self = this;
+
       this.map = map;
 
       this.search_fail_balloon = new GMaps.InfoWindow({
@@ -31,13 +33,13 @@ function(config, L, Stapes, GMaps, sv_svc) {
       this.ballon_close_timeout = null;
 
       GMaps.event.addListener(this.map, 'click', function(event) {
-        this.close_search_fail_balloon();
+        self.close_search_fail_balloon();
 
         // determine min/max search radius based on zoom level
         var min_search_radius;
         var max_search_radius;
 
-        var current_zoom = this.map.getZoom();
+        var current_zoom = self.map.getZoom();
 
         if (current_zoom <= 10) {
           min_search_radius = 400;
@@ -58,24 +60,26 @@ function(config, L, Stapes, GMaps, sv_svc) {
           min_search_radius,
           function(data, stat, search_latlng) {
             if(stat == GMaps.StreetViewStatus.OK) {
-              this.emit('search_result', data);
+              self.emit('search_result', data);
             } else {
-              this.open_search_fail_balloon(search_latlng);
+              self.open_search_fail_balloon(search_latlng);
             }
-          }.bind(this),
+          },
           max_search_radius
         );
-      }.bind(this));
+      });
     },
 
     open_search_fail_balloon: function(latlng) {
+      var self = this;
+
       this.close_search_fail_balloon();
 
       this.search_fail_balloon.setPosition(latlng);
       this.search_fail_balloon.open(this.map);
 
       this.balloon_close_timeout = setTimeout(
-        this.close_search_fail_balloon.bind(this),
+        self.close_search_fail_balloon,
         SEARCH_FAIL_BALLOON_TIME
       );
     },

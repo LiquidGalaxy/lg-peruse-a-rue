@@ -37,6 +37,8 @@ function(
     init: function() {
       console.debug('Map: init');
 
+      var self = this;
+
       if (typeof GMaps === 'undefined') L.error('Maps API not loaded!');
 
       this.default_center = new GMaps.LatLng(
@@ -79,46 +81,46 @@ function(
         var latlng = panodata.location.latLng;
         var panoid = panodata.location.pano;
 
-        this._broadcast_pano(panoid);
-        this._pan_map(latlng);
-        this.sv_marker.hide();
-      }.bind(this));
+        self._broadcast_pano(panoid);
+        self._pan_map(latlng);
+        self.sv_marker.hide();
+      });
 
       // handler for click search result
       this.click_search.on('search_result', function(panodata) {
         var latlng = panodata.location.latLng;
         var panoid = panodata.location.pano;
 
-        this._broadcast_pano(panoid);
-        this._pan_map(latlng);
-        this.sv_marker.move(latlng);
-      }.bind(this));
+        self._broadcast_pano(panoid);
+        self._pan_map(latlng);
+        self.sv_marker.move(latlng);
+      });
 
       // handler for earth position report
       this.earth_pos.on('found_location', function(panodata) {
         var latlng = panodata.location.latLng;
         var panoid = panodata.location.pano;
 
-        this._broadcast_pano(panoid);
-        this._pan_map(latlng);
-        this.sv_marker.move(latlng);
-      }.bind(this));
+        self._broadcast_pano(panoid);
+        self._pan_map(latlng);
+        self.sv_marker.move(latlng);
+      });
 
       // disable all <a> tags on the map canvas
       GMaps.event.addListenerOnce(this.map, 'idle', function() {
-        var links = this.getElementsByTagName("a");
+        var links = self.$canvas.getElementsByTagName("a");
         var len = links.length;
         for (var i = 0; i < len; i++) {
           links[i].style.display = 'none';
           links[i].onclick = function() {return(false);};
         }
-      }.bind(this.$canvas));
+      });
 
       // signal that the map is ready
       GMaps.event.addListenerOnce(this.map, 'idle', function() {
         console.debug('Map: ready');
-        this.emit('ready');
-      }.bind(this));
+        self.emit('ready');
+      });
     },
 
     zoom_in: function() {
@@ -145,6 +147,8 @@ function(
     // interface (poi).  it should pan the map, move the marker, and broadcast
     // the location to displays.
     select_pano_by_id: function(panoid) {
+      var self = this;
+
       sv_svc.getPanoramaById(
         panoid,
         function (data, stat) {
@@ -152,19 +156,21 @@ function(
             var result_latlng = data.location.latLng;
             var result_panoid = data.location.pano;
 
-            this._broadcast_pano(result_panoid);
-            this._pan_map(result_latlng);
-            this.sv_marker.hide();
+            self._broadcast_pano(result_panoid);
+            self._pan_map(result_latlng);
+            self.sv_marker.hide();
           } else {
             L.error('Map: select query failed!');
           }
-        }.bind(this)
+        }
       );
     },
 
     // update is called when the streetview location is changed by display
     // clients.  it should pan the map and move the marker to the new location.
     update_pano_by_id: function(panoid) {
+      var self = this;
+
       sv_svc.getPanoramaById(
         panoid,
         function (data, stat) {
@@ -172,12 +178,12 @@ function(
             var result_latlng = data.location.latLng;
             var result_panoid = data.location.pano;
 
-            this._pan_map(result_latlng);
-            this.sv_marker.move(result_latlng);
+            self._pan_map(result_latlng);
+            self.sv_marker.move(result_latlng);
           } else {
             L.error('Map: update query failed!');
           }
-        }.bind(this)
+        }
       );
     },
   });

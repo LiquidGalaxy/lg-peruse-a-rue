@@ -28,13 +28,15 @@ function(config, L, Stapes, $) {
         return;
       }
 
+      var self = this;
+
       $(document).ready(function() {
-        $.getJSON(this._get_content_url(), function(photospheres) {
+        $.getJSON(self._get_content_url(), function(photospheres) {
           $.each(photospheres.result, function(key, val) {
-            this._add_photosphere(val);
-          }.bind(this));
-        }.bind(this));
-      }.bind(this));
+            self._add_photosphere(val);
+          });
+        });
+      });
     },
 
     _add_photosphere: function(photosphere) {

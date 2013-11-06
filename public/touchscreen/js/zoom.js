@@ -20,6 +20,8 @@ function(config, L, Stapes, $) {
 
   var ZoomModule = Stapes.subclass({
     constructor: function() {
+      var self = this;
+
       this.$zoom_box = $('<div></div>')
                        .attr('id', 'zoom-control-box');
 
@@ -37,12 +39,12 @@ function(config, L, Stapes, $) {
       $('body').append(this.$zoom_box);
 
       this.$zoom_in.click(function() {
-        this.emit('zoom_in');
-      }.bind(this));
+        self.emit('zoom_in');
+      });
 
       this.$zoom_out.click(function() {
-        this.emit('zoom_out');
-      }.bind(this));
+        self.emit('zoom_out');
+      });
     }
   });
 

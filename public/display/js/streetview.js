@@ -73,6 +73,8 @@ function(config, L, validate, Stapes, GMaps) {
     init: function() {
       console.debug('StreetView: init');
 
+      var self = this;
+
       // *** ensure success of Maps API load
       if (typeof GMaps === 'undefined') L.error('Maps API not loaded!');
 
@@ -132,48 +134,48 @@ function(config, L, validate, Stapes, GMaps) {
       if (this.master) {
         // *** handle view change events from the streetview object
         GMaps.event.addListener(this.streetview, 'pov_changed', function() {
-          var pov = this.streetview.getPov();
+          var pov = self.streetview.getPov();
 
-          this._broadcastPov(pov);
-          this.pov = pov;
-        }.bind(this));
+          self._broadcastPov(pov);
+          self.pov = pov;
+        });
 
         // *** handle pano change events from the streetview object
         GMaps.event.addListener(this.streetview, 'pano_changed', function() {
-          var panoid = this.streetview.getPano();
+          var panoid = self.streetview.getPano();
 
-          if (panoid != this.pano) {
-            this._broadcastPano(panoid);
-            this.pano = panoid;
+          if (panoid != self.pano) {
+            self._broadcastPano(panoid);
+            self.pano = panoid;
           }
-        }.bind(this));
+        });
       }
 
       // *** disable <a> tags at the bottom of the canvas
       GMaps.event.addListenerOnce(this.map, 'idle', function() {
-        var links = this.getElementsByTagName("a");
+        var links = self.$canvas.getElementsByTagName("a");
         var len = links.length;
         for (var i = 0; i < len; i++) {
           links[i].style.display = 'none';
           links[i].onclick = function() {return(false);};
         }
-      }.bind(this.$canvas));
+      });
 
       // *** request the last known state from the server
       this.on('ready', function() {
-        this.emit('refresh');
-      }.bind(this));
+        self.emit('refresh');
+      });
 
       // *** wait for an idle event before reporting module readiness
       GMaps.event.addListenerOnce(this.map, 'idle', function() {
         console.debug('StreetView: ready');
-        this.emit('ready');
-      }.bind(this));
+        self.emit('ready');
+      });
 
       // *** handle window resizing
       window.addEventListener('resize',  function() {
-        this._resize();
-      }.bind(this));
+        self._resize();
+      });
     },
 
     // *** setPano(panoid)

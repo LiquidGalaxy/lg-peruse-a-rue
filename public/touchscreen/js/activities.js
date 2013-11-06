@@ -27,6 +27,8 @@ function(config, L, Stapes, $, leftUI, doT) {
     init: function() {
       console.debug('Activities: init');
 
+      var self = this;
+
       var activities = config.touchscreen.activities;
 
       if (activities == null) {
@@ -49,8 +51,8 @@ function(config, L, Stapes, $, leftUI, doT) {
       leftUI.append(activity_div);
 
       $('.activities-item').on('click', function(e) {
-        this._clicked(e.target);
-      }.bind(this));
+        self._clicked(e.target);
+      });
     },
 
     _clicked: function(activity) {
