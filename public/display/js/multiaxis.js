@@ -30,19 +30,21 @@ function(config, L, Stapes, io) {
     },
 
     init: function() {
+      var self = this;
+
       console.debug('MultiAxis: initializing');
 
       this.socket = io.connect('/multiaxis');
 
       this.socket.once('connect',function() {
         console.debug('MultiAxis: connected');
-        this.emit( 'ready' );
-      }.bind(this));
+        self.emit( 'ready' );
+      });
 
       this.socket.on('button',function(state) {
         if (Number(state) > 0)
-          this.moveForward();
-      }.bind(this));
+          self.moveForward();
+      });
 
       this.socket.on('state',function(data) {
         //console.log('multiaxis abs:', data.abs);
@@ -76,15 +78,15 @@ function(config, L, Stapes, io) {
           }
         }
         if (dirty) {
-          this.emit('abs', {yaw: yaw, pitch: 0});
+          self.emit('abs', {yaw: yaw, pitch: 0});
           if (-zoom >= MOVEMENT_THRESHOLD) {
-            this.addPush()
+            self.addPush()
           } else {
-            this.subtractPush();
-            this.moving = false;
+            self.subtractPush();
+            self.moving = false;
           }
         }
-      }.bind(this));
+      });
 
       this.socket.on('connect_failed',function() {
         L.error('MultiAxis: connect failed!');

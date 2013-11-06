@@ -24,6 +24,8 @@ function(config, L, Stapes, GMaps, sv_svc) {
     },
 
     _add_location_marker: function(panodata) {
+      var self = this;
+
       var latlng = panodata.location.latLng;
       var name   = panodata.location.description;
       var panoid = panodata.location.pano;
@@ -36,20 +38,22 @@ function(config, L, Stapes, GMaps, sv_svc) {
       });
 
       GMaps.event.addListener(marker, 'click', function(mev) {
-        this.emit('marker_selected', panodata);
-      }.bind(this));
+        self.emit('marker_selected', panodata);
+      });
     },
 
     add_location_by_id: function(panoid) {
+      var self = this;
+
       sv_svc.getPanoramaById(
         panoid,
         function (panodata, stat) {
           if(stat == GMaps.StreetViewStatus.OK) {
-            this._add_location_marker(panodata);
+            self._add_location_marker(panodata);
           } else {
             L.error('POIMarker: location query failed!');
           }
-        }.bind(this)
+        }
       );
     }
   });

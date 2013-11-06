@@ -38,12 +38,14 @@ function(config, L, Stapes, $, leftUI, doT) {
 
     // return content from URL
     _load_poi_from_url: function(content_url) {
+      var self = this;
+
       $.ajax({
           url: content_url,
           dataType: 'json',
           success: function(remote_data) {
-            this._apply_categories(remote_data);
-          }.bind(this),
+            self._apply_categories(remote_data);
+          },
           error: function(jqXHR, textStatus, errorThrown) {
             L.error('load_poi_from_url():', textStatus, ':', errorThrown);
           }
@@ -51,6 +53,8 @@ function(config, L, Stapes, $, leftUI, doT) {
     },
 
     _apply_categories: function(categories) {
+      var self = this;
+
       if (categories == null) {
         console.debug('POI: null or undefined');
         return;
@@ -71,12 +75,12 @@ function(config, L, Stapes, $, leftUI, doT) {
       leftUI.prepend(poi_div);
 
       $('.poi-tab-inactive').on('click', function(e) {
-        this._activate(e.target);
-      }.bind(this));
+        self._activate(e.target);
+      });
 
       $('.poi-item').each(function(index, item) {
-        this.emit('add_location', $(item).attr('panoid'));
-      }.bind(this));
+        self.emit('add_location', $(item).attr('panoid'));
+      });
 
       this._activate($('.poi-tab-inactive').first());
     },
@@ -86,6 +90,8 @@ function(config, L, Stapes, $, leftUI, doT) {
     },
 
     _activate: function(category) {
+      var self = this;
+
       this._deactivate_all();
 
       var $category = $(category);
@@ -95,8 +101,8 @@ function(config, L, Stapes, $, leftUI, doT) {
       var $list = $('.poi-list-inactive[category="'+title+'"]');
       $list.attr('class', 'poi-list-active');
       $list.children().on('click', function(e) {
-        this._clicked(e.target);
-      }.bind(this));
+        self._clicked(e.target);
+      });
     },
 
     _deactivate_all: function() {

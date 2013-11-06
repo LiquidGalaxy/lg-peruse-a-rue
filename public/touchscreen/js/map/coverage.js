@@ -22,6 +22,8 @@ function(config, L, Stapes, GMaps) {
 
   var SVCoverageModule = Stapes.subclass({
     constructor: function(map) {
+      var self = this;
+
       this.map = map;
 
       // instantiate street view coverage layer
@@ -29,17 +31,17 @@ function(config, L, Stapes, GMaps) {
 
       // enable/disable map coverage layer based on zoom level
       GMaps.event.addListener(this.map, 'zoom_changed', function(event) {
-        if (this.map.getZoom() >= MIN_COVERAGE_ZOOM_LEVEL)
-          this._show_coverage_layer();
+        if (self.map.getZoom() >= MIN_COVERAGE_ZOOM_LEVEL)
+          self._show_coverage_layer();
         else
-          this._hide_coverage_layer();
-      }.bind(this));
+          self._hide_coverage_layer();
+      });
 
       // signal that the map is ready
       GMaps.event.addListenerOnce(this.map, 'idle', function() {
         // trigger a zoom change
-        GMaps.event.trigger(this.map, 'zoom_changed');
-      }.bind(this));
+        GMaps.event.trigger(self.map, 'zoom_changed');
+      });
     },
 
     _show_coverage_layer: function() {

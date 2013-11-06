@@ -23,6 +23,8 @@ function(config, L, Stapes, GMaps, sv_svc, $) {
 
   var EarthPosModule = Stapes.subclass({
     constructor: function(map) {
+      var self = this;
+
       this.map = map;
 
       GMaps.event.addListenerOnce(this.map, 'idle', function(event) {
@@ -37,14 +39,14 @@ function(config, L, Stapes, GMaps, sv_svc, $) {
               sv_svc.getPanoramaByLocation(
                 ll,
                 MIN_SEARCH_RADIUS,
-                this.searchCB.bind(this),
+                self.searchCB,
                 MAX_SEARCH_RADIUS
               );
-            }.bind(this),
+            },
 
             error: function(jqXHR, textStatus, errorThrown) {
               console.warn('Error fetching Earth posiition:', errorThrown);
-            }.bind(this)
+            }
           };
 
           $.ajax(
@@ -52,7 +54,7 @@ function(config, L, Stapes, GMaps, sv_svc, $) {
             ajax_opts
           );
         }
-      }.bind(this));
+      });
     },
 
     searchCB: function(panodata, stat) {

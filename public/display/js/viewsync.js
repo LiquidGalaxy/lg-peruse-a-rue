@@ -94,12 +94,14 @@ function(config, L, validate, Stapes, io) {
     init: function() {
       console.debug( 'ViewSync: init' );
 
+      var self = this;
+
       this.socket = io.connect('/viewsync');
 
       this.socket.once('connect', function() {
         console.debug('ViewSync: ready');
-        this.emit('ready');
-      }.bind(this));
+        self.emit('ready');
+      });
 
       this.socket.on('sync pano', function(panoid) {
         if (!validate.panoid(panoid)) {
@@ -107,8 +109,8 @@ function(config, L, validate, Stapes, io) {
           return;
         }
 
-        this._recvPano(panoid);
-      }.bind(this));
+        self._recvPano(panoid);
+      });
 
       this.socket.on('sync pov', function(pov) {
         if (!validate.pov(pov)) {
@@ -116,8 +118,8 @@ function(config, L, validate, Stapes, io) {
           return;
         }
 
-        this._recvPov(pov);
-      }.bind(this));
+        self._recvPov(pov);
+      });
 
       this.socket.on('connect_failed', function() {
         L.error('ViewSync: connect failed!');
