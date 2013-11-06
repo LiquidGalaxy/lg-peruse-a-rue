@@ -18,7 +18,7 @@ define(
 ['config', 'bigl', 'stapes', 'googlemaps', 'sv_svc'],
 function(config, L, Stapes, GMaps, sv_svc) {
 
-  var ClickSearchModule = Stapes.subclass({
+  var POIModule = Stapes.subclass({
     constructor: function(map) {
       this.map = map;
     },
@@ -54,5 +54,5 @@ function(config, L, Stapes, GMaps, sv_svc) {
     }
   });
 
-  return ClickSearchModule;
+  return POIModule;
 });
