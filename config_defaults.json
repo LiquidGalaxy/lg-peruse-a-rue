@@ -8,7 +8,7 @@
      "activities": [
       {
         "title": "Google Earth", "method": "location",
-        "url": "http://localhost:8000/control/template/touchscreen_retail.html?resume=true"
+        "url": "http://lg-head/cms/control/template/touchscreen_retail.html?resume=true"
       }
     ],
     "show_photospheres": true,
