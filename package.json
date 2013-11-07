@@ -1,6 +1,6 @@
 {
   "name": "lg-peruse-a-rue",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "author": "End Point Corp <lg@endpoint.com>",
   "description": "A street view implementation for Liquid Galaxy",
   "contributors": [ 
@@ -43,7 +43,8 @@
     "socket.io" : "0.9.x",
     "stylus"    : "*",
     "commander" : "*",
-    "extend"    : "1.2.0"
+    "extend"    : "1.2.0",
+    "nanotimer" : "0.3.0"
   },
   "analyze": false,
   "license": "Apache 2.0",
@@ -52,6 +53,6 @@
     "url": "https://code.google.com/p/liquid-galaxy.lg-peruse-a-rue/"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.10.13"
   }
 }
