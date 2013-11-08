@@ -39,7 +39,7 @@ function(config, L, Stapes, GMaps, sv_svc, $) {
               sv_svc.getPanoramaByLocation(
                 ll,
                 MIN_SEARCH_RADIUS,
-                self.searchCB,
+                self.searchCB.bind(self),
                 MAX_SEARCH_RADIUS
               );
             },
