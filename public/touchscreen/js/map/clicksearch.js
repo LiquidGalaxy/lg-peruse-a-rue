@@ -79,7 +79,9 @@ function(config, L, Stapes, GMaps, sv_svc) {
       this.search_fail_balloon.open(this.map);
 
       this.balloon_close_timeout = setTimeout(
-        self.close_search_fail_balloon,
+        function() {
+          self.close_search_fail_balloon();
+        },
         SEARCH_FAIL_BALLOON_TIME
       );
     },
