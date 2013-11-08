@@ -19,13 +19,13 @@ define(
   'config', 'bigl', 'stapes', 'mapstyle', 'googlemaps', 'sv_svc',
   // map submodules
   'map/coverage', 'map/svmarker', 'map/clicksearch', 'map/poimarkers',
-  'map/earthpos'
+  'map/earthpos', 'map/kbdsearch'
 ],
 function(
   config, L, Stapes, PeruseMapStyles, GMaps, sv_svc,
   // map submodules
   SVCoverageModule, SVMarkerModule, ClickSearchModule, POIMarkerModule,
-  EarthPosModule
+  EarthPosModule, KeyboardSearchModule
 ) {
 
   var MapModule = Stapes.subclass({
@@ -75,6 +75,8 @@ function(
       this.poi_markers = new POIMarkerModule(this.map);
       this.click_search = new ClickSearchModule(this.map);
       this.earth_pos = new EarthPosModule(this.map);
+      if (config.touchscreen.show_search)
+        this.keyboard_search = new KeyboardSearchModule(this.map);
 
       // handler for marker clicks
       this.poi_markers.on('marker_selected', function(panodata) {

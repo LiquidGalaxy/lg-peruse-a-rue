@@ -20,6 +20,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta charset=utf-8">
     <link rel="stylesheet" type="text/css" href="/stylesheets/touchscreen.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/jsKeyboard.css" />
     <script data-main="js/main" src="/js/lib/require/require.min.js"></script>
   </head>
   <body>
@@ -30,6 +31,16 @@
 
     <div id="map_canvas"></div>
     <div id="left-ui"></div>
+
+    <script id="search-template" type="text/template">
+    <div id="search-box">
+      <h2>Search</h2>
+      <div>
+        <input class="keyboardEntry" id="keyboardEntry" name="keyboardEntry" type="text" value="" />
+        <div id="virtual-keyboard"></div>
+      </div>
+    </div>
+    </script>
 
     <script id="poi-template" type="text/template">
     <div id="poi-box">

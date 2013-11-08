@@ -30,13 +30,14 @@ requirejs.config({
     'doT': '/js/lib/doT/doT.min',
     'socketio': '/socket.io/socket.io',
     'googlemaps': '/js/googlemaps',
-    'sv_svc': '/js/sv_svc'
+    'sv_svc': '/js/sv_svc',
+    'jsKeyboard': '/js/jsKeyboard'
   },
   shim: {
     'config': { exports: 'config' },
     'googlemaps': {
       deps: [
-        'async!http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false!callback'
+        'async!http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places!callback'
       ]
     }
   },
