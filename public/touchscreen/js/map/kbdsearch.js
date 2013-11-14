@@ -109,7 +109,7 @@ function(config, L, Stapes, GMaps, $, jsKeyboard, leftUI, doT) {
         bounds.extend(place.geometry.location);
       }
 
-      this.map.setBounds(bounds);
+      this.map.panToBounds(bounds);
     },
 
     _searchFAIL: function() {
