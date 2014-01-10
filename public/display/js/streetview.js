@@ -277,10 +277,9 @@ function(config, L, validate, Stapes, GMaps) {
       var pov_heading = pov.heading;
       var link_heading = link.heading;
 
-      var diff = link_heading - pov_heading;
-      diff = Math.abs((diff + 180) % 360 - 180);
+      var diff = Math.abs(link_heading - pov_heading) % 360;
 
-      return diff;
+      return diff >= 180 ? diff - (diff - 180) * 2 : diff;
     },
 
     // *** _getForwardLink()
