@@ -112,6 +112,8 @@ To send a blank request to an http interface, use 'POST', 'GET', or 'PUT'
 methods.  To simply navigate the browser to another page, use the 'location'
 method.  To disable the activities box entirely, set the key to null.
 
+- `config['display']['show_links']` : show "chevron" links to neighboring panos
+
 ### Browser Interface
 
 Chrome is the only browser supported by Peruse-a-Rue.  Chromium probably works

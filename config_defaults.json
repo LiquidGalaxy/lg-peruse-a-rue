@@ -21,6 +21,7 @@
   "display": {
     "default_pano": "RXEzjLygO5ZPej-nro7JMA",
     "zoom": 3,
-    "mode": "html4"
+    "mode": "html4",
+    "show_links": true
   }
 }
