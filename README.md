@@ -80,6 +80,8 @@ defaults when the server starts.
 
 - `config['display']['mode']` : render mode ('html4', 'html5', 'webgl')
 
+- `config['display']['show_links']` : show "chevron" links to neighboring panos
+
 ### Browser Interface
 
 Chrome is the only browser supported by Peruse-a-Rue.  Chromium probably works

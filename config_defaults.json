@@ -16,6 +16,7 @@
   "display": {
     "default_pano": "rERiG4FHdYnqLBqpkVOUdg",
     "zoom": 3,
-    "mode": "html4"
+    "mode": "html4",
+    "show_links": true
   }
 }

@@ -101,7 +101,7 @@ function(config, L, validate, Stapes, GMaps) {
       };
 
       // *** only show links on the master display
-      if (this.master) {
+      if (this.master && config.display.show_links) {
         svOptions.linksControl = true;
       }
 
