@@ -139,6 +139,17 @@ function(
 
     _broadcast_pano: function(panoid) {
       this.emit('pano', panoid);
+
+      var self = this;
+      sv_svc.getPanoramaById(
+        panoid,
+        function (data, stat) {
+          if (stat == GMaps.StreetViewStatus.OK) {
+            sv_svc.serializePanoData(data);
+            self.emit('meta', data);
+          }
+        }
+      );
     },
 
     add_location_by_id: function(panoid) {

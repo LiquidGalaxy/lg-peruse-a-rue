@@ -15,8 +15,8 @@
 */
 
 define(
-['config', 'bigl', 'validate', 'stapes', 'googlemaps'],
-function(config, L, validate, Stapes, GMaps) {
+['config', 'bigl', 'validate', 'stapes', 'googlemaps', 'sv_svc'],
+function(config, L, validate, Stapes, GMaps, sv_svc) {
   var StreetViewModule = Stapes.subclass({
 
     // street view horizontal field of view per zoom level
@@ -272,6 +272,17 @@ function(config, L, validate, Stapes, GMaps) {
     // report a pano change to listeners
     _broadcastPano: function(panoid) {
       this.emit('pano_changed', panoid);
+
+      var self = this;
+      sv_svc.getPanoramaById(
+        panoid,
+        function (data, stat) {
+          if (stat == GMaps.StreetViewStatus.OK) {
+            sv_svc.serializePanoData(data);
+            self.emit('meta', data);
+          }
+        }
+      );
     },
 
     // *** _getLinkDifference(

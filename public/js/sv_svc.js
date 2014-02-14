@@ -64,11 +64,21 @@ define(['googlemaps'], function(GMaps) {
     delete this;
   }
 
+  // make StreetViewPanoramaData friendlier
+  function serializePanoData(panoData) {
+    panoData.location.latLng = {
+      lat: panoData.location.latLng.lat(),
+      lng: panoData.location.latLng.lng()
+    };
+  }
+
   return {
     // passthrough ID search
     getPanoramaById: sv_svc.getPanoramaById,
 
     // use our wrapped location search
-    getPanoramaByLocation: getPanoramaByLocation
+    getPanoramaByLocation: getPanoramaByLocation,
+
+    serializePanoData: serializePanoData
   }
 });
