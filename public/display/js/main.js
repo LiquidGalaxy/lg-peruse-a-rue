@@ -105,6 +105,9 @@ function(
       sv.on('pano_changed', function(pano) {
         viewsync.sendPano(pano);
       });
+      sv.on('meta', function(data) {
+        viewsync.sendMeta(data);
+      });
     });
 
     // *** create and link the MultiAxis module

@@ -83,6 +83,12 @@ function(config, L, validate, Stapes, io) {
       this.socket.emit('pano', panoid);
     },
 
+    // *** sendMeta(<serialized>google.maps.StreetViewPanoramaData)
+    // send new pano meta to the ViewSync relay
+    sendMeta: function(data) {
+      this.socket.emit('meta', data);
+    },
+
     // *** refresh()
     // request the current state from the relay
     refresh: function() {

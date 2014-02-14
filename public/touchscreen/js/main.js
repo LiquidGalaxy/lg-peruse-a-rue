@@ -89,6 +89,9 @@ function(
     map.on('pano', function(panoid) {
       viewsync.sendPano(panoid);
     });
+    map.on('meta', function(data) {
+      viewsync.sendMeta(data);
+    });
   });
 
   viewsync.on('pano', function(panoid) {

@@ -60,6 +60,10 @@ function(config, L, Stapes, io) {
       L.info('ViewSync: sendPano', panoid);
     },
 
+    sendMeta: function(data) {
+      this.socket.emit('meta', data);
+    },
+
     sendHdg: function(hdg) {
       this.socket.emit('pov', {
         heading: hdg,
