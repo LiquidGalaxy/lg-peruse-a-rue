@@ -43,17 +43,19 @@ function(config, L, Stapes, GMaps, sv_svc) {
 
         if (current_zoom <= 10) {
           min_search_radius = 400;
-          max_search_radius = 1600;
+          max_search_radius = 3200;
         } else if (current_zoom <= 12) {
           min_search_radius = 100;
-          max_search_radius = 400;
+          max_search_radius = 800;
         } else if (current_zoom <= 14) {
           min_search_radius = 50;
-          max_search_radius = 200;
+          max_search_radius = 400;
         } else {
           min_search_radius = 50;
-          max_search_radius = 50;
+          max_search_radius = 200;
         }
+
+        console.debug('min', min_search_radius, 'max', max_search_radius);
 
         sv_svc.getPanoramaByLocation(
           event.latLng,
