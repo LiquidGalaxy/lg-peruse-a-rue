@@ -72,6 +72,8 @@ defaults when the server starts.
 
 - `config['touchscreen']['show_zoomctl']` : zoom buttons
 
+- `config['touchscreen']['show_maptypectl']` : control for road/satellite map
+
 - `config['touchscreen']['font_scale']` : scale fonts by this ratio
 
 - `config['display']['default_pano']` : panoid to start with

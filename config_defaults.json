@@ -11,6 +11,7 @@
     ],
     "show_photospheres": true,
     "show_zoomctl": true,
+    "show_maptypectl": false,
     "font_scale": 1.0
   },
   "display": {
