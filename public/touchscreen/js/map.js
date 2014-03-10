@@ -54,7 +54,7 @@ function(
         center: this.default_center,
         zoom: 14,
         disableDefaultUI: true,
-        mapTypeControl: true,
+        mapTypeControl: config.touchscreen.show_maptypectl,
         mapTypeControlOptions: {
           mapTypeIds: [ GMaps.MapTypeId.ROADMAP, GMaps.MapTypeId.HYBRID ],
           position: GMaps.ControlPosition.TOP_LEFT
