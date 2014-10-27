@@ -59,7 +59,7 @@ function(
           mapTypeIds: [ GMaps.MapTypeId.ROADMAP, GMaps.MapTypeId.HYBRID ],
           position: GMaps.ControlPosition.TOP_LEFT
         },
-        mapTypeId: GMaps.MapTypeId.ROADMAP
+        mapTypeId: GMaps.MapTypeId[config.touchscreen.default_maptype]
       };
 
       this.map = new GMaps.Map(
