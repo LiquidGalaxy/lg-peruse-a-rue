@@ -57,6 +57,7 @@ function(
 
   var LOCAL_CONFIG = {
     master      : ('master' in fields)      ? fields.master      : false,
+    rotate      : ('rotate' in fields)      ? fields.rotate      : 1, // Alf rotate screen Portrait(1) or Landscape(0)
     yawoffset   : ('yawoffset' in fields)   ? fields.yawoffset   : 0,
     pitchoffset : ('pitchoffset' in fields) ? fields.pitchoffset : 0,
     rolloffset  : ('rolloffset' in fields)  ? fields.rolloffset  : 0,
@@ -66,8 +67,9 @@ function(
 
   // *** initialize the StreetView module
   var sv = new StreetViewModule(
-    document.getElementById('pano'),
-    LOCAL_CONFIG.master
+    document.getElementById('panoDiv'), // Alf
+    LOCAL_CONFIG
+    // Alf LOCAL_CONFIG.master
   );
 
   // *** initialize the ViewSync module
@@ -80,8 +82,8 @@ function(
 
   // *** link ViewSync state events to StreetView
   sv.on('ready', function() {
-    viewsync.on('pov_changed', function(pov) {
-      sv.setPov(pov);
+    viewsync.on('pov_changed', function(pov, roll) { //Add roll param
+      sv.setPov(pov, roll); //Alf set roll=5
     });
     viewsync.on('pano_changed', function(panoid) {
       sv.setPano(panoid);
@@ -94,7 +96,7 @@ function(
 
   // *** modules and linkages for master display only
   if (fields.master) {
-    // *** link StretView state changes to ViewSync
+    // *** link StreetView state changes to ViewSync
     viewsync.on('ready', function() {
       if (LOCAL_CONFIG.pano != null) {
         viewsync.sendPano(LOCAL_CONFIG.pano);
@@ -119,6 +121,9 @@ function(
       });
       multiaxis.on('move_forward', function() {
         sv.moveForward();
+      });
+      multiaxis.on('move_backward', function() { // Alf
+        sv.moveBackward();
       });
     });
 

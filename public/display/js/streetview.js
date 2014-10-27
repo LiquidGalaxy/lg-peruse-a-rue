@@ -52,18 +52,24 @@ function(config, L, validate, Stapes, GMaps) {
       ]
     },
 
-    constructor: function($canvas, master) {
+    constructor: function($canvas, opts) { // Alf
       this.$canvas = $canvas;
-      this.master = master;
+      this.master = opts.master;
+      this.rotate = opts.rotate; // Alf rotate monitor or not
       this.map = null;
       this.streetview = null;
       this.meta = null;
       this.pov = null;
       this.mode = config.display.mode;
-      this.zoom = config.display.zoom;
-      this.fov_table = this.SV_HFOV_TABLES[this.mode];
-      this.hfov = this.fov_table[this.zoom];
+      //Alf this.zoom = config.display.zoom;
+      //Alf this.fov_table = this.SV_HFOV_TABLES[this.mode];
       this.vfov = null;
+      //Alf this.hfov = this.fov_table[this.zoom];
+      this.hfov = config.display.hfov; // start Alf
+      this.yawoffset = opts.yawoffset;
+      this.bezel = config.display.bezel;
+      this.maxPitch = config.display.maxPitch;
+      this.yawRads = 0;
     },
 
     // PUBLIC
@@ -94,12 +100,13 @@ function(config, L, validate, Stapes, GMaps) {
 
       // *** options for the streetview object
       var svOptions = {
+        scrollwheel: false, // Alf not needed on slaves
         visible: true,
         disableDefaultUI: true
       };
 
-      // *** only show links on the master display
-      if (this.master) {
+      // *** only show links on the master or center display
+      if (this.master || this.yawoffset == 0) { // Alf
         svOptions.linksControl = true;
       }
 
@@ -109,18 +116,40 @@ function(config, L, validate, Stapes, GMaps) {
         mapOptions
       );
 
+     // Alf add markers - start
+     var latlng1 = new GMaps.LatLng(-33.614589,150.747138);
+     var icon1 = 'http://eresearch.uws.edu.au/public/wonderama/HAC1.png';
+     var image1 = new GMaps.Marker({ position: latlng1, map: this.map, icon: icon1 });
+     var latlng2 = new GMaps.LatLng(-33.615589,150.748138);
+     var icon2 = 'http://eresearch.uws.edu.au/public/wonderama/HAC2.png';
+     var image2 = new GMaps.Marker({ position: latlng2, map: this.map, icon: icon2 });
+     var latlng3 = new GMaps.LatLng(-33.616589,150.749138);
+     var icon3 = 'http://eresearch.uws.edu.au/public/wonderama/HAC3.png';
+     var image3 = new GMaps.Marker({ position: latlng3, map: this.map, icon: icon3 });
+     var latlng4 = new GMaps.LatLng(-33.617589,150.749138);
+     var icon4 = 'http://eresearch.uws.edu.au/public/wonderama/HAC4.png';
+     var image4 = new GMaps.Marker({ position: latlng4, map: this.map, icon: icon4 });
+        //console.debug('Marker code ran');
+     // Alf add markers - end
+
       // *** init streetview object
-      this.streetview = new GMaps.StreetViewPanorama(
+      /* Alf this.streetview = new GMaps.StreetViewPanorama(
         this.$canvas,
         svOptions
-      );
+      ); */
+	this.streetview = this.map.getStreetView();
+	this.streetview.setOptions(svOptions);
+	this.streetview.setVisible(true);
 
       // *** init streetview pov
       this.streetview.setPov({
         heading: 0,
         pitch: 0,
-        zoom: this.zoom
+        // Alf zoom: this.zoom
+	zoom: this.fovToZoom( this.hfov ) // Alf
       });
+
+      //console.log("Zoom hfov:"+this.hfov+" zoom:"+this.fovToZoom(this.hfov));
 
       // *** set the display mode as specified in global configuration
       this.streetview.setOptions({ mode: this.mode });
@@ -128,14 +157,34 @@ function(config, L, validate, Stapes, GMaps) {
       // *** apply the custom streetview object to the map
       this.map.setStreetView( this.streetview );
 
+      this.yawRads = -this.yawoffset * this.hfov * this.bezel * Math.PI/180; // Alf
+
       // *** events for master only
       if (this.master) {
         // *** handle view change events from the streetview object
         GMaps.event.addListener(this.streetview, 'pov_changed', function() {
           var pov = this.streetview.getPov();
 
-          this._broadcastPov(pov);
+		console.log("pov_changed event broadcast"); //Alf 
+	/* Alf master roll stuff */
+	var svContainerElement = null;
+         svContainerElement = document.getElementById("svContainer");
+	//var roll = 10; // getPhotographPov(tilt)-heading
+	var svpov = this.streetview.getPhotographerPov();
+	//svpov.pitch = 0.0;
+	var viewdiff = svpov.heading - pov.heading;
+	//if (viewdiff > 180) { viewdiff -= 180;}
+	//if (viewdiff < -180) { viewdiff += 180;}
+	var roll = svpov.pitch * Math.sin(viewdiff*Math.PI/180);
+	console.log('master viewdiff:'+viewdiff+' roll:'+roll);
+
+          //this._broadcastPov(pov); // Added roll to broadcast
+          this._broadcastPov({ heading:pov.heading, pitch:pov.pitch, zoom:pov.zoom, roll:-roll}); // Added roll to broadcast
+          //this._broadcastPov({ heading:pov.heading, pitch:pov.pitch, zoom:pov.zoom, roll:0}); // Added roll to broadcast
           this.pov = pov;
+
+     svContainerElement.setAttribute("style","transform: rotate(" + roll + "deg);-webkit-transform: rotate(" + roll + "deg)");
+      console.log('master roll:' + roll + ' viewhdg:'+pov.heading + ' campitch:' + svpov.pitch + ' camhdg:'+ svpov.heading);
         }.bind(this));
 
         // *** handle pano change events from the streetview object
@@ -157,6 +206,7 @@ function(config, L, validate, Stapes, GMaps) {
           links[i].style.display = 'none';
           links[i].onclick = function() {return(false);};
         }
+
       }.bind(this.$canvas));
 
       // *** request the last known state from the server
@@ -174,7 +224,21 @@ function(config, L, validate, Stapes, GMaps) {
       window.addEventListener('resize',  function() {
         this._resize();
       }.bind(this));
+
     },
+
+    // start Alf - this is pretty crappy via wolframalpha
+    fovToZoom: function(fov) { // fov > zoom conversion
+        //Alf 20131207 fov = fov * 1.42; // Alf fecking fudge
+	fov = fov *1.42;
+
+        //if (this.master) { fov = fov * 1080/1620; } //slaves are "zoomed" because of CSS canvas, adjust zoom on master to compensate
+
+        var zoom = -3.32969 *10E-7 * Math.pow(fov,3) + 0.000869466 * Math.pow(fov,2) - 0.0976644 * fov + 5.19578; // html5 or webgl
+        console.debug("fTZ fov:"+ fov + " zoom:" + zoom );
+        return zoom;
+    }, // end Alf
+
 
     // *** setPano(panoid)
     // switch to the provided pano, immediately
@@ -187,6 +251,12 @@ function(config, L, validate, Stapes, GMaps) {
       if (panoid != this.streetview.getPano()) {
         this.pano = panoid;
         this.streetview.setPano(panoid);
+     	/* Alf code to look at a fixed latlng
+	var somewhere = new google.maps.LatLng( -33.60958, 150.73777);
+	var newhdg = google.maps.geometry.spherical.computeHeading( this.streetview.getPosition(), somewhere);
+	console.log("setPano: newhdg="+newhdg);
+     	this.streetview.setPov( {heading:newhdg, pitch:0} ); // always throw new pano north
+	*/
       } else {
         console.warn('StreetView: ignoring redundant setPano');
       }
@@ -196,11 +266,57 @@ function(config, L, validate, Stapes, GMaps) {
     // set the view to the provided pov, immediately
     setPov: function(pov) {
       if (!validate.number(pov.heading) || !validate.number(pov.pitch)) {
-        L.error('StreetView: bad pov to setPov!');
+        L.error('StreetView: bad pov sent to setPov!');
+        return;
+      }
+      if (!validate.number(pov.roll)) { //Alf added roll validate check
+        L.error('StreetView: bad roll sent to setPov! roll='+pov.roll);
         return;
       }
 
-      this.streetview.setPov(pov);
+	
+// Alf should do a fix360 on heading
+
+     console.log("in streetview.setPov pov.heading:"+pov.heading+ " pov.pitch:"+pov.pitch + 'pov.roll:'+pov.roll);
+      if (this.master) {
+     this.streetview.setPov( pov );
+	console.log("does setPov ever fire on the master?");
+	/* Alf var svContainerElement = null;
+         svContainerElement = document.getElementById("svContainer");
+	//var pov.roll = - (pov.heading/10 - 5);
+     svContainerElement.setAttribute("style","transform: rotate(" + roll + "deg);-webkit-transform: rotate(" + roll + "deg)");
+      console.log('svC: setPov roll:' + roll + ' hdg:'+pov.heading); */
+
+	} else { // for html5 do pitch rolls
+
+      // start Alf
+      //orig var svContainerElement = document.getElementById("svLContainer");
+
+	var svContainerElement = null;
+     if (this.rotate == 1) {
+         svContainerElement = document.getElementById("svContainer");
+     } else {
+         svContainerElement = document.getElementById("svLContainer");
+     }
+
+     //var htr = [ pov.heading, pov.pitch, 0 ]; // heading,pitch,roll from master
+     var htr = [ pov.heading, pov.pitch, pov.roll ]; // heading,pitch,roll from master
+     var transform = M33.headingTiltRollToLocalOrientationMatrix( htr );
+     transform[0] = V3.rotate(transform[0], transform[2], this.yawRads);
+     transform[1] = V3.rotate(transform[1], transform[2], this.yawRads);
+     var slaveHTR =  M33.localOrientationMatrixToHeadingTiltRoll( transform );
+
+	// heading = slaveHTR[0], pitch = slaveHTR[1], roll = slaveHTR[2]
+     // this.streetview.setPov({ heading:slaveHTR[0], pitch:slaveHTR[1], zoom:pov.zoom });
+     this.streetview.setPov({ heading:slaveHTR[0], pitch:slaveHTR[1] }); // don't copy zoom
+
+     var slaveRoll = -slaveHTR[2];
+
+     svContainerElement.setAttribute("style","transform: rotate(" + slaveRoll + "deg);-webkit-transform: rotate(" + slaveRoll + "deg)");
+
+      console.log('svC: setPov slaveRoll:' + slaveRoll + ' hdg:'+pov.heading+ ' slhdg:'+slaveHTR[0]);
+ // end Alf
+	}
     },
 
     // *** setHdg(heading)
@@ -223,17 +339,26 @@ function(config, L, validate, Stapes, GMaps) {
       }
 
       var pov = this.streetview.getPov();
+      //console.log('translatePov pov.heading:'+pov.heading+ ' pov.pitch:'+pov.pitch);
 
-      pov.heading += abs.yaw;
-      pov.pitch   += abs.pitch;
+      pov.heading += abs.yaw / 2;// start Alf - slow down yaw
+      pov.pitch   += abs.pitch / 5; // slow down pitch
 
+      if (pov.pitch > this.maxPitch) {
+          pov.pitch = this.maxPitch;
+      } else if (pov.pitch < -this.maxPitch) {
+          pov.pitch = -this.maxPitch;
+      } // end Alf
+
+	// console.log('translatePov pov.hdg:'+pov.heading+' pov.pitch:'+pov.pitch+ 'pov.zoom:'+pov.zoom);
       this.streetview.setPov(pov);
+      // console.log('svC: translatePov'); // Alf
     },
 
     // *** moveForward()
     // move to the pano nearest the current heading
     moveForward: function() {
-      console.log('moving forward');
+      // console.log('moving forward');
       var forward = this._getForwardLink();
       if(forward) {
         this.setPano(forward.pano);
@@ -243,6 +368,20 @@ function(config, L, validate, Stapes, GMaps) {
       }
     },
 
+    // *** moveBackward() // start Alf
+    // move to the pano farest from the current heading
+    moveBackward: function() {
+      //console.log('moving backward');
+      var backward = this._getBackwardsLink();
+      if(backward) {
+        this.setPano(backward.pano);
+        this._broadcastPano(backward.pano);
+      } else {
+        console.log("can't move backward, no links!");
+      }
+    }, // end Alf
+
+
     // PRIVATE
 
     // *** _resize()
@@ -251,7 +390,7 @@ function(config, L, validate, Stapes, GMaps) {
       var screenratio = window.innerHeight / window.innerWidth;
       this.vfov = this.hfov * screenratio;
       this.emit('size_changed', {hfov: this.hfov, vfov: this.vfov});
-      console.debug('StreetView: resize', this.hfov, this.vfov);
+      console.debug('StreetView: resize hfov:'+ this.hfov + ' vfov:'+ this.vfov);
     },
 
     // *** _broadcastPov(GMaps.StreetViewPov)
@@ -293,7 +432,7 @@ function(config, L, validate, Stapes, GMaps) {
       for(var i=0; i<len; i++) {
         var link = links[i];
         var difference = this._getLinkDifference(pov, link);
-        console.log(difference, link);
+        //Alf console.log(difference, link);
         if (difference < nearest_difference) {
           nearest = link;
           nearest_difference = difference;
@@ -301,7 +440,30 @@ function(config, L, validate, Stapes, GMaps) {
       }
 
       return nearest;
-    }
+    }, // start Alf
+
+    // *** _getBackwardsLink() // start Alf
+    // return the link nearest the current heading
+    _getBackwardsLink: function() {
+      var pov = this.streetview.getPov();
+      var links = this.streetview.getLinks();
+      var len = links.length;
+      var farest = null;
+      var farest_difference = 0;
+
+      for(var i=0; i<len; i++) {
+        var link = links[i];
+        var difference = this._getLinkDifference(pov, link);
+        // Alf console.log(difference, link);
+        if (difference > farest_difference) {
+          farest = link;
+          farest_difference = difference;
+        }
+      }
+
+      return farest;
+    } // end Alf
+
   });
 
   return StreetViewModule;

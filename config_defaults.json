@@ -16,6 +16,9 @@
   "display": {
     "default_pano": "rERiG4FHdYnqLBqpkVOUdg",
     "zoom": 3,
-    "mode": "html4"
+    "mode": "html5",
+    "hfov": 30,
+    "bezel": 1.10,
+    "maxPitch": 30
   }
 }

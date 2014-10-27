@@ -148,7 +148,7 @@
         "identifier": "3_bYfC_dAE0Unh_ysYMEoA",
         "lookup": "panoid",
         "slug": "adachi-museum-art",
-        "title": "Adachi Museum of Art",
+        "title": "Adachi Museum of Art, Japan",
         "heading": 115
       },
       {
@@ -162,7 +162,7 @@
         "identifier": "FsSQSl8hX2jWawMfuE8K1w",
         "lookup": "panoid",
         "slug": "ateneum-art-museum",
-        "title": "Ateneum Art Museum",
+        "title": "Ateneum Art Museum, Helsinki",
         "heading": 277
       },
       {
@@ -183,8 +183,15 @@
         "identifier": "of3znKyi1Dfd2qtRWMbHaQ",
         "lookup": "panoid",
         "slug": "musee-dorsay",
-        "title": "Musee d'Orsay",
+        "title": "Musee d'Orsay, Paris",
         "heading": 207
+      },
+      {
+        "identifier": "GiXlbyE_W0XZEK7lOdvq8w",
+        "lookup": "panoid",
+        "slug": "nationalmuseum-sweden",
+        "title": "Nationalmuseum Sweden",
+        "heading": 0
       },
       {
         "identifier": "NTLCqsIo6Vkyq--jBjBKpA",

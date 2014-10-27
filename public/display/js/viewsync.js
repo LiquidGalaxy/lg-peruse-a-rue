@@ -41,6 +41,8 @@ function(config, L, validate, Stapes, io) {
       this.pitchshift  = null;
       this.origin      = null;
       this.socket      = null;
+      this.rotate      = opts.rotate; // Alf
+      this.bezel       = config.display.bezel; // Alf
     },
 
     // PUBLIC
@@ -53,11 +55,12 @@ function(config, L, validate, Stapes, io) {
         return;
       }
 
-      this.yawshift = this.yawoffset * fov.hfov;
+      this.yawshift = this.yawoffset * fov.hfov * this.bezel; // Alf
       this.pitchshift = this.pitchoffset * fov.vfov;
       if (this.origin !== null) {
         this._applyPov(this._translatePov(this.origin));
       }
+	 console.debug("resize yawshift:"+this.yawshift + "("+fov.hfov +","+this.bezel+")"); // Alf
     },
 
     // *** sendPov(google.maps.StreetViewPov)
@@ -79,7 +82,7 @@ function(config, L, validate, Stapes, io) {
         return;
       }
 
-      L.info('ViewSync: sendPano', panoid);
+      //Alf L.info('ViewSync: sendPano', panoid);
       this.socket.emit('pano', panoid);
     },
 
@@ -155,7 +158,8 @@ function(config, L, validate, Stapes, io) {
     // *** _recvPov(google.maps.StreetViewPov)
     // unpack and process the pov from a relay message
     _recvPov: function(pov) {
-      this._applyPov(this._translatePov(pov));
+      //Alf this._applyPov(this._translatePov(pov));
+      this._applyPov(pov); // Alf don't translate
       this.origin = pov;
     },
 
