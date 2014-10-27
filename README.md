@@ -74,6 +74,9 @@ defaults when the server starts.
 
 - `config['touchscreen']['font_scale']` : scale fonts by this ratio
 
+- `config['touchscreen']['default_maptype']` : sets the map imagery style
+  - See the [MapTypeId][maptypeid] reference for supported map styles
+
 - `config['display']['default_pano']` : panoid to start with
 
 - `config['display']['zoom']` : street view zoom level (Integer 0-4)
@@ -153,3 +156,5 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+[maptypeid]: https://developers.google.com/maps/documentation/javascript/reference#MapTypeId
