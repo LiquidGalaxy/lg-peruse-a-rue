@@ -109,7 +109,7 @@ function(
       });
 
       // disable all <a> tags on the map canvas
-      GMaps.event.addListenerOnce(this.map, 'idle', function() {
+      GMaps.event.addListener(this.map, 'idle', function() {
         var links = self.$canvas.getElementsByTagName("a");
         var len = links.length;
         for (var i = 0; i < len; i++) {
