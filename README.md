@@ -139,6 +139,8 @@ will follow its point of view.  Typically this is the center display.
 - pano : Load a Street View pano by panoid at startup.  Only accepted by the
 master instance.
 
+- heading : Specify a heading in degrees.  Only accepted by the master.
+
 Examples:
 
     http://lg-head:8086/display/?master=true  # master
