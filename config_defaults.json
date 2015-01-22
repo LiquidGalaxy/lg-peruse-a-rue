@@ -4,7 +4,7 @@
   "lg_iface_base": "http://lg1:81",
   "earth_pos_url": "http://lg-head:8888/window.json?window_slug=earth_center",
   "touchscreen": {
-    "default_center": [37.604555,-122.498633],
+    "default_center": [37.212168,-112.976732],
     "poi_url": "/touchscreen/poi-defaults.json",
     "activities": [
       { "title": "Google Earth", "app": "earth" }
