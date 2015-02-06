@@ -261,6 +261,13 @@
         "slug": "grand-canyon",
         "title": "Grand Canyon",
         "heading": 38
+      },
+      {
+        "identifier": "ZphZajKeR_lJjBJftY0SYw",
+        "lookup": "panoid",
+        "slug": "zion",
+        "title": "Zion",
+        "heading": 0
       }    
     ],
     "description": "National Parks",
