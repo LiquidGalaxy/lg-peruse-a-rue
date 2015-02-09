@@ -42,7 +42,49 @@
         "slug": "zion",
         "title": "Zion",
         "heading": 0
-      }    
+      },    
+      {
+        "identifier": "FRwQVUp8gTz_s0mNIHrBpA",
+        "lookup": "panoid",
+        "slug": "banff",
+        "title": "Banff",
+        "heading": 119.14
+      },    
+      {
+        "identifier": "R3myvCbkJEL1QYNUk0tarQ",
+        "lookup": "panoid",
+        "slug": "joshua-tree",
+        "title": "Joshua Tree",
+        "heading": 165.82 
+      },   
+      {
+        "identifier": "ixNCQULC2-MAAAQfCNpBaw",
+        "lookup": "panoid",
+        "slug": "mt-rainer",
+        "title": "Mt. Rainer",
+        "heading": 184.79
+      },    
+      {
+        "identifier": "zkmD_uKsJ7EAAAQYP-8TNw",
+        "lookup": "panoid",
+        "slug": "glacier",
+        "title": "Glacier",
+        "heading": 156.44 
+      },    
+      {
+        "identifier": "srwg9XdbVqgAAAQZTvmrGg",
+        "lookup": "panoid",
+        "slug": "death-valley",
+        "title": "Death Valley",
+        "heading": 306.55
+      },    
+      {
+        "identifier": "rmMITKW-esgAAAAGOrpnVg",
+        "lookup": "panoid",
+        "slug": "big-bend",
+        "title": "Big Bend",
+        "heading": 68.82 
+      }     
     ],
     "description": "National Parks",
     "title": "National Parks"
