@@ -3,7 +3,7 @@
   "udp_port": 8086,
   "earth_pos_url": "http://lg-head:8888/window.json?window_slug=earth_center",
   "touchscreen": {
-    "default_center": [37.604555,-122.498633],
+    "default_center": [48.845985,2.325925],
     "poi_url": "/touchscreen/poi-defaults.json",
      "activities": [
       {
@@ -17,7 +17,7 @@
     "font_scale": 1.0
   },
   "display": {
-    "default_pano": "rERiG4FHdYnqLBqpkVOUdg",
+    "default_pano": "RXEzjLygO5ZPej-nro7JMA",
     "zoom": 3,
     "mode": "html4"
   }
