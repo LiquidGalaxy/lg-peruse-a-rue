@@ -1,0 +1,85 @@
+[
+  {
+    "objects": [
+      {
+        "identifier": "3_bYfC_dAE0Unh_ysYMEoA",
+        "lookup": "panoid",
+        "slug": "adachi-museum-art",
+        "title": "Adachi Museum of Art",
+        "heading": 115
+      },
+      {
+        "identifier": "WlAty8ELmF7C6s5wGw1WQA",
+        "lookup": "panoid",
+        "slug": "art-gallery-new-south-wales",
+        "title": "Art Gallery of New South Wales",
+        "heading": 192
+      },
+      {
+        "identifier": "FsSQSl8hX2jWawMfuE8K1w",
+        "lookup": "panoid",
+        "slug": "ateneum-art-museum",
+        "title": "Ateneum Art Museum",
+        "heading": 277
+      },
+      {
+        "identifier": "G92BZF4Sjg9-6uvVROk0rQ",
+        "lookup": "panoid",
+        "slug": "chateau-de-fontainebleau",
+        "title": "Ch\u00e2teau de Fontainebleau",
+        "heading": 177
+      },
+      {
+        "identifier": "bw9RhAzNyFuE8ALzgIHK3A",
+        "lookup": "panoid",
+        "slug": "monastery-st-john-theologian",
+        "title": "Monastery of St. John the Theologian",
+        "heading": 112
+      },
+      {
+        "identifier": "of3znKyi1Dfd2qtRWMbHaQ",
+        "lookup": "panoid",
+        "slug": "musee-dorsay",
+        "title": "Musee d'Orsay",
+        "heading": 207
+      },
+      {
+        "identifier": "NTLCqsIo6Vkyq--jBjBKpA",
+        "lookup": "panoid",
+        "slug": "musee-dart-moderne-andre-malraux",
+        "title": "Musee d'art moderne Andr\u00e9 Malraux",
+        "heading": 0
+      },
+      {
+        "identifier": "a-nx4mfm1fsSZ6aHmTcdHQ",
+        "lookup": "panoid",
+        "slug": "national-museum-denmark",
+        "title": "National Museum of Denmark",
+        "heading": 232
+      },
+      {
+        "identifier": "GiXlbyE_W0XZEK7lOdvq8w",
+        "lookup": "panoid",
+        "slug": "nationalmuseum-sweden",
+        "title": "Nationalmuseum Sweden",
+        "heading": 0
+      },
+      {
+        "identifier": "dDW60hTubZX3KOpoNWcDjg",
+        "lookup": "panoid",
+        "slug": "borgen",
+        "title": "Borgen",
+        "heading": 241
+      },
+      {
+        "identifier": "39oOC_e2Oryqu6gMWimD0w",
+        "lookup": "panoid",
+        "slug": "state-tretyakov-gallery",
+        "title": "The State Tretyakov Gallery",
+        "heading": 308
+      }
+    ],
+    "description": "Art museums captured by Google Art Project.",
+    "title": "Art Project"
+  }
+]

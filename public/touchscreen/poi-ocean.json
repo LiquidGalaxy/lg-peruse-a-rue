@@ -1,0 +1,84 @@
+[
+  {
+    "objects": [
+      {
+        "description": "Great Barrier Reef, Australia",
+        "identifier": "CWskcsTEZBNXaD8gG-zATA",
+        "lookup": "panoid",
+        "slug": "heron-island",
+        "title": "Heron Island",
+        "heading": 342
+      },
+      {
+        "description": "Great Barrier Reef, Australia",
+        "identifier": "TNE1NPAnEUNYhGk9kFWyJw",
+        "lookup": "panoid",
+        "slug": "wilson-island",
+        "title": "Wilson Island",
+        "heading": 283
+      },
+      {
+        "description": "Great Barrier Reef, Australia",
+        "identifier": "x6cl4DcO0kwXqU4UKK9DWQ",
+        "lookup": "panoid",
+        "slug": "lady-elliot-island",
+        "title": "Lady Elliot Island",
+        "heading": 160
+      },
+      {
+        "description": "Dauin, Philippines",
+        "identifier": "MR7U6ji0NDZ1j5feP2Dcdg",
+        "lookup": "panoid",
+        "slug": "apo-islands",
+        "title": "Apo Islands",
+        "heading": 225
+      },
+      {
+        "description": "Hawaii, United States",
+        "identifier": "_HKq3kJG3NNXV9ElI9J8Wg",
+        "lookup": "panoid",
+        "slug": "hanauma-bay",
+        "title": "Hanauma Bay",
+        "heading": 220
+      },
+      {
+        "description": "Hawaii, United States",
+        "identifier": "GQ4AkG9eGKzbhzDGtyvi1A",
+        "lookup": "panoid",
+        "slug": "molokini-crater",
+        "title": "Molokini Crater",
+        "heading": 30
+      },
+      {
+        "identifier": "evECSTueMhYAAAQIt--IIg",
+        "lookup": "panoid",
+        "slug": "galapagos-sea-lions",
+        "title": "Galapagos: Playful Sea Lions",
+        "heading": 345
+      },
+      {
+        "identifier": "AIS1dRsr80EAAAQIt-rwkw",
+        "lookup": "panoid",
+        "slug": "galapagos-diving-at-champion",
+        "title": "Galapagos: Diving at Champion",
+        "heading": 205
+      },
+      {
+        "identifier": "v05O4YzTx6N3u5_ZP4zfTw",
+        "lookup": "panoid",
+        "slug": "galapagos-mangrove-habitat",
+        "title": "Galapagos: Mangrove Habitat",
+        "heading": 185
+      },
+      {
+        "identifier": "D_QiN99oipvKGnFyhidcRg",
+        "lookup": "panoid",
+        "slug": "galapagos-san-cristobal-island",
+        "title": "Galapagos: San Cristóbal Island",
+        "heading": 265
+      }
+    ],
+    "description": "Underwater panoramas of coral reefs provided by Catlin Seaview Survey.",
+    "title": "Ocean"
+  }
+]
