@@ -97,7 +97,8 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
       // *** options for the streetview object
       var svOptions = {
         visible: true,
-        disableDefaultUI: true
+        disableDefaultUI: true,
+        scrollwheel: false
       };
 
       // *** only show links on the master display
@@ -187,8 +188,12 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
       }
 
       if (panoid != this.streetview.getPano()) {
+        var pov = this.streetview.getPov();
+        pov.pitch = 0;
+        pov.zoom = this.zoom;
         this.pano = panoid;
         this.streetview.setPano(panoid);
+        this.setPov(pov);
       } else {
         console.warn('StreetView: ignoring redundant setPano');
       }
