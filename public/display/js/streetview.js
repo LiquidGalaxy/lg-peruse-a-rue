@@ -189,7 +189,8 @@ function(config, L, validate, Stapes, GMaps) {
 
       if (panoid != this.streetview.getPano()) {
         var pov = this.streetview.getPov();
-        pov.pitch = 0;
+        // disable the pov.pitch fix on systems with multiple rows
+        //pov.pitch = 0;
         pov.zoom = this.zoom;
         this.pano = panoid;
         this.streetview.setPano(panoid);
