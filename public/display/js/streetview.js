@@ -189,7 +189,6 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
 
       if (panoid != this.streetview.getPano()) {
         var pov = this.streetview.getPov();
-        pov.pitch = 0;
         pov.zoom = this.zoom;
         this.pano = panoid;
         this.streetview.setPano(panoid);
