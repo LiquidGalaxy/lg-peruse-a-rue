@@ -148,6 +148,7 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
           if (panoid != self.pano) {
             self._broadcastPano(panoid);
             self.pano = panoid;
+            self.resetPov();
           }
         });
       }
@@ -159,7 +160,7 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
         for (var i = 0; i < len; i++) {
           links[i].style.display = 'none';
           links[i].onclick = function() {return(false);};
-        }
+       }
       });
 
       // *** request the last known state from the server
@@ -188,13 +189,9 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
       }
 
       if (panoid != this.streetview.getPano()) {
-        var pov = this.streetview.getPov();
-        // disable the pov.pitch fix on systems with multiple rows
-        //pov.pitch = 0;
-        pov.zoom = this.zoom;
         this.pano = panoid;
         this.streetview.setPano(panoid);
-        this.setPov(pov);
+        this.resetPov();
       } else {
         console.warn('StreetView: ignoring redundant setPano');
       }
@@ -209,6 +206,18 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
       }
 
       this.streetview.setPov(pov);
+    },
+
+    // *** restPov(Gmaps.StreetViewPov)
+    // reset the pitch for the provided pov
+    resetPov: function() {
+      if (! this.master) {
+        return;
+      }
+      var pov = this.streetview.getPov();
+      pov.pitch = 0;
+      pov.zoom = this.zoom;
+      this.setPov(pov);
     },
 
     // *** setHdg(heading)
@@ -294,10 +303,9 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
       var pov_heading = pov.heading;
       var link_heading = link.heading;
 
-      var diff = link_heading - pov_heading;
-      diff = Math.abs((diff + 180) % 360 - 180);
+      var diff = Math.abs(link_heading - pov_heading) % 360;
 
-      return diff;
+      return diff >= 180 ? diff - (diff - 180) * 2 : diff;
     },
 
     // *** _getForwardLink()
