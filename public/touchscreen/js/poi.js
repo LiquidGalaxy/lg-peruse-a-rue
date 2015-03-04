@@ -39,17 +39,38 @@ function(config, L, Stapes, $, leftUI, doT) {
     // return content from URL
     _load_poi_from_url: function(content_url) {
       var self = this;
+      var urls = content_url.split(",");
+      var remote = [];
+      var ajaxRequests = [];
 
-      $.ajax({
-          url: content_url,
-          dataType: 'json',
-          success: function(remote_data) {
-            self._apply_categories(remote_data);
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            L.error('load_poi_from_url():', textStatus, ':', errorThrown);
-          }
+      // loadData to create the Ajax requests for each POI files
+      function loadData(url1) {
+          var ajaxCall = $.ajax({
+              url: url1,
+              dataType: 'json',
+              success: function(remote_data) {
+                remote.push(remote_data[0]);
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                L.error('load_poi_from_url():', textStatus, ':', errorThrown);
+              }
+          });
+          return ajaxCall;
+      };
+
+      // Framing an Array of Ajax Requests 
+      $.each(urls, function( index, url ) {
+        ajaxRequests.push(loadData(url));
       });
+
+
+      // Calling jQuery.when with passing ajaxRequests we made 
+      // This will wait for all the requests to complete and apply the categories and templates. 
+      var allRequests = $.when.apply($, ajaxRequests);
+      allRequests.done(function(){
+        self._apply_categories(remote);
+      });
+
     },
 
     _apply_categories: function(categories) {
