@@ -1,11 +1,21 @@
-define(['jquery', 'jquery-collapse'], function($, jQueryCollapse) {
+define(['config', 'jquery', 'jquery-collapse'], function(config,$, jQueryCollapse) {
   var $leftUI = $('#left-ui');
 
   function refresh() {
-    new jQueryCollapse($leftUI, {
-      accordion: true,
+    var fun = new jQueryCollapse($leftUI, {
+      accordion: false,
       query: 'div h2'
     });
+
+    if(config.touchscreen.show_activities == true){
+      fun.open(1);
+    }
+    if(config.touchscreen.show_poi == true){
+      fun.open(0);
+      if(config.touchscreen.show_activities == false){
+        fun.close(1);
+      }
+    }
   }
 
   return {
