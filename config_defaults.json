@@ -3,6 +3,7 @@
   "udp_port": 8086,
   "lg_iface_base": "http://lg1:81",
   "earth_pos_url": "http://lg-head:8888/window.json?window_slug=earth_center",
+  "always_revert_to_default_pano": false,
   "touchscreen": {
     "default_center": [37.212168,-112.976732],
     "poi_url": "/touchscreen/poi-defaults.json",
