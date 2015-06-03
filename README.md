@@ -76,6 +76,8 @@ defaults when the server starts.
 
 - `config['touchscreen']['show_maptypectl']` : control for road/satellite map
 
+- `config['touchscreen']['show_activities']` : show/hide "Other Activities" box 
+
 - `config['touchscreen']['font_scale']` : scale fonts by this ratio
 
 - `config['touchscreen']['default_maptype']` : sets the map imagery style
