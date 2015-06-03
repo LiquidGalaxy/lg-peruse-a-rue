@@ -127,5 +127,10 @@ function(
   poi.init();
 
   photospheres.init();
+  
+  if(config.touchscreen.show_activities == true){
+      activities.init();
+  }
+  
 
 });
