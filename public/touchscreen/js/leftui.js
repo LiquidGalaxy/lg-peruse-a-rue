@@ -7,12 +7,12 @@ define(['config', 'jquery', 'jquery-collapse'], function(config,$, jQueryCollaps
       query: 'div h2'
     });
 
-    if(config.touchscreen.show_activities == true){
+    if(config.touchscreen.expand_activities == true){
       fun.open(1);
     }
-    if(config.touchscreen.show_poi == true){
+    if(config.touchscreen.expand_poi == true){
       fun.open(0);
-      if(config.touchscreen.show_activities == false){
+      if(config.touchscreen.expand_activities == false){
         fun.close(1);
       }
     }

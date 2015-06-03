@@ -79,9 +79,9 @@ defaults when the server starts.
 - `config['touchscreen']['default_maptype']` : sets the map imagery style
   - See the [MapTypeId][maptypeid] reference for supported map styles
   
-- `config['touchscreen']['show_poi']` : Opens the "Points of Interest" Section
+- `config['touchscreen']['expand_poi']` : Expands the "Points of Interest" Section
 
-- `config['touchscreen']['show_other_activities']` : Opens the "Other Activities" Section
+- `config['touchscreen']['expand_activities']` : Expands the "Other Activities" Section
 
 - `config['display']['default_pano']` : panoid to start with
 

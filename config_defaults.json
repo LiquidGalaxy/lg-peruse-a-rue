@@ -15,8 +15,8 @@
     "show_maptypectl": false,
     "font_scale": 1.0,
     "default_maptype": "ROADMAP",
-    "show_poi": false,
-    "show_activities":false
+    "expand_poi": false,
+    "expand_activities": false
   },
   "display": {
     "default_pano": "ZphZajKeR_lJjBJftY0SYw",
