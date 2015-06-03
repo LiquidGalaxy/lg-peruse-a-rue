@@ -128,6 +128,4 @@ function(
 
   photospheres.init();
 
-  activities.init();
-
 });
