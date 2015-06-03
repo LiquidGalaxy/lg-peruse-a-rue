@@ -62,6 +62,8 @@ defaults when the server starts.
 
 - `config['earth_pos_url']` : json data representing Earth's last position
 
+- `config['always_revert_to_default_pano']` : if set to true, when leaving earth enter streetview at `config['display']['default_pano']` (default false)
+
 - `config['touchscreen']['poi_url']` : url to touchscreen locations, comma seperated values for multiple URL's.
 
 - `config['touchscreen']['default_center']` : [lat,lng]
