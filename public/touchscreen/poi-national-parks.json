@@ -23,26 +23,12 @@
         "heading": 97
       },
       {
-        "identifier": "iUWxDZYl9nkAAAQfCr4utw",
-        "lookup": "panoid",
-        "slug": "yellowstone",
-        "title": "Yellowstone",
-        "heading": 107
-      },
-      {
         "identifier": "ubAc5wjKYLEAAAQYfeC9cQ",
         "lookup": "panoid",
         "slug": "grand-canyon",
         "title": "Grand Canyon",
         "heading": 38
       },
-      {
-        "identifier": "ZphZajKeR_lJjBJftY0SYw",
-        "lookup": "panoid",
-        "slug": "zion",
-        "title": "Zion",
-        "heading": 0
-      },    
       {
         "identifier": "FRwQVUp8gTz_s0mNIHrBpA",
         "lookup": "panoid",
@@ -56,13 +42,6 @@
         "slug": "joshua-tree",
         "title": "Joshua Tree",
         "heading": 165.82 
-      },   
-      {
-        "identifier": "ixNCQULC2-MAAAQfCNpBaw",
-        "lookup": "panoid",
-        "slug": "mt-rainer",
-        "title": "Mt. Rainer",
-        "heading": 184.79
       },    
       {
         "identifier": "zkmD_uKsJ7EAAAQYP-8TNw",
@@ -70,13 +49,6 @@
         "slug": "glacier",
         "title": "Glacier",
         "heading": 156.44 
-      },    
-      {
-        "identifier": "srwg9XdbVqgAAAQZTvmrGg",
-        "lookup": "panoid",
-        "slug": "death-valley",
-        "title": "Death Valley",
-        "heading": 306.55
       },    
       {
         "identifier": "rmMITKW-esgAAAAGOrpnVg",
