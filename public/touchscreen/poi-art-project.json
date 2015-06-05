@@ -9,13 +9,6 @@
         "heading": 115
       },
       {
-        "identifier": "WlAty8ELmF7C6s5wGw1WQA",
-        "lookup": "panoid",
-        "slug": "art-gallery-new-south-wales",
-        "title": "Art Gallery of New South Wales",
-        "heading": 192
-      },
-      {
         "identifier": "FsSQSl8hX2jWawMfuE8K1w",
         "lookup": "panoid",
         "slug": "ateneum-art-museum",
@@ -49,13 +42,6 @@
         "slug": "nationalmuseum-sweden",
         "title": "Nationalmuseum Sweden",
         "heading": 0
-      },
-      {
-        "identifier": "39oOC_e2Oryqu6gMWimD0w",
-        "lookup": "panoid",
-        "slug": "state-tretyakov-gallery",
-        "title": "The State Tretyakov Gallery",
-        "heading": 308
       }
     ],
     "description": "Art museums captured by Google Art Project.",
