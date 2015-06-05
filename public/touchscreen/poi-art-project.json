@@ -23,18 +23,18 @@
         "heading": 277
       },
       {
-        "identifier": "G92BZF4Sjg9-6uvVROk0rQ",
-        "lookup": "panoid",
-        "slug": "chateau-de-fontainebleau",
-        "title": "Ch\u00e2teau de Fontainebleau",
-        "heading": 177
-      },
-      {
         "identifier": "of3znKyi1Dfd2qtRWMbHaQ",
         "lookup": "panoid",
         "slug": "musee-dorsay",
         "title": "Musee d'Orsay",
         "heading": 207
+      },
+      {
+        "identifier": "G92BZF4Sjg9-6uvVROk0rQ",
+        "lookup": "panoid",
+        "slug": "chateau-de-fontainebleau",
+        "title": "Ch\u00e2teau de Fontainebleau",
+        "heading": 177
       },
       {
         "identifier": "NTLCqsIo6Vkyq--jBjBKpA",
