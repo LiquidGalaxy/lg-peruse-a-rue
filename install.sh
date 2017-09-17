@@ -58,6 +58,10 @@ fi
   cd "$TARGET_DIR"
 	git pull
   npm install
+  gcc -o bin/spacenav-emitter src/spacenav-emitter.c
+  sudo chmod 0644 /dev/input/by-id/usb-3Dconnexion_SpaceNavigator-event-if00 
+  
+
   pm2 --name peruse start npm -- start
 	pm2 save
 )
