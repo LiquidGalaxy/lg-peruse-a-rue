@@ -1,0 +1,28 @@
+[
+  {
+    "objects": [
+      {
+        "identifier": "128HtoQ4x64AAAAGOzfuvg",
+        "lookup": "panoid",
+        "slug": "dtla",
+        "title": "DTLA",
+        "heading": 0
+      },
+      {
+        "identifier": "vm4452w6jY0AAAQWhTRlzQ",
+        "lookup": "panoid",
+        "slug": "prague",
+        "title": "Prague",
+        "heading": 0
+      },
+      {
+        "identifier": "1fQCGHkIkwoAAAQW93YesQ",
+        "lookup": "panoid",
+        "slug": "sacramento",
+        "title": "Sacramento",
+        "heading": 0
+      }
+    ],
+    "title": "CBRE"
+  }
+]

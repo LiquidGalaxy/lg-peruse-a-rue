@@ -27,7 +27,7 @@ define(['config'], function(config) {
       featureType: "administrative",
       elementType: "all",
       stylers: [
-        { visibility: "off" }
+        { visibility: "on" }
       ]
     },
     {

@@ -52,6 +52,8 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
       ]
     },
 
+    PANO_POV_DELAY_FRAMES: 20,
+
     constructor: function($canvas, master) {
       this.$canvas = $canvas;
       this.master = master;
@@ -64,6 +66,7 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
       this.fov_table = this.SV_HFOV_TABLES[this.mode];
       this.hfov = this.fov_table[this.zoom];
       this.vfov = null;
+      this.framesSincePanoChange = 0;
     },
 
     // PUBLIC
@@ -119,11 +122,12 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
       );
 
       // *** init streetview pov
-      this.streetview.setPov({
+      this.pov = {
         heading: 0,
         pitch: 0,
         zoom: this.zoom
-      });
+      };
+      this.streetview.setPov(this.pov);
 
       // *** set the display mode as specified in global configuration
       this.streetview.setOptions({ mode: this.mode });
@@ -174,10 +178,17 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
         self.emit('ready');
       });
 
+      GMaps.event.addListener(this.streetview, 'status_changed', function() {
+        this.framesSincePanoChange = this.PANO_POV_DELAY_FRAMES;
+      });
+
       // *** handle window resizing
       window.addEventListener('resize',  function() {
         self._resize();
       });
+
+      // *** start collecting pov changes once per anim frame
+      this._collectPov();
     },
 
     // *** setPano(panoid)
@@ -189,6 +200,7 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
       }
 
       if (panoid != this.streetview.getPano()) {
+        this.framesSincePanoChange = this.PANO_POV_DELAY_FRAMES;
         this.pano = panoid;
         this.streetview.setPano(panoid);
         this.resetPov();
@@ -205,7 +217,7 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
         return;
       }
 
-      this.streetview.setPov(pov);
+      this.pov = pov;
     },
 
     // *** restPov(Gmaps.StreetViewPov)
@@ -214,10 +226,18 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
       if (! this.master) {
         return;
       }
-      var pov = this.streetview.getPov();
-      pov.pitch = 0;
-      pov.zoom = this.zoom;
-      this.setPov(pov);
+      var pov = {
+        heading: this.pov.heading,
+        pitch: this.pov.pitch
+      };
+      if (pov.pitch != 0) {
+        pov.pitch = 0;
+        this.setPov(pov);
+      }
+      var zoom = this.streetview.getZoom();
+      if (zoom != this.zoom) {
+        this.streetview.setZoom(this.zoom);
+      }
     },
 
     // *** setHdg(heading)
@@ -234,17 +254,21 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
     // *** translatePov({yaw, pitch})
     // translate the view by a relative pov
     translatePov: function(abs) {
+      // prevent spacenav "jumping" after pano change
+      if (this.framesSincePanoChange > 0) {
+        return;
+      }
+
       if (!validate.number(abs.yaw) || !validate.number(abs.pitch)) {
         L.error('StreetView: bad abs to translatePov!');
         return;
       }
 
-      var pov = this.streetview.getPov();
-
-      pov.heading += abs.yaw;
-      pov.pitch   += abs.pitch;
-
-      this.streetview.setPov(pov);
+      var pov1 = {
+        heading: this.pov.heading + abs.yaw,
+        pitch: this.pov.pitch + abs.pitch
+      };
+      this.setPov(pov1);
     },
 
     // *** moveForward()
@@ -328,6 +352,29 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
       }
 
       return nearest;
+    },
+
+    // *** _collectPov()
+    // set the street view pov to match internal state
+    _collectPov: function() {
+      var self = this;
+      requestAnimationFrame(function() {
+        self._collectPov();
+      });
+
+      if (this.framesSincePanoChange > 0) {
+        this.framesSincePanoChange--;
+        return;
+      }
+
+      if (!this.pov) {
+        return;
+      }
+
+      var pov1 = this.streetview.getPov();
+      if (this.pov.heading !== pov1.heading || this.pov.pitch !== pov1.pitch) {
+        this.streetview.setPov(this.pov);
+      }
     }
   });
 
