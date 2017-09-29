@@ -54,7 +54,7 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
 
     PANO_POV_DELAY_FRAMES: 20,
 
-    constructor: function($canvas, master) {
+    constructor: function($canvas, master, zoom) {
       this.$canvas = $canvas;
       this.master = master;
       this.map = null;
@@ -62,7 +62,7 @@ function(config, L, validate, Stapes, GMaps, sv_svc) {
       this.meta = null;
       this.pov = null;
       this.mode = config.display.mode;
-      this.zoom = config.display.zoom;
+      this.zoom = zoom;
       this.fov_table = this.SV_HFOV_TABLES[this.mode];
       this.hfov = this.fov_table[this.zoom];
       this.vfov = null;

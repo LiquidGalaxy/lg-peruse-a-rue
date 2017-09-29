@@ -61,13 +61,15 @@ function(
     pitchoffset : ('pitchoffset' in fields) ? fields.pitchoffset : 0,
     rolloffset  : ('rolloffset' in fields)  ? fields.rolloffset  : 0,
     pano        : ('pano' in fields)        ? fields.pano        : null,
+	zoom        : ('zoom' in fields)        ? Number(fields.zoom)        : 3,
     heading     : ('heading' in fields)     ? Number(fields.heading)     : null
   };
 
   // *** initialize the StreetView module
   var sv = new StreetViewModule(
     document.getElementById('pano'),
-    LOCAL_CONFIG.master
+    LOCAL_CONFIG.master,
+	LOCAL_CONFIG.zoom
   );
 
   // *** initialize the ViewSync module
