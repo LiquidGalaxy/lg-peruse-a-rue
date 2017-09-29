@@ -24,7 +24,7 @@ echo "Listen 99" | sudo tee -a /etc/apache2/ports.conf > /dev/null
 sudo a2enmod proxy proxy_http rewrite
 sudo tee "/etc/apache2/sites-available/peruse.conf" > /dev/null << EOM
 <VirtualHost *:99>
-	
+
 	ProxyRequests off
 
 	<Proxy *>
@@ -32,7 +32,9 @@ sudo tee "/etc/apache2/sites-available/peruse.conf" > /dev/null << EOM
 		Allow from all
 	</Proxy>
 
-	<Location />	
+	<Location />
+		ProxyPass ws://localhost:8086/
+		ProxyPassReverse ws://localhost:8086/
 		ProxyPass http://localhost:8086/
 		ProxyPassReverse http://localhost:8086/
 	</Location>
@@ -43,6 +45,8 @@ sudo a2ensite peruse.conf
 sudo /etc/init.d/apache2 reload
 
 sudo iptables -I INPUT 1 -p tcp --dport 99 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 8086 -j ACCEPT
+sudo iptables -I INPUT 1 -p udp --dport 8086 -j ACCEPT
 sudo iptables-save | sudo tee /etc/iptables.conf > /dev/null
 
 curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
