@@ -118,11 +118,6 @@ function(config, L, validate, Stapes, io) {
       });
 
       this.socket.on('sync pano', function(panoid) {
-        if (!validate.panoid(panoid)) {
-          L.error('ViewSync: bad panoid from socket!');
-          return;
-        }
-
         self._recvPano(panoid);
       });
 
