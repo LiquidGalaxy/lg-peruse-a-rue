@@ -157,7 +157,6 @@ define(
 					// *** handle pano change events from the streetview object
 					GMaps.event.addListener(this.streetview, 'pano_changed', function() {
 						var panoid = self.streetview.getPano();
-debugger;
 						if (panoid != self.pano) {
 							self._broadcastPano(panoid);
 							self.pano = panoid;
@@ -253,6 +252,8 @@ debugger;
 			// *** setPov(GMaps.StreetViewPov)
 			// set the view to the provided pov, immediately
 			setPov: function(pov) {
+				//keep zoom for now
+				pov.zoom = this.zoom;
 				if (!validate.number(pov.heading) || !validate.number(pov.pitch)) {
 					L.error('StreetView: bad pov to setPov!');
 					return;
