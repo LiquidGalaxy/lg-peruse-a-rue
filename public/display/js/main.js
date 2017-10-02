@@ -18,6 +18,7 @@ requirejs.config({
   paths: {
     // *** RequireJS Plugins
     'async': '/js/lib/require/async',
+    'tour': '/js/tour',
     // *** Dynamic Global Configuration
     'config': '/js/config',
     // *** Common Deps
@@ -61,6 +62,7 @@ function(
     pitchoffset : ('pitchoffset' in fields) ? fields.pitchoffset : 0,
     rolloffset  : ('rolloffset' in fields)  ? fields.rolloffset  : 0,
     pano        : ('pano' in fields)        ? fields.pano        : null,
+    tour        : ('tour' in fields)        ? fields.tour        : null,
 	zoom        : ('zoom' in fields)        ? Number(fields.zoom)        : 3,
     heading     : ('heading' in fields)     ? Number(fields.heading)     : null
   };
@@ -69,7 +71,8 @@ function(
   var sv = new StreetViewModule(
     document.getElementById('pano'),
     LOCAL_CONFIG.master,
-	LOCAL_CONFIG.zoom
+	LOCAL_CONFIG.zoom,
+	LOCAL_CONFIG.tour
   );
 
   // *** initialize the ViewSync module
@@ -88,6 +91,9 @@ function(
     viewsync.on('pano_changed', function(panoid) {
       sv.setPano(panoid);
     });
+    viewsync.on('tour_changed', function(tour) {
+      sv.setTour(tour);
+    });
   });
 
   sv.on('refresh', function() {
@@ -98,6 +104,9 @@ function(
   if (fields.master) {
     // *** link StretView state changes to ViewSync
     viewsync.on('ready', function() {
+      if (LOCAL_CONFIG.tour != null) {
+        viewsync.sendTour(LOCAL_CONFIG.tour);
+      }
       if (LOCAL_CONFIG.pano != null) {
         viewsync.sendPano(LOCAL_CONFIG.pano);
       }

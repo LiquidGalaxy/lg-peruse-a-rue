@@ -20,7 +20,7 @@
     "show_activities": true
   },
   "display": {
-    "default_pano": "bnXDLJFcwtYNI5Q28icyKg",
+    "default_pano": "",
     "zoom": 3,
     "mode": "webgl",
     "show_links": true

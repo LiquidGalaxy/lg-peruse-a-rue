@@ -83,6 +83,14 @@ function(config, L, validate, Stapes, io) {
       this.socket.emit('pano', panoid);
     },
 
+    // *** sendPano(panoid)
+    // send a tour change to the ViewSync relay
+    sendTour: function(tour) {
+
+      L.info('ViewSync: sendTour', tour);
+      this.socket.emit('tour', tour);
+    },
+
     // *** sendMeta(<serialized>google.maps.StreetViewPanoramaData)
     // send new pano meta to the ViewSync relay
     sendMeta: function(data) {
@@ -118,6 +126,10 @@ function(config, L, validate, Stapes, io) {
         self._recvPano(panoid);
       });
 
+      this.socket.on('sync tour', function(tourId) {
+        self._recvTour(tourId);
+      });
+
       this.socket.on('sync pov', function(pov) {
         if (!validate.pov(pov)) {
           L.error('ViewSync: bad pov from socket!');
@@ -151,6 +163,11 @@ function(config, L, validate, Stapes, io) {
     _applyPano: function(panoid) {
       this.emit('pano_changed', panoid);
     },
+    // *** _applyPano(panoid)
+    // emits a pano change to ViewSync listeners
+    _applyTour: function(tour) {
+      this.emit('tour_changed', tour);
+    },
 
     // *** _translatePov(google.maps.StreetViewPov)
     // translate the point of view by local offsets
@@ -166,6 +183,13 @@ function(config, L, validate, Stapes, io) {
       this._applyPov(this._translatePov(pov));
       this.origin = pov;
     },
+
+    // *** _recvPov(google.maps.StreetViewPov)
+    // unpack and process the pov from a relay message
+    _recvTour: function(tour) {
+		this._applyTour(tour);
+
+	},
 
     // *** _recvPano(panoid)
     // unpack and process the panoid from a relay message

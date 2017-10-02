@@ -25,7 +25,7 @@ module.exports.main = function() {
   var BigL = require('./lib/bigl');
   var ViewSync = require('./lib/viewsync');
   var MultiAxis = require('./lib/multiaxis');
-  //var geRecv = require('./lib/ge_nl_rec');
+  var geRecv = require('./lib/ge_nl_rec');
 
   //
   // sort out configuration/settings
