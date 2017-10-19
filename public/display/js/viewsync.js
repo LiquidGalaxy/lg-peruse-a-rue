@@ -74,11 +74,6 @@ function(config, L, validate, Stapes, io) {
     // *** sendPano(panoid)
     // send a pano change to the ViewSync relay
     sendPano: function(panoid) {
-      if (!validate.panoid(panoid)) {
-        L.error('ViewSync: bad panoid to sendPano!');
-        return;
-      }
-
       L.info('ViewSync: sendPano', panoid);
       this.socket.emit('pano', panoid);
     },
@@ -87,7 +82,7 @@ function(config, L, validate, Stapes, io) {
     // send a tour change to the ViewSync relay
     sendTour: function(tour) {
 
-      L.info('ViewSync: sendTour', tour);
+      L.info('ViewSync: sendTour/pano', tour);
       this.socket.emit('tour', tour);
     },
 

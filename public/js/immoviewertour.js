@@ -1,7 +1,7 @@
 
-define([], function() {
+define(['jquery'], function($) {
 
-	var tourProvider = function() {
+	var loadJson = function(tourId) {
 		return {
 			"id":                       "59705a4d4cedfd004b22302d",
 			"created":                  1500535373000,
@@ -19,7 +19,7 @@ define([], function() {
 						"SMALL":         "https://images-virtualtours.immobilienscout24.de/items/residea_m/59705a4d4cedfd004b22302e/Tour/150-images/srv_c7fxnlv900.JPG?v=1500535444423",
 						"FULL":          "https://images-virtualtours.immobilienscout24.de/items/residea_m/59705a4d4cedfd004b22302e/Tour/srv_c7fxnlv900.JPG?v=1500535444423",
 						"HD1080":        "https://images-virtualtours.immobilienscout24.de/items/residea_m/59705a4d4cedfd004b22302e/Tour/1080-images/srv_c7fxnlv900.JPG?v=1500535444423",
-						"ORIGINAL_PATH": "https://images-virtualtours.immobilienscout24.de/items/residea_m/59705a4d4cedfd004b22302e/Tour/original-images/srv_c7fxnlv900.JPG?v=1500535444423",
+						"ORIGINAL_PATH": "http://localhost:8086/static/srv_c7fxnlv900.JPG?v=1500535444423",
 						"HD1606":        "https://images-virtualtours.immobilienscout24.de/items/residea_m/59705a4d4cedfd004b22302e/Tour/1606-images/srv_c7fxnlv900.JPG?v=1500535444423",
 						"THUMB":         "https://images-virtualtours.immobilienscout24.de/items/residea_m/59705a4d4cedfd004b22302e/Tour/thumb-images/srv_c7fxnlv900.JPG?v=1500535444423"
 					},
@@ -127,5 +127,53 @@ define([], function() {
 			]
 		}
 	};
-	return tourProvider;
+	return function(tourId, callback) {
+		//var json = loadJson(tourId);
+		$.ajax
+		({
+			type: "GET",
+			url: "https://virtualtours.immobilienscout24.de/rest/v1/tours/tour?internalID="+tourId,
+			dataType: 'json',
+			async: false,
+			headers: {
+				"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJQQU5PUkFNQSIsIkRFRkFVTFQiLCJBUElfR0xPQkFMX1RPVVJfUkVBRCJdLCJ1c2VySUQiOiI1OTNhYTQ2ZWM5ZTc3YzAwNTI0NTg4ZTIifQ.VjzDGfuFc_HMTXLR00me2K-cJQ46xeyydwPaWqAixXMHc9LXiahgxdtBQSp520Bychpq8fw9I201DGcvJv9aPw"
+			},
+			success: function (data){
+				var panos = data.panoramas.map(function(panorama) {
+					// noinspection JSUnusedGlobalSymbols
+					return {
+						tourPano:  panorama,
+						location:  {
+							pano:        panorama.filename,
+							description: panorama.name
+						},
+						links:     panorama.attachments.map(function(attachment) {
+							return {
+								heading: (attachment.xPos + 90),
+								pano:    attachment.linkedRoom
+							};
+						}),
+						// The text for the copyright control.
+						copyright: 'Imagery (c) 2017 Immobilien Scout24 GmbH',
+						// The definition of the tiles for this panorama.
+						tiles:     {
+							//tileSize: new google.maps.Size(2000, 1000),
+							//worldSize: new google.maps.Size(2000, 1000),
+							// The heading in degrees at the origin of the panorama
+							// tile set.
+							tileSize: new google.maps.Size(10000, 5000),
+							worldSize: new google.maps.Size(10000, 5000),
+
+							centerHeading: 105,
+							getTileUrl:    function() {
+								return panorama.fileUrls.ORIGINAL_PATH
+							}
+						}
+					};
+				});
+				callback(panos);
+			}
+		});
+
+	}
 });
