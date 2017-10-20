@@ -1,5 +1,5 @@
 
-define(['jquery'], function($) {
+define(['jquery', 'config'], function($, config) {
 
 	var loadJson = function(tourId) {
 		return {
@@ -128,7 +128,6 @@ define(['jquery'], function($) {
 		}
 	};
 	return function(tourId, callback) {
-		//var json = loadJson(tourId);
 		$.ajax
 		({
 			type: "GET",
@@ -136,7 +135,7 @@ define(['jquery'], function($) {
 			dataType: 'json',
 			async: false,
 			headers: {
-				"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJQQU5PUkFNQSIsIkRFRkFVTFQiLCJBUElfR0xPQkFMX1RPVVJfUkVBRCJdLCJ1c2VySUQiOiI1OTNhYTQ2ZWM5ZTc3YzAwNTI0NTg4ZTIifQ.VjzDGfuFc_HMTXLR00me2K-cJQ46xeyydwPaWqAixXMHc9LXiahgxdtBQSp520Bychpq8fw9I201DGcvJv9aPw"
+				"Authorization": config.immoviewer_auth_header
 			},
 			success: function (data){
 				var panos = data.panoramas.map(function(panorama) {
