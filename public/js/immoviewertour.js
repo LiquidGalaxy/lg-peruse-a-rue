@@ -160,8 +160,8 @@ define(['jquery', 'config'], function($, config) {
 							//worldSize: new google.maps.Size(2000, 1000),
 							// The heading in degrees at the origin of the panorama
 							// tile set.
-							tileSize: new google.maps.Size(10000, 5000),
-							worldSize: new google.maps.Size(10000, 5000),
+							tileSize: new google.maps.Size(5000, 2500),
+							worldSize: new google.maps.Size(5000, 2500),
 
 							centerHeading: 105,
 							getTileUrl:    function() {
