@@ -70,6 +70,7 @@ require(
   };
 
   function start(panoId) {
+  	debugger;
 // *** initialize the ViewSync module
 			var viewsync = new ViewSyncModule(LOCAL_CONFIG);
 
@@ -87,7 +88,7 @@ require(
 					sv.setPano(panoid);
 				});
 				viewsync.on('tour_changed', function(tour) {
-					if(LOCAL_CONFIG.tour !== tour) {
+					if(!LOCAL_CONFIG.master && LOCAL_CONFIG.tour !== tour) {
 						LOCAL_CONFIG.tour = tour;
 						immoviewer(tour, function(panos) {
 							sv = new CustomTourModule(
