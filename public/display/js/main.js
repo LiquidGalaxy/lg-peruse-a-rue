@@ -70,7 +70,6 @@ require(
   };
 
   function start(panoId) {
-  	debugger;
 // *** initialize the ViewSync module
 			var viewsync = new ViewSyncModule(LOCAL_CONFIG);
 
