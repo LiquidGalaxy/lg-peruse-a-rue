@@ -1,0 +1,50 @@
+[
+  {
+    "objects": [
+      {
+        "identifier": "0PDJMeu0ov36Joqinhu6KA",
+        "lookup": "panoid",
+        "slug": "itsukushima-shinto-shrine",
+        "title": "Itsukushima Shinto Shrine",
+        "heading": 329
+      },
+      {
+        "identifier": "KL_bjAgm3J-VSIPU_BPUAA",
+        "lookup": "panoid",
+        "slug": "archaeological-areas-of-pompei",
+        "title": "Archaeological Areas of Pompei",
+        "heading": 128
+      },
+      {
+        "identifier": "AfGF5tFC13NdN-qI2yHC8Q",
+        "lookup": "panoid",
+        "slug": "scotts-hut-cape-evans-ross-island",
+        "title": "Scott's Hut, Cape Evans on Ross Island",
+        "heading": 14
+      },
+      {
+        "identifier": "yZOv6BZtRjaaqxZ8ddRXrw",
+        "lookup": "panoid",
+        "slug": "hiroshima-peace-memorial",
+        "title": "Hiroshima Peace Memorial",
+        "heading": 13
+      },
+      {
+        "identifier": "pRZn1Zzu4wUgDfTYhZQKbA",
+        "lookup": "panoid",
+        "slug": "stonehenge",
+        "title": "Stonehenge",
+        "heading": 170
+      },
+      {
+        "identifier": "yjtri_z_8uDmDrr2JG-lkA",
+        "lookup": "panoid",
+        "slug": "mill-network-at-kinderdijk-elshout",
+        "title": "Mill Network at Kinderdijk-Elshout",
+        "heading": 66
+      }
+    ],
+    "description": "The World Wonders Project",
+    "title": "World Wonders Project"
+  }
+]

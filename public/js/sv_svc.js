@@ -18,50 +18,28 @@ define(['googlemaps'], function(GMaps) {
   // provide StreetViewService as a singleton in this module
   var sv_svc = new GMaps.StreetViewService();
 
-  // extensions to getPanoramaByLocation:
-  // optional expansion to max_radius
-  // pass original search latlng to the callback
   function getPanoramaByLocation(latlng, radius, cb, max_radius) {
-    var search_opts = {
-      latlng: latlng,
-      radius: radius,
-      max_radius: max_radius || radius,
-      cb: cb
+    var locationRequest = {
+      location: latlng,
+      preference: GMaps.StreetViewPreference.NEAREST,
+      radius: max_radius || radius
     };
 
-    sv_svc.getPanoramaByLocation(
-      latlng,
-      radius,
-      expandingCB.bind(search_opts)
+    sv_svc.getPanorama(
+      locationRequest,
+      cb
     );
   }
 
-  // recursive callback for expanding search
-  function expandingCB(data, stat) {
-    if (stat == GMaps.StreetViewStatus.OK) {
-      // success
-      this.cb(data, stat, this.latlng);
+  function getPanoramaById(pano, cb) {
+    var panoRequest = {
+      pano: pano
+    };
 
-    } else if (this.radius < this.max_radius) {
-      // expand the search
-      this.radius *= 2;
-      if (this.radius > this.max_radius)
-        this.radius = this.max_radius;
-
-      getPanoramaByLocation(
-        this.latlng,
-        this.radius,
-        this.cb,
-        this.max_radius
-      );
-
-    } else {
-      // failure
-      this.cb(data, stat, this.latlng);
-    }
-
-    // explicit cleanup
-    delete this;
+    sv_svc.getPanorama(
+      panoRequest,
+      cb
+    );
   }
 
   // make StreetViewPanoramaData friendlier
@@ -73,8 +51,8 @@ define(['googlemaps'], function(GMaps) {
   }
 
   return {
-    // passthrough ID search
-    getPanoramaById: sv_svc.getPanoramaById,
+    // use our wrapped ID search
+    getPanoramaById: getPanoramaById,
 
     // use our wrapped location search
     getPanoramaByLocation: getPanoramaByLocation,

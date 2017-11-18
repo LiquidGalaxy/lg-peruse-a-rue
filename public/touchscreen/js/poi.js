@@ -133,14 +133,17 @@ function(config, L, Stapes, $, leftUI, doT) {
     },
 
     _clicked: function(loc) {
+      var self = this;
       var $loc = $(loc);
-      var panoid = $loc.attr('panoid');
-      this.emit('select_location', panoid);
       var hdg_attr = $loc.attr('heading');
       if (hdg_attr != null) {
         var hdg = Number(hdg_attr);
         this.emit('location_heading', hdg);
       }
+      var panoid = $loc.attr('panoid');
+      setTimeout(function() {
+        self.emit('select_location', panoid);
+      }, 17);
     }
   });
 

@@ -7,7 +7,7 @@ A Street View implementation for Liquid Galaxy.
 The Peruse-a-Rue server requires Node.js and npm.  Instructions for installing
 Node.js on all supported platforms can be found on their website:
 
-    <http://nodejs.org/>
+<http://nodejs.org/>
 
 ### Installing Peruse-a-Rue
 
@@ -22,6 +22,40 @@ npm can read the dependency list from package.json in the current directory.
 While in the Peruse-a-Rue git root:
 
     $ npm install
+
+### Using the spacenav-emitter
+
+To use a SpaceNavigator with the Peruse-a-Rue server, you must first compile
+and run the spacenav-emitter binary.  This tool reads events from the
+SpaceNavigator and emits them as UDP datagrams, which allows you to attach the
+SpaceNav to a different host than the Peruse server.
+
+First, compile the binary:
+
+    $ gcc -o spacenav-emitter src/spacenav-emitter.c
+
+Now find the SpaceNav device.  It should be symlinked from `/dev/input/by-id`:
+
+    $ ls -l /dev/input/by-id
+    total 0
+    lrwxrwxrwx 1 root root 9 Oct 13 16:54 usb-3Dconnexion_SpaceNavigator-event-if00 -> ../event8
+    lrwxrwxrwx 1 root root 9 Sep 23 22:08 usb-Logitech_USB_Receiver-if02-event-kbd -> ../event3
+    lrwxrwxrwx 1 root root 9 Sep 23 22:08 usb-Logitech_USB_Receiver-if02-event-mouse -> ../event2
+    lrwxrwxrwx 1 root root 9 Sep 23 22:08 usb-Logitech_USB_Receiver-if02-mouse -> ../mouse0
+
+You may need to fix the permissions:
+
+    $ sudo chmod 0644 /dev/input/by-id/usb-3Dconnexion_SpaceNavigator-event-if00
+
+Now run spacnav-emitter, directing it at the Peruse-a-Rue UDP port:
+
+    $ ./spacenav-emitter /dev/input/by-id/usb-3Dconnexion_SpaceNavigator-event-if00 127.0.0.1 8086
+
+You can use socat to verify that data is coming through on the receiving host:
+
+    $ socat UDP-LISTEN:8086 STDOUT
+
+You should see a bunch of gibberish when you move the SpaceNav.
 
 ### Usage
 
@@ -76,13 +110,13 @@ defaults when the server starts.
 
 - `config['touchscreen']['show_maptypectl']` : control for road/satellite map
 
-- `config['touchscreen']['show_activities']` : show/hide "Other Activities" box 
+- `config['touchscreen']['show_activities']` : show/hide "Other Activities" box
 
 - `config['touchscreen']['font_scale']` : scale fonts by this ratio
 
 - `config['touchscreen']['default_maptype']` : sets the map imagery style
   - See the [MapTypeId][maptypeid] reference for supported map styles
-  
+
 - `config['touchscreen']['expand_poi']` : Expands the "Points of Interest" Section
 
 - `config['touchscreen']['expand_activities']` : Expands the "Other Activities" Section
@@ -134,7 +168,7 @@ Copyright 2013 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License"):
 
-    <http://www.apache.org/licenses/LICENSE-2.0>
+<http://www.apache.org/licenses/LICENSE-2.0>
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
