@@ -22,7 +22,7 @@
   "display": {
     "default_pano": "",
     "zoom": 3,
-    "mode": "html4",
+    "mode": "webgl",
     "show_links": true
   }
 }
