@@ -1,0 +1,49 @@
+[
+  {
+    "objects": [
+      {
+        "identifier": "UeCMBsfBTX2Zn616cSjz0Q",
+        "lookup": "panoid",
+        "slug": "amazon-rainforest",
+        "title": "Amazon Rainforest",
+        "heading": 117
+      },
+      {
+        "identifier": "bBFBtYA_XV4CcUgDhPMTOA",
+        "lookup": "panoid",
+        "slug": "mayan-ruins",
+        "title": "Mayan Ruins",
+        "heading": 18
+      },
+      {
+        "identifier": "iGjThi1QBZJArzMcX1xxMg",
+        "lookup": "panoid",
+        "slug": "grand-canyon",
+        "title": "Grand Canyon",
+        "heading": 67
+      },
+      {
+        "identifier": "XcrqqDmFvmjz305qV2SRgA",
+        "lookup": "panoid",
+        "slug": "versailles",
+        "title": "Versailles",
+        "heading": 123
+      },
+      {
+        "identifier": "VDBXyJ1gOnKsxaoiRtSfjg",
+        "lookup": "panoid",
+        "slug": "pompeii",
+        "title": "Pompeii",
+        "heading": 327
+      },
+      {
+        "identifier": "g5YvV4GFwFyYSIuMy5E0VQ",
+        "lookup": "panoid",
+        "slug": "mount-fuji",
+        "title": "Mount Fuji",
+        "heading": 270
+      }
+    ],
+    "title": "Earth"
+  }
+]

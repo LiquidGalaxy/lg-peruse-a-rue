@@ -3,7 +3,7 @@
   "version": "0.6.4",
   "author": "End Point Corp <lg@endpoint.com>",
   "description": "A street view implementation for Liquid Galaxy",
-  "contributors": [ 
+  "contributors": [
     {
       "name": "Matt Vollrath",
       "email": "matt@endpoint.com"
